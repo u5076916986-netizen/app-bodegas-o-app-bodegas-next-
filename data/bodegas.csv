@@ -1,0 +1,11 @@
+bodega_id,nombre,categoria_principal,correo_pedidos,telefono,ciudad,zona,direccion,horario_texto,metodos_pago,min_pedido_cop,tiempo_entrega_estimado,estado,logo_url
+BOD_001,Distribuidora Don Pepe,ASEO,pedidos.bod001@demo.com,+57 3000000001,Medellín,Norte,Cra 10 #20-30,Lun-Sáb 08:00-18:00,contraentrega|nequi:3120000001,50000,2-6h,activo,https://example.com/logo1.png
+BOD_002,La Central de Abarrotes,ALIMENTOS,pedidos.bod002@demo.com,+57 3000000002,Medellín,Centro,Calle 45 #10-20,Lun-Sáb 07:00-17:00,contraentrega|nequi:3120000002,80000,4-12h,activo,https://example.com/logo2.png
+BOD_003,El Rey del Licor,LICORES,pedidos.bod003@demo.com,+57 3000000003,Medellín,Sur,Av 80 #30-10,Lun-Dom 10:00-22:00,contraentrega|nequi:3120000003,120000,2-8h,activo,https://example.com/logo3.png
+BOD_004,Herramientas Omega,HERRAMIENTAS,pedidos.bod004@demo.com,+57 3000000004,Medellín,Occidente,Cra 70 #25-90,Lun-Sáb 08:00-18:00,contraentrega|transferencia,100000,24h,activo,https://example.com/logo4.png
+BOD_005,Snacks & Dulces J&J,SNACKS,pedidos.bod005@demo.com,+57 3000000005,Medellín,Noreste,Calle 90 #40-12,Lun-Sáb 08:00-18:00,contraentrega|nequi:3120000005,50000,2-6h,activo,https://example.com/logo5.png
+BOD_006,Bebidas Frías Polar,BEBIDAS,pedidos.bod006@demo.com,+57 3000000006,Medellín,Centro,Av 33 #50-08,Lun-Sáb 07:00-17:00,contraentrega|nequi:3120000006,70000,4-10h,activo,https://example.com/logo6.png
+BOD_007,Lácteos Santa Fe,LACTEOS,pedidos.bod007@demo.com,+57 3000000007,Medellín,Sur,Calle 12 #80-40,Lun-Sáb 06:00-14:00,contraentrega,90000,4-12h,activo,https://example.com/logo7.png
+BOD_008,Panadería Mayorista Trigo,PANADERIA,pedidos.bod008@demo.com,+57 3000000008,Medellín,Oriente,Cra 34 #12-60,Lun-Sáb 05:00-13:00,contraentrega,60000,4-12h,activo,https://example.com/logo8.png
+BOD_009,Aseo y Hogar Brillo,ASEO,pedidos.bod009@demo.com,+57 3000000009,Medellín,Norte,Cra 15 #60-18,Lun-Sáb 08:00-18:00,contraentrega|nequi:3120000009,50000,2-6h,activo,https://example.com/logo9.png
+BOD_010,Miscelánea TodoUno,MIXTO,pedidos.bod010@demo.com,+57 3000000010,Medellín,Norte,Cra 15 #60-19,Lun-Sáb 08:00-18:01,contraentrega|nequi:3120000010,50000,2-6h,activo,https://example.com/logo10.png
