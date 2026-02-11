@@ -1,0 +1,44 @@
+[
+    {
+        "id": "ENT_001",
+        "bodegaId": "BOD_002",
+        "pedidoId": "47551571-7655-469a-b7ef-4181df1a200e",
+        "tenderoNombre": "Juan Pérez",
+        "direccion": "dfsgdsgf",
+        "zona": "Centro",
+        "repartidorId": "REP_001",
+        "repartidorNombre": "Carlos Mendez",
+        "estado": "pendiente",
+        "etaMin": 45,
+        "createdAt": "2026-02-09T08:15:00Z",
+        "updatedAt": "2026-02-09T08:15:00Z"
+    },
+    {
+        "id": "ENT_002",
+        "bodegaId": "BOD_002",
+        "pedidoId": "PED_BOD002_002",
+        "tenderoNombre": "María García",
+        "direccion": "Carrera 15 #70-50, Bogotá",
+        "zona": "Sur",
+        "repartidorId": "REP_002",
+        "repartidorNombre": "Ana López",
+        "estado": "en_ruta",
+        "etaMin": 20,
+        "createdAt": "2026-02-09T07:45:00Z",
+        "updatedAt": "2026-02-09T09:30:00Z"
+    },
+    {
+        "id": "ENT_003",
+        "bodegaId": "BOD_002",
+        "pedidoId": "PED_BOD002_003",
+        "tenderoNombre": "Luis Rodríguez",
+        "direccion": "Avenida Paseo #25-80, Bogotá",
+        "zona": "Norte",
+        "repartidorId": "REP_001",
+        "repartidorNombre": "Carlos Mendez",
+        "estado": "entregada",
+        "etaMin": 0,
+        "createdAt": "2026-02-08T09:00:00Z",
+        "updatedAt": "2026-02-08T14:30:00Z"
+    }
+]

@@ -1,42 +1,42 @@
-# AI Agent Instructions for app-bodegas
+# Instrucciones para Agentes de IA en app-bodegas
 
-## Project Overview
-This is a Next.js 16 application for a bodega (warehouse) ordering system. The MVP implements a simple flow: view bodegas → view products → create pedido (order).
+## Resumen del Proyecto
+Esta es una aplicación Next.js 16 para un sistema de pedidos en bodegas (almacenes). El MVP implementa un flujo simple: ver bodegas → ver productos → crear pedido.
 
-## Architecture
-- **Frontend**: Next.js App Router with React 19, TypeScript, Tailwind CSS
-- **Data Storage**:
-  - Static data: CSV files in `data/` (bodegas.csv, productos.csv)
-  - Dynamic data: JSON Lines format in `data/pedidos.jsonl` for append-only order logs
-- **API**: `/api/pedidos` route handles order creation (POST) and listing (GET)
-- **Dependencies**: `csv-parse` and `papaparse` for CSV parsing, standard Next.js stack
+## Arquitectura
+- **Frontend**: Next.js App Router con React 19, TypeScript, Tailwind CSS
+- **Almacenamiento de Datos**:
+  - Datos estáticos: archivos CSV en `data/` (bodegas.csv, productos.csv)
+  - Datos dinámicos: formato JSON Lines en `data/pedidos.jsonl` para logs de pedidos de solo anexión
+- **API**: ruta `/api/pedidos` maneja creación de pedidos (POST) y listado (GET)
+- **Dependencias**: `csv-parse` y `papaparse` para parsing de CSV, stack estándar de Next.js
 
-## Key Patterns
-- **Data Parsing**: Use `safeNumber()` function for robust numeric conversion (handles null/undefined)
-- **Order IDs**: Generate with `crypto.randomUUID()` or fallback to timestamp-based IDs
-- **File Storage**: Ensure `data/` directory exists before writing; use JSONL for efficient appends
-- **Types**: Define TypeScript interfaces for `Pedido`, `PedidoItem`, etc. in API routes
-- **Runtime**: Specify `"nodejs"` runtime for API routes that use file system
+## Patrones Clave
+- **Parsing de Datos**: Usar función `safeNumber()` para conversión numérica robusta (maneja null/undefined)
+- **IDs de Pedidos**: Generar con `crypto.randomUUID()` o fallback a IDs basados en timestamp
+- **Almacenamiento de Archivos**: Asegurar que el directorio `data/` exista antes de escribir; usar JSONL para anexiones eficientes
+- **Tipos**: Definir interfaces TypeScript para `Pedido`, `PedidoItem`, etc. en rutas API
+- **Runtime**: Especificar `"nodejs"` runtime para rutas API que usan sistema de archivos
 
-## Workflows
-- **Development**: `npm run dev` starts dev server
-- **Build**: `npm run build` for production build
-- **Lint**: `npm run lint` runs ESLint
-- **Data Access**: Parse CSVs client-side using `papaparse` for bodegas/products data
+## Flujos de Trabajo
+- **Desarrollo**: `npm run dev` inicia servidor de desarrollo
+- **Construcción**: `npm run build` para construcción de producción
+- **Linting**: `npm run lint` ejecuta ESLint
+- **Acceso a Datos**: Parsear CSVs del lado cliente usando `papaparse` para datos de bodegas/productos
 
-## Conventions
-- **Naming**: Spanish terms (bodega, pedido, producto); currency in COP
-- **Context**: Colombian market, includes payment methods like Nequi, contraentrega
-- **State Management**: No global state library; use React hooks for component state
-- **Styling**: Tailwind CSS with custom classes; focus on responsive design
+## Convenciones
+- **Nomenclatura**: Términos en español (bodega, pedido, producto); moneda en COP
+- **Contexto**: Mercado colombiano, incluye métodos de pago como Nequi, contraentrega
+- **Gestión de Estado**: Sin librería de estado global; usar hooks de React para estado de componentes
+- **Estilización**: Tailwind CSS con clases personalizadas; enfoque en diseño responsivo
 
-## Examples
-- **Reading CSVs**: Use `papaparse.parse()` with header:true for structured data
-- **Order Creation**: Validate `bodega_id` and `items` array; calculate totals server-side
-- **Error Handling**: Return `{ok: false, error: string}` for API failures
+## Ejemplos
+- **Lectura de CSVs**: Usar `papaparse.parse()` con header:true para datos estructurados
+- **Creación de Pedidos**: Validar `bodega_id` y array `items`; calcular totales del lado servidor
+- **Manejo de Errores**: Retornar `{ok: false, error: string}` para fallos en API
 
-## File Structure
-- `app/page.tsx`: Home page with bodega link
-- `app/api/pedidos/route.ts`: Order API (exemplifies JSONL storage pattern)
-- `data/`: CSV files for static data, JSONL for orders</content>
+## Estructura de Archivos
+- `app/page.tsx`: Página de inicio con enlace a bodegas
+- `app/api/pedidos/route.ts`: API de pedidos (ejemplifica patrón de almacenamiento JSONL)
+- `data/`: Archivos CSV para datos estáticos, JSONL para pedidos</content>
 <parameter name="filePath">c:\Users\loomb\OneDrive\Desktop\app\app-bodegas\.github\copilot-instructions.md

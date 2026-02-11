@@ -1,0 +1,26 @@
+{
+    "DEFAULT": {
+        "primary": "#334155",
+        "primarySoft": "#f8fafc",
+        "border": "#e2e8f0",
+        "badgeBg": "#f1f5f9",
+        "badgeText": "#475569",
+        "headerBg": "#ffffff"
+    },
+    "BOD_001": {
+        "primary": "#059669",
+        "primarySoft": "#ecfdf5",
+        "border": "#d1fae5",
+        "badgeBg": "#d1fae5",
+        "badgeText": "#065f46",
+        "headerBg": "#ffffff"
+    },
+    "BOD_006": {
+        "primary": "#0284c7",
+        "primarySoft": "#e0f2fe",
+        "border": "#bae6fd",
+        "badgeBg": "#bae6fd",
+        "badgeText": "#075985",
+        "headerBg": "#ffffff"
+    }
+}

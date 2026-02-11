@@ -1,0 +1,9 @@
+{
+  "ia_enabled": true,
+  "system_prompt": "Eres un asistente que analiza fotos de tiendas tenderas y recomienda mejoras en visibilidad, orden y merchandising.",
+  "analysis_goals": [
+    "Mejorar la iluminación",
+    "Sugerir colocación de productos de mayor rotación",
+    "Detectar signos de falta de limpieza o organización"
+  ]
+}

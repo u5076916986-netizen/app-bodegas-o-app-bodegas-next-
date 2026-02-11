@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ce7679d6-e28c-4b6a-85a1-e83ae24c07f5",
+    "bodegaId": "BOD_002",
+    "titulo": "Nueva promoción disponible",
+    "mensaje": "2x1 en bebidas • 50% de descuento",
+    "target": "tenderos",
+    "createdAt": "2026-02-10T18:37:01.528Z",
+    "read": false
+  },
+  {
+    "id": "fa6e836f-1f93-46f9-9b95-8228658f2b10",
+    "bodegaId": "BOD_002",
+    "titulo": "Nueva promoción disponible",
+    "mensaje": "Descuento $2.000 en aseo • $2.000 de descuento",
+    "target": "tenderos",
+    "createdAt": "2026-02-10T18:37:01.776Z",
+    "read": false
+  },
+  {
+    "id": "15a7227a-e454-424e-ae55-b888f82b7300",
+    "createdAt": "2026-02-10T19:37:17.072Z",
+    "read": false,
+    "bodegaId": "BOD_001",
+    "titulo": "Nuevo pedido recibido",
+    "mensaje": "Pedido PED_BOD_001_FDDF6DFE listo para confirmar.",
+    "target": "bodegas"
+  },
+  {
+    "id": "698c0cba-d1ea-44fe-818f-86f51988f6df",
+    "createdAt": "2026-02-10T19:37:17.075Z",
+    "read": false,
+    "bodegaId": "BOD_001",
+    "titulo": "Pedido creado",
+    "mensaje": "Tu pedido PED_BOD_001_FDDF6DFE fue registrado y está en preparación.",
+    "target": "tenderos"
+  },
+  {
+    "id": "a15b640b-945a-4d8b-8645-259c6feab982",
+    "createdAt": "2026-02-10T20:22:14.873Z",
+    "read": false,
+    "bodegaId": "BOD_001",
+    "titulo": "Actualización de pedido",
+    "mensaje": "Pedido PED_BOD_001_FDDF6DFE ahora está cancelado.",
+    "target": "tenderos"
+  },
+  {
+    "id": "8a1cf18a-7649-4edf-9132-a5b53682c66e",
+    "createdAt": "2026-02-10T20:22:14.876Z",
+    "read": false,
+    "bodegaId": "BOD_001",
+    "titulo": "Estado actualizado",
+    "mensaje": "Pedido PED_BOD_001_FDDF6DFE ahora está cancelado.",
+    "target": "repartidores"
+  },
+  {
+    "id": "43f81537-3b56-4e9d-9563-c298e7615909",
+    "createdAt": "2026-02-10T20:33:26.854Z",
+    "read": false,
+    "bodegaId": "BOD_006",
+    "titulo": "Nuevo pedido recibido",
+    "mensaje": "Pedido PED_BOD_006_7341B4C0 listo para confirmar.",
+    "target": "bodegas"
+  },
+  {
+    "id": "202662df-e57d-473d-9f3f-cee208c53d03",
+    "createdAt": "2026-02-10T20:33:26.862Z",
+    "read": false,
+    "bodegaId": "BOD_006",
+    "titulo": "Pedido creado",
+    "mensaje": "Tu pedido PED_BOD_006_7341B4C0 fue registrado y está en preparación.",
+    "target": "tenderos"
+  },
+  {
+    "id": "cf1005ed-44cc-4634-a26c-13850eb83a31",
+    "createdAt": "2026-02-11T18:49:41.589Z",
+    "read": false,
+    "bodegaId": "BOD_002",
+    "titulo": "Nuevo pedido recibido",
+    "mensaje": "Pedido PED_BOD_002_81D8CBD5 listo para confirmar.",
+    "target": "bodegas"
+  },
+  {
+    "id": "6f6412e8-3340-4c91-ba6e-ef5b7369e250",
+    "createdAt": "2026-02-11T18:49:41.596Z",
+    "read": false,
+    "bodegaId": "BOD_002",
+    "titulo": "Pedido creado",
+    "mensaje": "Tu pedido PED_BOD_002_81D8CBD5 fue registrado y está en preparación.",
+    "target": "tenderos"
+  }
+]

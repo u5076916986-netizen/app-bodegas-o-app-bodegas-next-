@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # Para persistir en archivo de datos en VPS, dejar ORDERS_STORAGE sin setear o vacío
+      # - ORDERS_STORAGE=file
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/bodegas"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

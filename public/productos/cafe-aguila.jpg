@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6d28d9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#faf5ff"/>
+  <rect x="80" y="100" width="240" height="200" rx="20" fill="url(#grad5)"/>
+  <text x="200" y="210" font-family="Arial, sans-serif" font-size="72" fill="white" text-anchor="middle" font-weight="bold">☕</text>
+  <text x="200" y="340" font-family="Arial, sans-serif" font-size="18" fill="#6d28d9" text-anchor="middle" font-weight="bold">Café Águila Roja</text>
+  <text x="200" y="365" font-family="Arial, sans-serif" font-size="14" fill="#6b7280" text-anchor="middle">250g</text>
+</svg>

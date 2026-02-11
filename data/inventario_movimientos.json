@@ -1,0 +1,57 @@
+[
+    {
+        "movimientoId": "MOV_001",
+        "bodegaId": "BOD_002",
+        "productoId": "PRD_BOD_002_0001",
+        "nombreProducto": "Aceite de girasol 1L",
+        "tipo": "entrada",
+        "cantidad": 50,
+        "motivo": "Compra a proveedor",
+        "fecha": "2026-02-08T10:30:00Z",
+        "usuario": "admin@bodega"
+    },
+    {
+        "movimientoId": "MOV_002",
+        "bodegaId": "BOD_002",
+        "productoId": "PRD_BOD_002_0002",
+        "nombreProducto": "Arroz integral 5kg",
+        "tipo": "salida",
+        "cantidad": 10,
+        "motivo": "Venta a cliente",
+        "fecha": "2026-02-07T14:15:00Z",
+        "usuario": "vendedor@bodega"
+    },
+    {
+        "movimientoId": "MOV_003",
+        "bodegaId": "BOD_002",
+        "productoId": "PRD_BOD_002_0003",
+        "nombreProducto": "Leche evaporada 400ml",
+        "tipo": "ajuste",
+        "cantidad": -5,
+        "motivo": "Merma por vencimiento",
+        "fecha": "2026-02-06T09:00:00Z",
+        "usuario": "admin@bodega"
+    },
+    {
+        "movimientoId": "MOV_004",
+        "bodegaId": "BOD_002",
+        "productoId": "PRD_BOD_002_0001",
+        "nombreProducto": "Aceite de girasol 1L",
+        "tipo": "salida",
+        "cantidad": 15,
+        "motivo": "Venta a cliente",
+        "fecha": "2026-02-05T11:20:00Z",
+        "usuario": "vendedor@bodega"
+    },
+    {
+        "movimientoId": "MOV_005",
+        "bodegaId": "BOD_002",
+        "productoId": "PRD_BOD_002_0004",
+        "nombreProducto": "Café molido 500g",
+        "tipo": "entrada",
+        "cantidad": 30,
+        "motivo": "Compra a proveedor",
+        "fecha": "2026-02-04T08:45:00Z",
+        "usuario": "admin@bodega"
+    }
+]

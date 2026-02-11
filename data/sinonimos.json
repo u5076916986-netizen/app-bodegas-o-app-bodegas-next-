@@ -1,0 +1,67 @@
+{
+    "aseo": [
+        "limpieza",
+        "detergente",
+        "cloro",
+        "jabón",
+        "jabon",
+        "desinfectante",
+        "escoba",
+        "trapo",
+        "bayeta",
+        "cepillo"
+    ],
+    "bebidas": [
+        "gaseosa",
+        "refresco",
+        "soda",
+        "jugo",
+        "agua",
+        "cerveza",
+        "vino"
+    ],
+    "snacks": [
+        "mecato",
+        "pasabocas",
+        "papas",
+        "galletas",
+        "chicle",
+        "dulce",
+        "caramelo"
+    ],
+    "frutas": [
+        "manzana",
+        "platano",
+        "banana",
+        "naranja",
+        "limón",
+        "limon",
+        "mandarina"
+    ],
+    "lacteos": [
+        "leche",
+        "queso",
+        "yogur",
+        "mantequilla",
+        "crema",
+        "avena"
+    ],
+    "carnes": [
+        "pollo",
+        "carne",
+        "res",
+        "pavo",
+        "jamon",
+        "jamón",
+        "salchicha"
+    ],
+    "condimentos": [
+        "sal",
+        "pimienta",
+        "aceite",
+        "vinagre",
+        "salsa",
+        "aliño",
+        "ajo"
+    ]
+}

@@ -1,0 +1,18 @@
+{
+  "DEFAULT": { "accent": "#2563eb", "bg": "#f8fafc" },
+  "BOD_001": {
+    "accent": "#0ea5e9",
+    "bg": "#f0f9ff",
+    "logo": "/logos/bod_001.png"
+  },
+  "BOD_002": {
+    "accent": "#f97316",
+    "bg": "#fff7ed",
+    "logo": "/logos/bod_002.png"
+  },
+  "BOD_006": {
+    "accent": "#60a5fa",
+    "bg": "#0f172a",
+    "logo": "/logos/bod_006.png"
+  }
+}

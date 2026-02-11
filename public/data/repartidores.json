@@ -1,0 +1,14 @@
+[
+    {
+        "id": "REP_001",
+        "nombre": "Carlos Mendez",
+        "telefono": "3000000001",
+        "bodegaId": "BOD_002"
+    },
+    {
+        "id": "REP_002",
+        "nombre": "Ana Ruiz",
+        "telefono": "3000000002",
+        "bodegaId": "BOD_001"
+    }
+]

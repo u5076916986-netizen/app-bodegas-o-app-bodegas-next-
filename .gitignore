@@ -9,3 +9,5 @@ out/
 *.pem
 **/*token*
 **/*secret*
+
+.codeartsdoer

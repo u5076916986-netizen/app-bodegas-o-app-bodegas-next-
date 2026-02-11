@@ -1,0 +1,86 @@
+[
+  {
+    "id": "PROD_002",
+    "bodegaId": "BOD_002",
+    "nombre": "Frijoles Negros 2kg",
+    "sku": "FRJ-001",
+    "categoria": "Granos",
+    "precio": 8900,
+    "stock": 0,
+    "activo": true,
+    "descripcion": "Frijoles negros frescos",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROD_003",
+    "bodegaId": "BOD_002",
+    "nombre": "Aceite de Oliva 1L",
+    "sku": "ACE-001",
+    "categoria": "Aceites",
+    "precio": 32000,
+    "stock": 12,
+    "activo": true,
+    "descripcion": "Aceite de oliva extra virgen importado",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROD_004",
+    "bodegaId": "BOD_002",
+    "nombre": "Sal Marina 1kg",
+    "sku": "SAL-001",
+    "categoria": "Condimentos",
+    "precio": 3500,
+    "stock": 156,
+    "activo": true,
+    "descripcion": "Sal marina refinada",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROD_005",
+    "bodegaId": "BOD_002",
+    "nombre": "Harina de Trigo 2kg",
+    "sku": "HAR-001",
+    "categoria": "Harinas",
+    "precio": 5200,
+    "stock": 8,
+    "activo": false,
+    "descripcion": "Harina integral de trigo",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROD_006",
+    "bodegaId": "BOD_003",
+    "nombre": "Queso Fresco 500g",
+    "sku": "QUE-001",
+    "categoria": "Lácteos",
+    "precio": 12500,
+    "stock": 25,
+    "activo": true,
+    "descripcion": "Queso fresco local",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROD_007",
+    "bodegaId": "BOD_003",
+    "nombre": "Leche Entera 1L",
+    "sku": "LEH-001",
+    "categoria": "Lácteos",
+    "precio": 4200,
+    "stock": 89,
+    "activo": true,
+    "descripcion": "Leche entera pasteurizada",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROD_1770581630193",
+    "bodegaId": "BOD_002",
+    "nombre": "Az�car Blanca 2kg",
+    "sku": "AZU-001",
+    "categoria": "Endulzantes",
+    "precio": 7800,
+    "stock": 32,
+    "activo": true,
+    "descripcion": "Az�car blanca refinada",
+    "updatedAt": "2026-02-08T20:13:50.193Z"
+  }
+]

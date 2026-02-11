@@ -1,0 +1,74 @@
+[
+    {
+        "productoId": "PRD_BOD_002_0001",
+        "bodegaId": "BOD_002",
+        "nombre": "Aceite de girasol 1L",
+        "categoria": "Aceites",
+        "precioCosto": 4500,
+        "precioVenta": 8900,
+        "stockActual": 35,
+        "stockMinimo": 10,
+        "stockMaximo": 100,
+        "unidad": "botella"
+    },
+    {
+        "productoId": "PRD_BOD_002_0002",
+        "bodegaId": "BOD_002",
+        "nombre": "Arroz integral 5kg",
+        "categoria": "Granos",
+        "precioCosto": 12000,
+        "precioVenta": 22500,
+        "stockActual": 8,
+        "stockMinimo": 15,
+        "stockMaximo": 80,
+        "unidad": "bolsa"
+    },
+    {
+        "productoId": "PRD_BOD_002_0003",
+        "bodegaId": "BOD_002",
+        "nombre": "Leche evaporada 400ml",
+        "categoria": "Lácteos",
+        "precioCosto": 2500,
+        "precioVenta": 4200,
+        "stockActual": 0,
+        "stockMinimo": 20,
+        "stockMaximo": 150,
+        "unidad": "lata"
+    },
+    {
+        "productoId": "PRD_BOD_002_0004",
+        "bodegaId": "BOD_002",
+        "nombre": "Café molido 500g",
+        "categoria": "Bebidas",
+        "precioCosto": 8000,
+        "precioVenta": 15900,
+        "stockActual": 28,
+        "stockMinimo": 10,
+        "stockMaximo": 60,
+        "unidad": "bolsa"
+    },
+    {
+        "productoId": "PRD_BOD_002_0005",
+        "bodegaId": "BOD_002",
+        "nombre": "Azúcar blanca 1kg",
+        "categoria": "Azúcares",
+        "precioCosto": 3500,
+        "precioVenta": 6500,
+        "stockActual": 45,
+        "stockMinimo": 20,
+        "stockMaximo": 120,
+        "unidad": "bolsa"
+    },
+    {
+        "productoId": "PRD_BOD_002_0006",
+        "bodegaId": "BOD_002",
+        "nombre": "Sal refinada 1kg",
+        "categoria": "Condimentos",
+        "precioCosto": 1200,
+        "precioVenta": 2500,
+        "stockActual": 5,
+        "stockMinimo": 25,
+        "stockMaximo": 100,
+        "unidad": "bolsa"
+    }
+]

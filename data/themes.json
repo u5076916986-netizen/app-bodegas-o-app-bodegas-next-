@@ -1,0 +1,95 @@
+[
+  {
+    "bodegaId": "DEFAULT",
+    "name": "Tema base",
+    "theme": {
+      "brand": {
+        "primary": "#0f172a",
+        "secondary": "#1e293b",
+        "accent": "#38bdf8"
+      },
+      "surface": {
+        "bg": "#f8fafc",
+        "card": "#ffffff",
+        "border": "#e2e8f0"
+      },
+      "text": {
+        "strong": "#0f172a",
+        "normal": "#1f2937",
+        "muted": "#6b7280"
+      },
+      "ui": {
+        "buttonRadius": "0.5rem",
+        "cardRadius": "0.75rem",
+        "shadow": "0 10px 30px rgba(15, 23, 42, 0.08)"
+      },
+      "effects": {
+        "gradient": "linear-gradient(135deg, #0ea5e9, #22d3ee)",
+        "pattern": "none",
+        "logoGlow": "0 0 20px rgba(56, 189, 248, 0.4)"
+      }
+    }
+  },
+  {
+    "bodegaId": "BOD_001",
+    "name": "Distribuidora Don Pepe",
+    "theme": {
+      "brand": {
+        "primary": "#0b3b60",
+        "secondary": "#145b8a",
+        "accent": "#22c55e"
+      },
+      "surface": {
+        "bg": "#f1f5f9",
+        "card": "#ffffff",
+        "border": "#dbeafe"
+      },
+      "text": {
+        "strong": "#0f172a",
+        "normal": "#1f2937",
+        "muted": "#64748b"
+      },
+      "ui": {
+        "buttonRadius": "0.75rem",
+        "cardRadius": "1rem",
+        "shadow": "0 12px 32px rgba(12, 74, 110, 0.12)"
+      },
+      "effects": {
+        "gradient": "linear-gradient(135deg, #0ea5e9, #22d3ee, #22c55e)",
+        "pattern": "none",
+        "logoGlow": "0 0 24px rgba(34, 197, 94, 0.45)"
+      }
+    }
+  },
+  {
+    "bodegaId": "BOD_006",
+    "name": "Bebidas Frías Polar",
+    "theme": {
+      "brand": {
+        "primary": "#0b152f",
+        "secondary": "#112a46",
+        "accent": "#60a5fa"
+      },
+      "surface": {
+        "bg": "#0f172a",
+        "card": "#111827",
+        "border": "#1f2937"
+      },
+      "text": {
+        "strong": "#e5e7eb",
+        "normal": "#cbd5e1",
+        "muted": "#94a3b8"
+      },
+      "ui": {
+        "buttonRadius": "0.5rem",
+        "cardRadius": "0.75rem",
+        "shadow": "0 14px 40px rgba(17, 24, 39, 0.35)"
+      },
+      "effects": {
+        "gradient": "linear-gradient(135deg, #1e3a8a, #0ea5e9, #38bdf8)",
+        "pattern": "none",
+        "logoGlow": "0 0 28px rgba(96, 165, 250, 0.5)"
+      }
+    }
+  }
+]

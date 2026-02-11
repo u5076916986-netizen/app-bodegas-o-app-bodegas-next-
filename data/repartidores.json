@@ -1,0 +1,46 @@
+[
+    {
+        "repartidorId": "REP_001",
+        "bodegaId": "BOD_002",
+        "nombre": "Carlos Mendez",
+        "email": "carlos@bodega.com",
+        "telefono": "3101234567",
+        "estado": "activo",
+        "zona": "Norte",
+        "entregasHoy": 5,
+        "entregasCompletas": 142
+    },
+    {
+        "repartidorId": "REP_002",
+        "bodegaId": "BOD_002",
+        "nombre": "María García",
+        "email": "maria@bodega.com",
+        "telefono": "3105678901",
+        "estado": "activo",
+        "zona": "Centro",
+        "entregasHoy": 8,
+        "entregasCompletas": 198
+    },
+    {
+        "repartidorId": "REP_003",
+        "bodegaId": "BOD_002",
+        "nombre": "Juan Pérez",
+        "email": "juan@bodega.com",
+        "telefono": "3109876543",
+        "estado": "descanso",
+        "zona": "Sur",
+        "entregasHoy": 0,
+        "entregasCompletas": 156
+    },
+    {
+        "repartidorId": "REP_004",
+        "bodegaId": "BOD_002",
+        "nombre": "Sofia López",
+        "email": "sofia@bodega.com",
+        "telefono": "3112345678",
+        "estado": "activo",
+        "zona": "Oriente",
+        "entregasHoy": 6,
+        "entregasCompletas": 171
+    }
+]

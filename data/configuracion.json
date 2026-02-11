@@ -1,0 +1,16 @@
+{
+    "sistema": {
+        "refreshRecomendacionMin": 10,
+        "modoRecomendacion": "reglas"
+    },
+    "entregas": {
+        "costoBaseEnvio": 5000,
+        "umbralEntregaRapidaMin": 30
+    },
+    "roles": {
+        "activarAdmin": true,
+        "activarRepartidor": true,
+        "activarBodega": true,
+        "activarTendero": true
+    }
+}

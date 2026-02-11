@@ -1,0 +1,59 @@
+{
+    "Granos": [
+        "Aceites",
+        "Condimentos",
+        "Harinas"
+    ],
+    "Aceites": [
+        "Granos",
+        "Condimentos",
+        "Harinas"
+    ],
+    "Condimentos": [
+        "Granos",
+        "Aceites",
+        "Harinas"
+    ],
+    "Harinas": [
+        "Granos",
+        "Aceites",
+        "Endulzantes"
+    ],
+    "Lácteos": [
+        "Endulzantes",
+        "Harinas",
+        "Granos"
+    ],
+    "Endulzantes": [
+        "Lácteos",
+        "Harinas",
+        "Granos"
+    ],
+    "Aseo": [
+        "Papel",
+        "Detergente",
+        "Limpieza"
+    ],
+    "Papel": [
+        "Aseo",
+        "Limpieza"
+    ],
+    "Detergente": [
+        "Aseo",
+        "Papel",
+        "Limpieza"
+    ],
+    "Limpieza": [
+        "Aseo",
+        "Papel",
+        "Detergente"
+    ],
+    "Bebidas": [
+        "Snacks",
+        "Endulzantes"
+    ],
+    "Snacks": [
+        "Bebidas",
+        "Condimentos"
+    ]
+}

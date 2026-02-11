@@ -1,0 +1,1735 @@
+[
+  {
+    "id": "PED_BOD002_003",
+    "pedidoId": "PED_BOD002_003",
+    "bodegaId": "BOD_002",
+    "estado": "entregado",
+    "repartidorId": "REP_001",
+    "repartidorNombre": "Carlos Mendez",
+    "cliente": {
+      "nombre": "Luis Rodríguez",
+      "telefono": "3105558899"
+    },
+    "direccion": "Avenida Paseo #25-80, Bogotá",
+    "zona": "Centro",
+    "items": [
+      {
+        "sku": "PRD_BOD_002_0101",
+        "productoId": "PRD_BOD_002_0101",
+        "nombre": "Agua 600ml",
+        "cantidad": 2,
+        "precio": 3000,
+        "precio_cop": 3000,
+        "subtotal": 6000
+      },
+      {
+        "sku": "PRD_BOD_002_0102",
+        "productoId": "PRD_BOD_002_0102",
+        "nombre": "Gaseosa 1.5L",
+        "cantidad": 1,
+        "precio": 4500,
+        "precio_cop": 4500,
+        "subtotal": 4500
+      },
+      {
+        "sku": "PRD_BOD_002_0103",
+        "productoId": "PRD_BOD_002_0103",
+        "nombre": "Papas 150g",
+        "cantidad": 2,
+        "precio": 2500,
+        "precio_cop": 2500,
+        "subtotal": 5000
+      }
+    ],
+    "total": 15500,
+    "createdAt": "2026-02-09T15:20:00.000Z",
+    "datosEntrega": {
+      "nombre": "Luis Rodríguez",
+      "telefono": "3105558899",
+      "direccion": "Avenida Paseo #25-80, Bogotá",
+      "notas": null
+    },
+    "totalOriginal": 15500,
+    "discount": 0,
+    "updatedAt": "2026-02-09T15:20:00.000Z"
+  },
+  {
+    "id": "PED_BOD002_004",
+    "pedidoId": "PED_BOD002_004",
+    "bodegaId": "BOD_002",
+    "estado": "nuevo",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "cliente": {
+      "nombre": "María Gómez",
+      "telefono": "3114447766"
+    },
+    "direccion": "Calle 12 #45-20, Bogotá",
+    "zona": "Norte",
+    "items": [
+      {
+        "sku": "PRD_BOD_002_0201",
+        "productoId": "PRD_BOD_002_0201",
+        "nombre": "Arroz 1kg",
+        "cantidad": 1,
+        "precio": 5200,
+        "precio_cop": 5200,
+        "subtotal": 5200
+      },
+      {
+        "sku": "PRD_BOD_002_0202",
+        "productoId": "PRD_BOD_002_0202",
+        "nombre": "Aceite 900ml",
+        "cantidad": 1,
+        "precio": 9800,
+        "precio_cop": 9800,
+        "subtotal": 9800
+      },
+      {
+        "sku": "PRD_BOD_002_0203",
+        "productoId": "PRD_BOD_002_0203",
+        "nombre": "Azúcar 1kg",
+        "cantidad": 2,
+        "precio": 4200,
+        "precio_cop": 4200,
+        "subtotal": 8400
+      }
+    ],
+    "total": 23400,
+    "createdAt": "2026-02-09T16:05:00.000Z",
+    "datosEntrega": {
+      "nombre": "María Gómez",
+      "telefono": "3114447766",
+      "direccion": "Calle 12 #45-20, Bogotá",
+      "notas": "Entregar en portería"
+    },
+    "totalOriginal": 23400,
+    "discount": 0,
+    "updatedAt": "2026-02-09T16:05:00.000Z"
+  },
+  {
+    "pedidoId": "47551571-7655-469a-b7ef-4181df1a200e",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "nombre": "Detergente en polvo 1kg",
+        "precio_cop": 12000,
+        "cantidad": 6,
+        "subtotal": 72000,
+        "precio": 12000
+      },
+      {
+        "productoId": "PRD_BOD_001_0002",
+        "nombre": "Jabón Rey 300g",
+        "precio_cop": 2800,
+        "cantidad": 1,
+        "subtotal": 2800,
+        "precio": 2800
+      }
+    ],
+    "total": 74800,
+    "createdAt": "2026-01-10T16:11:22.301Z",
+    "datosEntrega": {
+      "nombre": "juan",
+      "telefono": "435343656",
+      "direccion": "dfsgdsgf",
+      "notas": null
+    },
+    "estado": "nuevo",
+    "id": "47551571-7655-469a-b7ef-4181df1a200e",
+    "cliente": {
+      "nombre": "juan",
+      "telefono": "435343656"
+    },
+    "direccion": "dfsgdsgf",
+    "totalOriginal": 74800,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-10T16:11:22.301Z"
+  },
+  {
+    "pedidoId": "271d4abc-4378-4e95-b693-44264d682594",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "cantidad": 2,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0002",
+        "cantidad": 4,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0004",
+        "cantidad": 3,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "createdAt": "2026-01-10T16:16:04.791Z",
+    "datosEntrega": {
+      "nombre": "ghfv",
+      "telefono": "vhgc",
+      "direccion": "hjghj",
+      "notas": null
+    },
+    "estado": "nuevo",
+    "id": "271d4abc-4378-4e95-b693-44264d682594",
+    "cliente": {
+      "nombre": "ghfv",
+      "telefono": "vhgc"
+    },
+    "direccion": "hjghj",
+    "totalOriginal": 0,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-10T16:16:04.791Z"
+  },
+  {
+    "pedidoId": "26587dd4-babd-4133-80fb-59dfc10e25a2",
+    "bodegaId": "BOD_008",
+    "items": [
+      {
+        "productoId": "PRD_BOD_008_0350",
+        "cantidad": 8,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "createdAt": "2026-01-10T16:18:29.602Z",
+    "datosEntrega": {
+      "nombre": "gfvbnvjhv",
+      "telefono": "jhfghvnb",
+      "direccion": "hfgh",
+      "notas": null
+    },
+    "estado": "nuevo",
+    "id": "26587dd4-babd-4133-80fb-59dfc10e25a2",
+    "cliente": {
+      "nombre": "gfvbnvjhv",
+      "telefono": "jhfghvnb"
+    },
+    "direccion": "hfgh",
+    "totalOriginal": 0,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-10T16:18:29.602Z"
+  },
+  {
+    "pedidoId": "b9354d04-ee7c-4573-9e17-7d9ab726d39f",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0002",
+        "cantidad": 20,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "createdAt": "2026-01-10T16:40:58.414Z",
+    "datosEntrega": {
+      "nombre": "rggf",
+      "telefono": "dgfdfg",
+      "direccion": "fgdfg",
+      "notas": "f"
+    },
+    "estado": "nuevo",
+    "id": "b9354d04-ee7c-4573-9e17-7d9ab726d39f",
+    "cliente": {
+      "nombre": "rggf",
+      "telefono": "dgfdfg"
+    },
+    "direccion": "fgdfg",
+    "totalOriginal": 0,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-10T16:40:58.414Z"
+  },
+  {
+    "pedidoId": "ff4a4684-0a72-4665-86cd-18db7bc0f108",
+    "bodegaId": "BOD_002",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0050",
+        "cantidad": 9,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "createdAt": "2026-01-11T16:05:04.214Z",
+    "datosEntrega": {
+      "nombre": "anderds",
+      "telefono": "321555987",
+      "direccion": "calle 10",
+      "notas": null
+    },
+    "estado": "nuevo",
+    "id": "ff4a4684-0a72-4665-86cd-18db7bc0f108",
+    "cliente": {
+      "nombre": "anderds",
+      "telefono": "321555987"
+    },
+    "direccion": "calle 10",
+    "totalOriginal": 0,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T16:05:04.214Z"
+  },
+  {
+    "pedidoId": "ccf21b19-1367-4204-ba41-c3cde8231ee9",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "cantidad": 8,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0004",
+        "cantidad": 1,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "createdAt": "2026-01-11T16:36:45.371Z",
+    "datosEntrega": {
+      "nombre": "iohjn",
+      "telefono": "kjbgjb",
+      "direccion": "oihjkhiu",
+      "notas": null
+    },
+    "estado": "nuevo",
+    "id": "ccf21b19-1367-4204-ba41-c3cde8231ee9",
+    "cliente": {
+      "nombre": "iohjn",
+      "telefono": "kjbgjb"
+    },
+    "direccion": "oihjkhiu",
+    "totalOriginal": 0,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T16:36:45.371Z"
+  },
+  {
+    "pedidoId": "40f9c8e2-3c97-4335-92eb-6d83661691f5",
+    "bodegaId": "BOD_008",
+    "items": [
+      {
+        "productoId": "PRD_BOD_008_0349",
+        "cantidad": 1,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_008_0350",
+        "cantidad": 9,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_008_0352",
+        "cantidad": 3,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "createdAt": "2026-01-11T16:41:04.278Z",
+    "datosEntrega": {
+      "nombre": "wfedg",
+      "telefono": "fgfdgfd",
+      "direccion": "regsdf",
+      "notas": "ffdgdf"
+    },
+    "estado": "nuevo",
+    "id": "40f9c8e2-3c97-4335-92eb-6d83661691f5",
+    "cliente": {
+      "nombre": "wfedg",
+      "telefono": "fgfdgfd"
+    },
+    "direccion": "regsdf",
+    "totalOriginal": 0,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T16:41:04.278Z"
+  },
+  {
+    "pedidoId": "7a6a1943-cb91-4c56-8e41-63a7a2a60fc5",
+    "bodegaId": "BOD_004",
+    "items": [
+      {
+        "productoId": "PRD_BOD_004_0149",
+        "cantidad": 5,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_004_0151",
+        "cantidad": 8,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_004_0150",
+        "cantidad": 6,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_004_0154",
+        "cantidad": 10,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "createdAt": "2026-01-11T16:55:43.203Z",
+    "datosEntrega": {
+      "nombre": "gfvn",
+      "telefono": "nvbnbv",
+      "direccion": " bncgfh",
+      "notas": null
+    },
+    "estado": "nuevo",
+    "id": "7a6a1943-cb91-4c56-8e41-63a7a2a60fc5",
+    "cliente": {
+      "nombre": "gfvn",
+      "telefono": "nvbnbv"
+    },
+    "direccion": " bncgfh",
+    "totalOriginal": 0,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T16:55:43.203Z"
+  },
+  {
+    "pedidoId": "3f1b57f8-9e41-4d0b-885d-99c4ae899acb",
+    "bodegaId": "BOD_002",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0050",
+        "cantidad": 9,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 108000,
+    "discount": 0,
+    "createdAt": "2026-01-11T17:26:59.103Z",
+    "datosEntrega": {
+      "nombre": "dgdfg",
+      "telefono": "fgbcbdf",
+      "direccion": "fdgfh",
+      "notas": null
+    },
+    "pointsEarned": 108,
+    "estado": "nuevo",
+    "id": "3f1b57f8-9e41-4d0b-885d-99c4ae899acb",
+    "cliente": {
+      "nombre": "dgdfg",
+      "telefono": "fgbcbdf"
+    },
+    "direccion": "fdgfh",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T17:26:59.103Z"
+  },
+  {
+    "pedidoId": "059f322e-3511-400d-8930-88b603f52031",
+    "trackingCode": "TRK-X6DLFM",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0002",
+        "cantidad": 20,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0008",
+        "cantidad": 9,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 137000,
+    "discount": 0,
+    "createdAt": "2026-01-11T20:41:21.476Z",
+    "datosEntrega": {
+      "nombre": "fgfdgf",
+      "telefono": "gdfdgfd",
+      "direccion": "gdfgdfg",
+      "notas": null
+    },
+    "pointsEarned": 141,
+    "estado": "nuevo",
+    "id": "059f322e-3511-400d-8930-88b603f52031",
+    "cliente": {
+      "nombre": "fgfdgf",
+      "telefono": "gdfdgfd"
+    },
+    "direccion": "gdfgdfg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T20:41:21.476Z"
+  },
+  {
+    "pedidoId": "52d3c37b-5ece-4dd7-bb4b-7f3f1bc3284a",
+    "trackingCode": "TRK-8PB7MM",
+    "bodegaId": "BOD_005",
+    "items": [
+      {
+        "productoId": "PRD_BOD_005_0197",
+        "cantidad": 5,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_005_0196",
+        "cantidad": 7,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 98000,
+    "discount": 0,
+    "createdAt": "2026-01-11T20:43:14.397Z",
+    "datosEntrega": {
+      "nombre": "dgdsgfd",
+      "telefono": "fgdgd",
+      "direccion": "gfgfhg",
+      "notas": null
+    },
+    "pointsEarned": 99,
+    "estado": "nuevo",
+    "id": "52d3c37b-5ece-4dd7-bb4b-7f3f1bc3284a",
+    "cliente": {
+      "nombre": "dgdsgfd",
+      "telefono": "fgdgd"
+    },
+    "direccion": "gfgfhg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T20:43:14.397Z"
+  },
+  {
+    "pedidoId": "cda18250-729a-41ed-9c6a-849c7d8cd98a",
+    "trackingCode": "TRK-Z9IRIX",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "cantidad": 7,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 84000,
+    "discount": 0,
+    "createdAt": "2026-01-11T20:58:44.137Z",
+    "datosEntrega": {
+      "nombre": "fgfb",
+      "telefono": "fdhgh",
+      "direccion": "ghghg",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "cda18250-729a-41ed-9c6a-849c7d8cd98a",
+    "cliente": {
+      "nombre": "fgfb",
+      "telefono": "fdhgh"
+    },
+    "direccion": "ghghg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T20:58:44.137Z"
+  },
+  {
+    "pedidoId": "a9ba3a3e-3699-4071-8c60-03016b7bf01f",
+    "trackingCode": "TRK-IZEE78",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "cantidad": 1,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0002",
+        "cantidad": 14,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 51200,
+    "discount": 0,
+    "createdAt": "2026-01-11T21:09:12.753Z",
+    "datosEntrega": {
+      "nombre": "giufgj",
+      "telefono": "gkhj",
+      "direccion": "jhfjgj",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "a9ba3a3e-3699-4071-8c60-03016b7bf01f",
+    "cliente": {
+      "nombre": "giufgj",
+      "telefono": "gkhj"
+    },
+    "direccion": "jhfjgj",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T21:09:12.753Z"
+  },
+  {
+    "pedidoId": "a48a4a06-c978-4807-821e-a0b6e9eed649",
+    "trackingCode": "TRK-39UZLZ",
+    "bodegaId": "BOD_004",
+    "items": [
+      {
+        "productoId": "PRD_BOD_004_0149",
+        "cantidad": 15,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_004_0151",
+        "cantidad": 34,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_004_0150",
+        "cantidad": 5,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 142500,
+    "discount": 0,
+    "createdAt": "2026-01-11T21:38:41.427Z",
+    "datosEntrega": {
+      "nombre": "fgdhg",
+      "telefono": "gfruyj",
+      "direccion": "hfgjhjh",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "a48a4a06-c978-4807-821e-a0b6e9eed649",
+    "cliente": {
+      "nombre": "fgdhg",
+      "telefono": "gfruyj"
+    },
+    "direccion": "hfgjhjh",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T21:38:41.427Z"
+  },
+  {
+    "pedidoId": "4bc1ff74-d2d3-47eb-b770-41cb41089eab",
+    "trackingCode": "TRK-DQNNP5",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "cantidad": 11,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 132000,
+    "discount": 0,
+    "createdAt": "2026-01-11T21:57:02.171Z",
+    "datosEntrega": {
+      "nombre": "fsdgfh",
+      "telefono": "hjjm",
+      "direccion": "hfjmgn",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "4bc1ff74-d2d3-47eb-b770-41cb41089eab",
+    "cliente": {
+      "nombre": "fsdgfh",
+      "telefono": "hjjm"
+    },
+    "direccion": "hfjmgn",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-11T21:57:02.171Z"
+  },
+  {
+    "pedidoId": "1c88a4a9-3b3e-4db4-b155-e5d5886e56ee",
+    "trackingCode": "TRK-UPXI36",
+    "bodegaId": "BOD_005",
+    "items": [
+      {
+        "productoId": "PRD_BOD_005_0197",
+        "cantidad": 21,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 58800,
+    "discount": 0,
+    "createdAt": "2026-01-12T19:16:00.496Z",
+    "datosEntrega": {
+      "nombre": "hjvnjhg",
+      "telefono": "jgjhggj",
+      "direccion": "jyghghjg",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "1c88a4a9-3b3e-4db4-b155-e5d5886e56ee",
+    "cliente": {
+      "nombre": "hjvnjhg",
+      "telefono": "jgjhggj"
+    },
+    "direccion": "jyghghjg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-12T19:16:00.496Z"
+  },
+  {
+    "pedidoId": "a5736a64-3f0f-4acc-8e35-f3204801c38b",
+    "trackingCode": "TRK-TFC8FM",
+    "bodegaId": "BOD_005",
+    "items": [
+      {
+        "productoId": "PRD_BOD_005_0200",
+        "cantidad": 11,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_005_0201",
+        "cantidad": 9,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 72300,
+    "discount": 0,
+    "createdAt": "2026-01-12T22:33:08.633Z",
+    "datosEntrega": {
+      "nombre": "kjhjk",
+      "telefono": "jghj",
+      "direccion": "jgfhn",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "a5736a64-3f0f-4acc-8e35-f3204801c38b",
+    "cliente": {
+      "nombre": "kjhjk",
+      "telefono": "jghj"
+    },
+    "direccion": "jgfhn",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-12T22:33:08.633Z"
+  },
+  {
+    "pedidoId": "dcf10b5f-a844-4164-813a-b1f6950116ad",
+    "trackingCode": "TRK-833C8W",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0002",
+        "cantidad": 4,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0004",
+        "cantidad": 7,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 65800,
+    "discount": 0,
+    "createdAt": "2026-01-12T22:47:34.697Z",
+    "datosEntrega": {
+      "nombre": "fsdgfd",
+      "telefono": "gfdgfdgfd",
+      "direccion": "gfxvcgfd",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "dcf10b5f-a844-4164-813a-b1f6950116ad",
+    "cliente": {
+      "nombre": "fsdgfd",
+      "telefono": "gfdgfdgfd"
+    },
+    "direccion": "gfxvcgfd",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-12T22:47:34.697Z"
+  },
+  {
+    "pedidoId": "77e1bb33-6614-45b1-9e41-5cbaa9484d00",
+    "trackingCode": "TRK-7JPQR8",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0003",
+        "cantidad": 17,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 59500,
+    "discount": 0,
+    "createdAt": "2026-01-12T22:56:39.983Z",
+    "datosEntrega": {
+      "nombre": "zvcxvc",
+      "telefono": "cxvcxvx",
+      "direccion": "xcbvvvc",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "77e1bb33-6614-45b1-9e41-5cbaa9484d00",
+    "cliente": {
+      "nombre": "zvcxvc",
+      "telefono": "cxvcxvx"
+    },
+    "direccion": "xcbvvvc",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-12T22:56:39.983Z"
+  },
+  {
+    "pedidoId": "03207799-15d3-42c4-ba57-7f052034673a",
+    "trackingCode": "TRK-XJDMBG",
+    "bodegaId": "BOD_003",
+    "items": [
+      {
+        "productoId": "PRD_BOD_003_0100",
+        "cantidad": 6,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_003_0102",
+        "cantidad": 18,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 157200,
+    "discount": 0,
+    "createdAt": "2026-01-13T19:39:58.520Z",
+    "datosEntrega": {
+      "nombre": "gdffh",
+      "telefono": "fdgsd",
+      "direccion": "fgsdg",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "03207799-15d3-42c4-ba57-7f052034673a",
+    "cliente": {
+      "nombre": "gdffh",
+      "telefono": "fdgsd"
+    },
+    "direccion": "fgsdg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-13T19:39:58.520Z"
+  },
+  {
+    "pedidoId": "46facaae-509d-4692-b786-61184b5da558",
+    "trackingCode": "TRK-1RU827",
+    "bodegaId": "BOD_002",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0050",
+        "cantidad": 10,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 120000,
+    "discount": 0,
+    "createdAt": "2026-01-13T20:05:10.619Z",
+    "datosEntrega": {
+      "nombre": "fdgd",
+      "telefono": "fdgdfgfd",
+      "direccion": "gfdgfd",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "46facaae-509d-4692-b786-61184b5da558",
+    "cliente": {
+      "nombre": "fdgd",
+      "telefono": "fdgdfgfd"
+    },
+    "direccion": "gfdgfd",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-13T20:05:10.619Z"
+  },
+  {
+    "pedidoId": "2a433144-27ad-42e0-b42d-c6dd5d7c4c7b",
+    "trackingCode": "TRK-ECCP8C",
+    "bodegaId": "BOD_004",
+    "items": [
+      {
+        "productoId": "PRD_BOD_004_0154",
+        "cantidad": 11,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_004_0150",
+        "cantidad": 2,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 114600,
+    "discount": 0,
+    "createdAt": "2026-01-21T16:06:31.548Z",
+    "datosEntrega": {
+      "nombre": "rgfdgdf",
+      "telefono": "gdfgfg",
+      "direccion": "fdgdfgf",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "2a433144-27ad-42e0-b42d-c6dd5d7c4c7b",
+    "cliente": {
+      "nombre": "rgfdgdf",
+      "telefono": "gdfgfg"
+    },
+    "direccion": "fdgdfgf",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-01-21T16:06:31.548Z"
+  },
+  {
+    "pedidoId": "230aa574-75e1-4405-bf77-2226f941be45",
+    "trackingCode": "TRK-DUYDU9",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0008",
+        "cantidad": 13,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "cantidad": 11,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 249000,
+    "discount": 5000,
+    "createdAt": "2026-02-03T19:14:21.339Z",
+    "datosEntrega": {
+      "nombre": "dfdgfdf",
+      "telefono": "dggfdgf",
+      "direccion": "gfgfdgfd",
+      "notas": null
+    },
+    "coupon": {
+      "code": "WELCOME5000",
+      "descuentoCOP": 5000
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "230aa574-75e1-4405-bf77-2226f941be45",
+    "cliente": {
+      "nombre": "dfdgfdf",
+      "telefono": "dggfdgf"
+    },
+    "direccion": "gfgfdgfd",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-03T19:14:21.339Z"
+  },
+  {
+    "pedidoId": "e9f89b4d-559d-471c-893f-51240a09ba38",
+    "trackingCode": "TRK-EB0QL1",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0007",
+        "cantidad": 6,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_001_0008",
+        "cantidad": 4,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 61200,
+    "discount": 5000,
+    "createdAt": "2026-02-03T21:23:01.450Z",
+    "datosEntrega": {
+      "nombre": "fgdfg",
+      "telefono": "fdgfdg",
+      "direccion": "fdgfdgfg",
+      "notas": null
+    },
+    "coupon": {
+      "code": "WELCOME5000",
+      "descuentoCOP": 5000
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "e9f89b4d-559d-471c-893f-51240a09ba38",
+    "cliente": {
+      "nombre": "fgdfg",
+      "telefono": "fdgfdg"
+    },
+    "direccion": "fdgfdgfg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-03T21:23:01.450Z"
+  },
+  {
+    "pedidoId": "cd9e98ce-4da3-41e8-8288-5c6039c718d1",
+    "trackingCode": "TRK-CV5JRZ",
+    "bodegaId": "BOD_002",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0051",
+        "cantidad": 5,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_002_0053",
+        "cantidad": 16,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_002_0049",
+        "cantidad": 13,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_002_0050",
+        "cantidad": 9,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_002_0058",
+        "cantidad": 1,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 351800,
+    "discount": 0,
+    "createdAt": "2026-02-04T13:10:57.644Z",
+    "datosEntrega": {
+      "nombre": "rtr",
+      "telefono": "tretr",
+      "direccion": "trtr",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "cd9e98ce-4da3-41e8-8288-5c6039c718d1",
+    "cliente": {
+      "nombre": "rtr",
+      "telefono": "tretr"
+    },
+    "direccion": "trtr",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-04T13:10:57.644Z"
+  },
+  {
+    "pedidoId": "557f2c24-4f5d-44e7-a88c-cdc26dbf8a0d",
+    "trackingCode": "TRK-W564J2",
+    "bodegaId": "BOD_005",
+    "items": [
+      {
+        "productoId": "PRD_BOD_005_0199",
+        "cantidad": 11,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_005_0197",
+        "cantidad": 4,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 97000,
+    "discount": 0,
+    "createdAt": "2026-02-04T13:58:07.584Z",
+    "datosEntrega": {
+      "nombre": "gfghfdgfd",
+      "telefono": "dfbxfd",
+      "direccion": "fdgfdgfd",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "557f2c24-4f5d-44e7-a88c-cdc26dbf8a0d",
+    "cliente": {
+      "nombre": "gfghfdgfd",
+      "telefono": "dfbxfd"
+    },
+    "direccion": "fdgfdgfd",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-04T13:58:07.584Z"
+  },
+  {
+    "pedidoId": "6918d545-111d-4120-b950-c6ce469d17fd",
+    "trackingCode": "TRK-NI4S2K",
+    "bodegaId": "BOD_001",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0001",
+        "cantidad": 7,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 84000,
+    "discount": 5000,
+    "createdAt": "2026-02-04T14:58:28.580Z",
+    "datosEntrega": {
+      "nombre": "fgfgfgfd",
+      "telefono": "ffgfdgfgfdg",
+      "direccion": "gfdgfdfdfgf",
+      "notas": null
+    },
+    "coupon": {
+      "code": "WELCOME5000",
+      "descuentoCOP": 5000
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "6918d545-111d-4120-b950-c6ce469d17fd",
+    "cliente": {
+      "nombre": "fgfgfgfd",
+      "telefono": "ffgfdgfgfdg"
+    },
+    "direccion": "gfdgfdfdfgf",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-04T14:58:28.580Z"
+  },
+  {
+    "pedidoId": "f3f2bfdf-3dbe-4bcb-8d39-90e8ed9c1d14",
+    "trackingCode": "TRK-8Y60W4",
+    "bodegaId": "BOD_005",
+    "items": [
+      {
+        "productoId": "PRD_BOD_005_0203",
+        "cantidad": 8,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 72000,
+    "discount": 0,
+    "createdAt": "2026-02-04T20:29:04.804Z",
+    "datosEntrega": {
+      "nombre": "cfbcvb",
+      "telefono": "vcbcvbvc",
+      "direccion": "vcbvcbcv",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "f3f2bfdf-3dbe-4bcb-8d39-90e8ed9c1d14",
+    "cliente": {
+      "nombre": "cfbcvb",
+      "telefono": "vcbcvbvc"
+    },
+    "direccion": "vcbvcbcv",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-04T20:29:04.804Z"
+  },
+  {
+    "pedidoId": "957506bd-6d18-4a76-b53d-53191d1c793b",
+    "trackingCode": "TRK-KERC9R",
+    "bodegaId": "BOD_005",
+    "items": [
+      {
+        "productoId": "PRD_BOD_005_0197",
+        "cantidad": 25,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 70000,
+    "discount": 0,
+    "createdAt": "2026-02-04T20:35:04.667Z",
+    "datosEntrega": {
+      "nombre": "dcxvcxvgfdhgfhgf",
+      "telefono": "cxvcxvchgfhgh",
+      "direccion": "fghgfhgfhgfhg",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "957506bd-6d18-4a76-b53d-53191d1c793b",
+    "cliente": {
+      "nombre": "dcxvcxvgfdhgfhgf",
+      "telefono": "cxvcxvchgfhgh"
+    },
+    "direccion": "fghgfhgfhgfhg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-04T20:35:04.667Z"
+  },
+  {
+    "pedidoId": "81a5c699-cb0b-44bf-9d62-a64a708579b6",
+    "trackingCode": "TRK-BYA5KT",
+    "bodegaId": "BOD_002",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0050",
+        "cantidad": 8,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 96000,
+    "discount": 0,
+    "createdAt": "2026-02-07T13:48:57.656Z",
+    "datosEntrega": {
+      "nombre": "fdfdg",
+      "telefono": "gfdgfd",
+      "direccion": "fdgdfg",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "81a5c699-cb0b-44bf-9d62-a64a708579b6",
+    "cliente": {
+      "nombre": "fdfdg",
+      "telefono": "gfdgfd"
+    },
+    "direccion": "fdgdfg",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-07T13:48:57.656Z"
+  },
+  {
+    "pedidoId": "9730a233-7da9-4292-9942-40ec4a1ad638",
+    "trackingCode": "TRK-0W6PBT",
+    "bodegaId": "BOD_004",
+    "items": [
+      {
+        "productoId": "PRD_BOD_004_0150",
+        "cantidad": 15,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 117000,
+    "discount": 0,
+    "createdAt": "2026-02-07T15:04:21.861Z",
+    "datosEntrega": {
+      "nombre": "dvcgfdgfd",
+      "telefono": "gfdgfdg",
+      "direccion": "fdgfdgfd",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "9730a233-7da9-4292-9942-40ec4a1ad638",
+    "cliente": {
+      "nombre": "dvcgfdgfd",
+      "telefono": "gfdgfdg"
+    },
+    "direccion": "fdgfdgfd",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-07T15:04:21.861Z"
+  },
+  {
+    "pedidoId": "fd8ab102-43cf-406b-b0a4-3f1f24d18825",
+    "trackingCode": "TRK-LKDBYX",
+    "bodegaId": "BOD_008",
+    "items": [
+      {
+        "productoId": "PRD_BOD_008_0352",
+        "cantidad": 8,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 78400,
+    "discount": 0,
+    "createdAt": "2026-02-07T17:31:29.150Z",
+    "datosEntrega": {
+      "nombre": "vvcvc",
+      "telefono": "cvxcv",
+      "direccion": "vcvcxvcx",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "estado": "nuevo",
+    "id": "fd8ab102-43cf-406b-b0a4-3f1f24d18825",
+    "cliente": {
+      "nombre": "vvcvc",
+      "telefono": "cvxcv"
+    },
+    "direccion": "vcvcxvcx",
+    "repartidorId": null,
+    "repartidorNombre": null,
+    "updatedAt": "2026-02-07T17:31:29.150Z"
+  },
+  {
+    "pedidoId": "08671c42-ae9f-442a-92b7-ddcf636b4ab0",
+    "trackingCode": "TRK-H2NGCS",
+    "bodegaId": "BOD_002",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0050",
+        "cantidad": 8,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_002_0081",
+        "cantidad": 4,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      },
+      {
+        "productoId": "PRD_BOD_002_0061",
+        "cantidad": 1,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 110000,
+    "discount": 0,
+    "createdAt": "2026-02-08T18:13:46.611Z",
+    "datosEntrega": {
+      "nombre": "vdfgf",
+      "telefono": "fgdg",
+      "direccion": "gfdgfd",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "updatedAt": "2026-02-08T18:13:46.919Z",
+    "estado": "nuevo",
+    "id": "08671c42-ae9f-442a-92b7-ddcf636b4ab0",
+    "cliente": {
+      "nombre": "vdfgf",
+      "telefono": "fgdg"
+    },
+    "direccion": "gfdgfd",
+    "repartidorId": null,
+    "repartidorNombre": null
+  },
+  {
+    "pedidoId": "f574d035-ad9b-405f-a023-07780941d9f3",
+    "trackingCode": "TRK-6JTQU4",
+    "bodegaId": "BOD_005",
+    "items": [
+      {
+        "productoId": "PRD_BOD_005_0227",
+        "cantidad": 20,
+        "precio": 0,
+        "precio_cop": 0,
+        "subtotal": 0
+      }
+    ],
+    "total": 0,
+    "totalOriginal": 56000,
+    "discount": 0,
+    "createdAt": "2026-02-09T15:07:21.060Z",
+    "datosEntrega": {
+      "nombre": "ghjgjh",
+      "telefono": "dgffdg",
+      "direccion": "gfgfd",
+      "notas": null
+    },
+    "pointsEarned": 0,
+    "updatedAt": "2026-02-09T15:07:21.078Z",
+    "estado": "nuevo",
+    "id": "f574d035-ad9b-405f-a023-07780941d9f3",
+    "cliente": {
+      "nombre": "ghjgjh",
+      "telefono": "dgffdg"
+    },
+    "direccion": "gfgfd",
+    "repartidorId": null,
+    "repartidorNombre": null
+  },
+  {
+    "id": "PED_BOD_003_CBOA3P",
+    "pedidoId": "PED_BOD_003_CBOA3P",
+    "bodegaId": "BOD_003",
+    "estado": "entregado",
+    "cliente": {
+      "nombre": "fdfd",
+      "telefono": "fdsf"
+    },
+    "direccion": "dfdsfd",
+    "zona": "Sur",
+    "items": [
+      {
+        "productoId": "PRD_BOD_003_0120",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 47,
+        "subtotal": 131600
+      }
+    ],
+    "total": 131600,
+    "createdAt": "2026-02-09T19:18:14.190Z",
+    "datosEntrega": {
+      "nombre": "fdfd",
+      "telefono": "fdsf",
+      "direccion": "dfdsfd",
+      "notas": null
+    },
+    "updatedAt": "2026-02-09T19:18:21.832Z",
+    "totalOriginal": 131600,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null
+  },
+  {
+    "id": "PED_BOD_006_15AOL0",
+    "pedidoId": "PED_BOD_006_15AOL0",
+    "bodegaId": "BOD_006",
+    "estado": "nuevo",
+    "cliente": {
+      "nombre": "dssadsdsds",
+      "telefono": "dsfdsf"
+    },
+    "direccion": "fdsfdsf",
+    "items": [
+      {
+        "productoId": "PRD_BOD_006_0256",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 27,
+        "subtotal": 75600
+      }
+    ],
+    "total": 75600,
+    "createdAt": "2026-02-10T17:41:06.518Z",
+    "datosEntrega": {
+      "nombre": "dssadsdsds",
+      "telefono": "dsfdsf",
+      "direccion": "fdsfdsf",
+      "notas": null
+    },
+    "updatedAt": "2026-02-10T17:41:06.597Z",
+    "totalOriginal": 75600,
+    "discount": 0,
+    "repartidorId": null,
+    "repartidorNombre": null
+  },
+  {
+    "id": "PED_BOD_002_6EE01H",
+    "pedidoId": "PED_BOD_002_6EE01H",
+    "bodegaId": "BOD_002",
+    "estado": "nuevo",
+    "repartidorId": "REP_001",
+    "cliente": {
+      "nombre": "dfsdf",
+      "telefono": "ddsfdsf"
+    },
+    "direccion": "dfsdffds",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0084",
+        "nombre": "Esponja multiusos",
+        "precio": 1500,
+        "precio_cop": 1500,
+        "cantidad": 36,
+        "subtotal": 54000
+      },
+      {
+        "productoId": "PRD_BOD_002_0072",
+        "nombre": "Cloro 1L",
+        "precio": 3500,
+        "precio_cop": 3500,
+        "cantidad": 12,
+        "subtotal": 42000
+      }
+    ],
+    "total": 96000,
+    "totalOriginal": 96000,
+    "discount": 0,
+    "coupon": {
+      "code": "PROMO-21346-90",
+      "descuentoCOP": 48000
+    },
+    "createdAt": "2026-02-10T19:05:25.123Z",
+    "datosEntrega": {
+      "nombre": "dfsdf",
+      "telefono": "ddsfdsf",
+      "direccion": "dfsdffds",
+      "notas": null
+    },
+    "updatedAt": "2026-02-10T19:05:25.146Z",
+    "repartidorNombre": null
+  },
+  {
+    "id": "PED_BOD_001_FDDF6DFE",
+    "pedidoId": "PED_BOD_001_FDDF6DFE",
+    "bodegaId": "BOD_001",
+    "estado": "cancelado",
+    "repartidorId": "REP_001",
+    "cliente": {
+      "nombre": "dcxvcxv",
+      "telefono": "vcxvcx"
+    },
+    "direccion": "vcxvcx",
+    "items": [
+      {
+        "productoId": "PRD_BOD_001_0002",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 14,
+        "subtotal": 39200
+      },
+      {
+        "productoId": "PRD_BOD_001_0023",
+        "nombre": "Cloro 1L",
+        "precio": 3500,
+        "precio_cop": 3500,
+        "cantidad": 14,
+        "subtotal": 49000
+      }
+    ],
+    "total": 88200,
+    "totalOriginal": 88200,
+    "discount": 0,
+    "coupon": {
+      "code": "BOD00110",
+      "descuentoCOP": 8820
+    },
+    "createdAt": "2026-02-10T19:37:16.983Z",
+    "datosEntrega": {
+      "nombre": "dcxvcxv",
+      "telefono": "vcxvcx",
+      "direccion": "vcxvcx",
+      "notas": null
+    },
+    "updatedAt": "2026-02-10T20:22:14.870Z",
+    "repartidorNombre": null
+  },
+  {
+    "id": "PED_BOD_006_7341B4C0",
+    "pedidoId": "PED_BOD_006_7341B4C0",
+    "bodegaId": "BOD_006",
+    "estado": "nuevo",
+    "repartidorId": "REP_001",
+    "cliente": {
+      "nombre": "andrs",
+      "telefono": "3221"
+    },
+    "direccion": "calle 10, medellin",
+    "items": [
+      {
+        "productoId": "PRD_BOD_006_0286",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 13,
+        "subtotal": 36400
+      },
+      {
+        "productoId": "PRD_BOD_006_0266",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 18,
+        "subtotal": 50400
+      }
+    ],
+    "total": 86800,
+    "totalOriginal": 86800,
+    "discount": 0,
+    "createdAt": "2026-02-10T20:33:26.815Z",
+    "datosEntrega": {
+      "nombre": "andrs",
+      "telefono": "3221",
+      "direccion": "calle 10, medellin",
+      "notas": null
+    },
+    "updatedAt": "2026-02-10T20:33:26.838Z",
+    "repartidorNombre": null
+  },
+  {
+    "id": "PED_BOD_002_81D8CBD5",
+    "pedidoId": "PED_BOD_002_81D8CBD5",
+    "bodegaId": "BOD_002",
+    "estado": "nuevo",
+    "repartidorId": "REP_001",
+    "cliente": {
+      "nombre": "asdfdsfds",
+      "telefono": "fdsfdsfdsf"
+    },
+    "direccion": "dsfdfdfd",
+    "items": [
+      {
+        "productoId": "PRD_BOD_002_0061",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 4,
+        "subtotal": 11200
+      },
+      {
+        "productoId": "PRD_BOD_002_0081",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 28,
+        "subtotal": 78400
+      }
+    ],
+    "total": 89600,
+    "totalOriginal": 89600,
+    "discount": 0,
+    "coupon": {
+      "code": "PROMO-21346-90",
+      "descuentoCOP": 44800
+    },
+    "createdAt": "2026-02-11T18:49:41.530Z",
+    "datosEntrega": {
+      "nombre": "asdfdsfds",
+      "telefono": "fdsfdsfdsf",
+      "direccion": "dsfdfdfd",
+      "notas": null
+    },
+    "updatedAt": "2026-02-11T18:49:41.568Z",
+    "repartidorNombre": null
+  }
+]

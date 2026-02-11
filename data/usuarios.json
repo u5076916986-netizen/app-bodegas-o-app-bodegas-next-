@@ -1,0 +1,47 @@
+[
+    {
+        "usuarioId": "USR_001",
+        "bodegaId": "BOD_002",
+        "nombre": "Admin Principal",
+        "email": "admin@bodega.com",
+        "rol": "admin",
+        "estado": "activo",
+        "ultimaActividad": "2026-02-09T08:00:00Z"
+    },
+    {
+        "usuarioId": "USR_002",
+        "bodegaId": "BOD_002",
+        "nombre": "Vendedor 1",
+        "email": "vendedor1@bodega.com",
+        "rol": "vendedor",
+        "estado": "activo",
+        "ultimaActividad": "2026-02-08T16:30:00Z"
+    },
+    {
+        "usuarioId": "USR_003",
+        "bodegaId": "BOD_002",
+        "nombre": "Vendedor 2",
+        "email": "vendedor2@bodega.com",
+        "rol": "vendedor",
+        "estado": "activo",
+        "ultimaActividad": "2026-02-08T15:45:00Z"
+    },
+    {
+        "usuarioId": "USR_004",
+        "bodegaId": "BOD_002",
+        "nombre": "Logístico",
+        "email": "logistica@bodega.com",
+        "rol": "logistica",
+        "estado": "activo",
+        "ultimaActividad": "2026-02-09T07:15:00Z"
+    },
+    {
+        "usuarioId": "USR_005",
+        "bodegaId": "BOD_002",
+        "nombre": "Contador",
+        "email": "contador@bodega.com",
+        "rol": "contador",
+        "estado": "inactivo",
+        "ultimaActividad": "2026-01-20T10:00:00Z"
+    }
+]

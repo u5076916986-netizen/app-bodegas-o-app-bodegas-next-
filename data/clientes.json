@@ -1,0 +1,67 @@
+[
+    {
+        "clienteId": "CLI_001",
+        "bodegaId": "BOD_002",
+        "nombre": "Tienda El Rincón",
+        "telefono": "3101234567",
+        "ciudad": "Bogotá",
+        "zona": "Centro",
+        "totalCompras": 25,
+        "gastTotal": 1250000,
+        "ultimaCompra": "2026-02-08T14:30:00Z",
+        "estado": "frecuente",
+        "creditoDisponible": 500000
+    },
+    {
+        "clienteId": "CLI_002",
+        "bodegaId": "BOD_002",
+        "nombre": "Minimercado la Esquina",
+        "telefono": "3105678901",
+        "ciudad": "Bogotá",
+        "zona": "Norte",
+        "totalCompras": 8,
+        "gastTotal": 380000,
+        "ultimaCompra": "2026-02-06T10:15:00Z",
+        "estado": "nuevo",
+        "creditoDisponible": 0
+    },
+    {
+        "clienteId": "CLI_003",
+        "bodegaId": "BOD_002",
+        "nombre": "Despensa del Barrio",
+        "telefono": "3109876543",
+        "ciudad": "Bogotá",
+        "zona": "Sur",
+        "totalCompras": 42,
+        "gastTotal": 2100000,
+        "ultimaCompra": "2026-02-07T16:45:00Z",
+        "estado": "frecuente",
+        "creditoDisponible": 1000000
+    },
+    {
+        "clienteId": "CLI_004",
+        "bodegaId": "BOD_002",
+        "nombre": "Super Vecino",
+        "telefono": "3112345678",
+        "ciudad": "Bogotá",
+        "zona": "Oriente",
+        "totalCompras": 3,
+        "gastTotal": 145000,
+        "ultimaCompra": "2026-02-01T09:30:00Z",
+        "estado": "nuevo",
+        "creditoDisponible": 0
+    },
+    {
+        "clienteId": "CLI_005",
+        "bodegaId": "BOD_002",
+        "nombre": "Almacén La Fe",
+        "telefono": "3116789012",
+        "ciudad": "Bogotá",
+        "zona": "Centro",
+        "totalCompras": 19,
+        "gastTotal": 950000,
+        "ultimaCompra": "2026-02-05T11:20:00Z",
+        "estado": "frecuente",
+        "creditoDisponible": 750000
+    }
+]

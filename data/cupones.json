@@ -1,0 +1,46 @@
+[
+  {
+    "id": "CUP-WELCOME-5000",
+    "code": "WELCOME5000",
+    "bodegaId": "BOD_001",
+    "type": "fixed",
+    "value": 5000,
+    "minSubtotal": 30000,
+    "active": true,
+    "startDate": "2024-01-01T00:00:00.000Z",
+    "endDate": "2026-12-31T23:59:59.999Z"
+  },
+  {
+    "id": "CUP-BOD001-10P",
+    "code": "BOD00110",
+    "bodegaId": "BOD_001",
+    "type": "percent",
+    "value": 10,
+    "minSubtotal": 80000,
+    "active": true,
+    "startDate": "2024-01-01T00:00:00.000Z",
+    "endDate": "2026-12-31T23:59:59.999Z"
+  },
+  {
+    "id": "ef40c12b-f647-4df9-875e-8a3542efd88b",
+    "code": "PROMO-21346-90",
+    "bodegaId": "BOD_002",
+    "type": "percent",
+    "value": 50,
+    "minSubtotal": 0,
+    "active": true,
+    "startDate": "2026-02-10T18:36:59.534Z",
+    "endDate": "2026-02-12T18:36:59.534Z"
+  },
+  {
+    "id": "4bc7762c-8719-476e-9350-9db9a820a654",
+    "code": "PROMO-21620-97",
+    "bodegaId": "BOD_002",
+    "type": "fixed",
+    "value": 2000,
+    "minSubtotal": 15000,
+    "active": true,
+    "startDate": "2026-02-10T18:36:59.534Z",
+    "endDate": "2026-02-12T18:36:59.534Z"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "PROMO_001",
+    "bodegaId": "BOD_002",
+    "nombre": "Descuento Granos - Febrero",
+    "tipo": "porcentaje",
+    "valor": 15,
+    "fechaInicio": "2026-02-01T00:00:00Z",
+    "fechaFin": "2026-02-28T23:59:59Z",
+    "aplicaA": "categoria",
+    "categoriaProductos": [
+      "Granos"
+    ],
+    "productosIds": [],
+    "estado": "activa",
+    "productosAfectados": 2,
+    "createdAt": "2026-02-01T10:00:00Z",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROMO_002",
+    "bodegaId": "BOD_002",
+    "nombre": "Aceites Premium - Preventa",
+    "tipo": "precio_fijo",
+    "valor": 28000,
+    "fechaInicio": "2026-02-15T00:00:00Z",
+    "fechaFin": "2026-02-22T23:59:59Z",
+    "aplicaA": "categoria",
+    "categoriaProductos": [
+      "Aceites"
+    ],
+    "productosIds": [],
+    "estado": "programada",
+    "productosAfectados": 1,
+    "createdAt": "2026-02-08T10:00:00Z",
+    "updatedAt": "2026-02-08T10:00:00Z"
+  },
+  {
+    "id": "PROMO_003",
+    "bodegaId": "BOD_002",
+    "nombre": "Limpieza - Saldo",
+    "tipo": "porcentaje",
+    "valor": 25,
+    "fechaInicio": "2026-01-01T00:00:00Z",
+    "fechaFin": "2026-01-31T23:59:59Z",
+    "aplicaA": "categoria",
+    "categoriaProductos": [
+      "Limpieza"
+    ],
+    "productosIds": [],
+    "estado": "finalizada",
+    "productosAfectados": 0,
+    "createdAt": "2026-01-15T10:00:00Z",
+    "updatedAt": "2026-02-01T10:00:00Z"
+  },
+  {
+    "id": "PROMO_1770748621335_83optgk45",
+    "bodegaId": "BOD_002",
+    "nombre": "2x1 en bebidas",
+    "tipo": "porcentaje",
+    "valor": 50,
+    "fechaInicio": "2026-02-10T18:36:59.534Z",
+    "fechaFin": "2026-02-12T18:36:59.534Z",
+    "aplicaA": "categoria",
+    "categoriaProductos": [
+      "Bebidas"
+    ],
+    "productosIds": [],
+    "estado": "programada",
+    "productosAfectados": 0,
+    "createdAt": "2026-02-10T18:37:01.335Z",
+    "updatedAt": "2026-02-10T18:37:01.335Z"
+  },
+  {
+    "id": "PROMO_1770748621572_wkt8bj4m1",
+    "bodegaId": "BOD_002",
+    "nombre": "Descuento $2.000 en aseo",
+    "tipo": "precio_fijo",
+    "valor": 2000,
+    "fechaInicio": "2026-02-10T18:36:59.534Z",
+    "fechaFin": "2026-02-12T18:36:59.534Z",
+    "aplicaA": "categoria",
+    "categoriaProductos": [
+      "Aseo"
+    ],
+    "productosIds": [],
+    "estado": "programada",
+    "productosAfectados": 0,
+    "createdAt": "2026-02-10T18:37:01.572Z",
+    "updatedAt": "2026-02-10T18:37:01.572Z"
+  }
+]
