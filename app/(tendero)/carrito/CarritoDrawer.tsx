@@ -130,7 +130,7 @@ export default function CarritoDrawer({
                 categoria: producto.categoria,
                 precio_cop: producto.precio_cop ?? producto.precio ?? 0,
                 precio: producto.precio ?? producto.precio_cop ?? 0,
-                stock: producto.stock,
+                stock: producto.stock ?? 0,
                 activo: producto.activo,
                 sku: (producto as any).sku,
             })),
