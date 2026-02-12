@@ -554,7 +554,7 @@ export default function CheckoutClient() {
                                                 <p className="text-xs text-slate-500">{producto.categoria}</p>
                                             </div>
                                             <span className="text-xs font-semibold text-slate-700">
-                                                {formatCurrency(producto.precio_cop ?? producto.precio ?? 0)}
+                                                {formatCurrency(producto.precio_cop ?? 0)}
                                             </span>
                                         </div>
                                         <button

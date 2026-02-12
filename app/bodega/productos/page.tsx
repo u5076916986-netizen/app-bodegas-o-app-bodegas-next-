@@ -1,4 +1,5 @@
 import ProductosClient from "@/components/ProductosClient";
+import { Suspense } from "react";
 
 interface ProductosPageProps {
     params: Promise<{ bodegaId: string }>;
@@ -7,5 +8,9 @@ interface ProductosPageProps {
 export default async function ProductosPage({ params }: ProductosPageProps) {
     const { bodegaId } = await params;
 
-    return <ProductosClient bodegaId={bodegaId} />;
+    return (
+        <Suspense fallback={<div className="p-4">Cargando...</div>}>
+            <ProductosClient bodegaId={bodegaId} />
+        </Suspense>
+    );
 }

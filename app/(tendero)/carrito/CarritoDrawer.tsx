@@ -120,6 +120,8 @@ export default function CarritoDrawer({
     const minimo = minimoPedido ?? 0;
     const faltante = Math.max(0, minimo - subtotal);
     const cartIds = new Set(items.map((line) => line.producto.producto_id));
+    const readSku = (value: unknown) =>
+        typeof value === "string" && value.trim().length > 0 ? value : undefined;
     const now = promoNow ? new Date(promoNow) : null;
     const recomendaciones = now
         ? buildRecommendations(
@@ -128,11 +130,11 @@ export default function CarritoDrawer({
                 bodegaId,
                 nombre: producto.nombre,
                 categoria: producto.categoria,
-                precio_cop: producto.precio_cop ?? producto.precio ?? 0,
-                precio: producto.precio ?? producto.precio_cop ?? 0,
+                precio_cop: producto.precio_cop ?? 0,
+                precio: producto.precio_cop ?? 0,
                 stock: producto.stock ?? 0,
                 activo: producto.activo,
-                sku: (producto as any).sku,
+                sku: readSku((producto as Record<string, unknown>).sku),
             })),
             faltante,
             cartIds,
@@ -154,7 +156,7 @@ export default function CarritoDrawer({
                 nombre: line.producto.nombre,
                 precio: line.producto.precio_cop ?? 0,
                 quantity: line.quantity,
-                sku: (line.producto as any).sku,
+                sku: readSku((line.producto as Record<string, unknown>).sku),
             })),
             nombre,
             telefono,
@@ -264,7 +266,7 @@ export default function CarritoDrawer({
                                     <p className="text-xs text-slate-500">{producto.categoria}</p>
                                     <div className="mt-2 flex items-center justify-between">
                                         <span className="text-xs font-semibold text-slate-700">
-                                            {formatCurrency(producto.precio_cop ?? producto.precio ?? 0)}
+                                            {formatCurrency(producto.precio_cop ?? 0)}
                                         </span>
                                         <button
                                             type="button"

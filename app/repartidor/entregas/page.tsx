@@ -1,5 +1,6 @@
 import RepartidorEntregas from "./RepartidorEntregas";
 import Breadcrumbs from "@/app/ui/Breadcrumbs";
+import { Suspense } from "react";
 
 export default function RepartidorEntregasPage() {
     return (
@@ -10,7 +11,9 @@ export default function RepartidorEntregasPage() {
                     { label: "Mis entregas" },
                 ]}
             />
-            <RepartidorEntregas />
+            <Suspense fallback={<div className="p-4">Cargando...</div>}>
+                <RepartidorEntregas />
+            </Suspense>
         </div>
     );
 }

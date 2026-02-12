@@ -172,9 +172,9 @@ export default function BodegaDetailClient({ bodega, productos, theme }: Props) 
       bodegaId: bodega.bodega_id,
       nombre: producto.nombre,
       categoria: producto.categoria,
-      precio_cop: producto.precio_cop ?? producto.precio ?? 0,
-      precio: producto.precio ?? producto.precio_cop ?? 0,
-      stock: producto.stock,
+      precio_cop: producto.precio_cop ?? 0,
+      precio: producto.precio_cop ?? 0,
+      stock: producto.stock ?? 0,
       activo: producto.activo,
       sku: (producto as any).sku,
     }));
@@ -206,7 +206,7 @@ export default function BodegaDetailClient({ bodega, productos, theme }: Props) 
       {
         productId: producto.producto_id,
         name: producto.nombre,
-        price: Number(producto.precio_cop ?? producto.precio ?? 0),
+        price: Number(producto.precio_cop ?? 0),
         imageUrl: (producto as any).imagen_url,
         bodegaId: bodega.bodega_id,
       },

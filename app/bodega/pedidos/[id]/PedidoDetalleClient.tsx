@@ -9,6 +9,15 @@ export default function PedidoDetalleClient({ initialPedido }: { initialPedido: 
     const [pedido, setPedido] = useState<Pedido>(initialPedido);
     const [actionInProgress, setActionInProgress] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const createdAtText = pedido.createdAt
+        ? new Date(pedido.createdAt).toLocaleDateString("es-CO", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        })
+        : "N/D";
 
     const handleEstadoChange = async (nuevoEstado: string) => {
         setActionInProgress(nuevoEstado);
@@ -51,33 +60,27 @@ export default function PedidoDetalleClient({ initialPedido }: { initialPedido: 
                     <div>
                         <div className="text-sm text-gray-600">Fecha de creación</div>
                         <div className="text-sm">
-                            {new Date(pedido.createdAt).toLocaleDateString("es-CO", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                            })}
+                            {createdAtText}
                         </div>
                     </div>
                     <div>
                         <div className="text-sm text-gray-600">Estado</div>
                         <span
                             className={`px-3 py-1 rounded text-xs font-semibold ${pedido.estado === EstadoPedido.NUEVO
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : pedido.estado === EstadoPedido.ACEPTADO
-                                        ? "bg-blue-100 text-blue-800"
-                                        : pedido.estado === EstadoPedido.PREPARANDO
-                                            ? "bg-purple-100 text-purple-800"
-                                            : pedido.estado === EstadoPedido.LISTO
-                                                ? "bg-green-100 text-green-800"
-                                                : pedido.estado === EstadoPedido.EN_CAMINO
-                                                    ? "bg-indigo-100 text-indigo-800"
-                                                    : pedido.estado === EstadoPedido.ENTREGADO
-                                                        ? "bg-gray-100 text-gray-800"
-                                                        : pedido.estado === EstadoPedido.CANCELADO
-                                                            ? "bg-red-100 text-red-800"
-                                                            : "bg-gray-100 text-gray-800"
+                                ? "bg-yellow-100 text-yellow-800"
+                                : pedido.estado === EstadoPedido.ACEPTADO
+                                    ? "bg-blue-100 text-blue-800"
+                                    : pedido.estado === EstadoPedido.PREPARANDO
+                                        ? "bg-purple-100 text-purple-800"
+                                        : pedido.estado === EstadoPedido.LISTO
+                                            ? "bg-green-100 text-green-800"
+                                            : pedido.estado === EstadoPedido.EN_CAMINO
+                                                ? "bg-indigo-100 text-indigo-800"
+                                                : pedido.estado === EstadoPedido.ENTREGADO
+                                                    ? "bg-gray-100 text-gray-800"
+                                                    : pedido.estado === EstadoPedido.CANCELADO
+                                                        ? "bg-red-100 text-red-800"
+                                                        : "bg-gray-100 text-gray-800"
                                 }`}
                         >
                             {pedido.estado === EstadoPedido.NUEVO ? "Nuevo"
