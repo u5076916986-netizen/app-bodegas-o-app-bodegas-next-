@@ -413,9 +413,9 @@ export default function CheckoutClient() {
 
                     <div className="mt-4 space-y-2">
                         {draft.items.map((item) => (
-                            <div key={item.productoId} className="flex items-center justify-between text-sm">
-                                <span className="text-slate-700">{item.nombre}</span>
-                                <span className="font-semibold text-slate-900">
+                            <div key={item.productoId} className="flex items-center justify-between gap-3 text-sm">
+                                <span className="min-w-0 flex-1 truncate text-slate-700">{item.nombre}</span>
+                                <span className="shrink-0 font-semibold text-slate-900">
                                     {formatCurrency(item.precio * item.quantity)}
                                 </span>
                             </div>
@@ -471,9 +471,9 @@ export default function CheckoutClient() {
                                         key={item.id}
                                         className="flex items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white p-2"
                                     >
-                                        <div>
-                                            <p className="text-xs font-semibold text-slate-900">{item.nombre}</p>
-                                            <p className="text-[11px] text-slate-500">
+                                        <div className="min-w-0 flex-1">
+                                            <p className="truncate text-xs font-semibold text-slate-900">{item.nombre}</p>
+                                            <p className="truncate text-[11px] text-slate-500">
                                                 {item.categoria || "Sugerido"} · {formatCurrency(Number(item.precio_cop ?? item.precio ?? 0))}
                                             </p>
                                         </div>

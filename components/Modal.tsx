@@ -34,8 +34,10 @@ export default function Modal({
     }[size];
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className={`rounded-lg bg-white shadow-lg ${sizeClass} w-full mx-4`}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-3 sm:px-4">
+            <div
+                className={`w-full ${sizeClass} max-h-[90vh] overflow-hidden rounded-lg border border-[color:var(--surface-border)] bg-[color:var(--surface-card)] text-[color:var(--text-normal)] shadow-lg`}
+            >
                 <div className="border-b px-6 py-4">
                     <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
                 </div>

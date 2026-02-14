@@ -207,10 +207,10 @@ export default function CarritoDrawer({
                             {items.map((line) => (
                                 <div
                                     key={line.producto.producto_id}
-                                    className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm"
+                                    className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm"
                                 >
-                                    <div>
-                                        <div className="font-semibold text-slate-800">{line.producto.nombre}</div>
+                                    <div className="min-w-0 flex-1">
+                                        <div className="truncate font-semibold text-slate-800">{line.producto.nombre}</div>
                                         <div className="mt-1 flex items-center gap-2">
                                             <button
                                                 type="button"
@@ -231,122 +231,121 @@ export default function CarritoDrawer({
                                             </button>
                                         </div>
                                     </div>
-                                    <div className="font-semibold text-slate-800">
+                                    <div className="shrink-0 font-semibold text-slate-800">
                                         {formatCurrency((line.producto.precio_cop ?? 0) * line.quantity)}
                                     </div>
                                 </div>
                             ))}
                         </div>
                     )}
-                    <div className="flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-sm">
-                        <span className="text-slate-600">Total</span>
-                        <span className="text-base font-semibold text-slate-900">{formatCurrency(subtotal)}</span>
-                    </div>
-                </div>
 
-                {showRecommendations && showReco && recomendaciones.length > 0 ? (
-                    <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                            <h4 className="text-sm font-semibold text-slate-700">Completar mínimo</h4>
-                            <button
-                                type="button"
-                                onClick={() => setShowReco(false)}
-                                className="text-xs font-semibold text-slate-500 hover:text-slate-700"
-                            >
-                                Ocultar
-                            </button>
-                        </div>
-                        <p className="text-xs text-slate-500">
-                            Faltan {formatCurrency(faltante)} para el mínimo.
-                        </p>
-                        <div className="grid gap-2 sm:grid-cols-2">
-                            {recomendaciones.map((producto) => (
-                                <div key={producto.id} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
-                                    <p className="font-semibold text-slate-900">{producto.nombre}</p>
-                                    <p className="text-xs text-slate-500">{producto.categoria}</p>
-                                    <div className="mt-2 flex items-center justify-between">
-                                        <span className="text-xs font-semibold text-slate-700">
-                                            {formatCurrency(producto.precio_cop ?? 0)}
-                                        </span>
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                const target = catalogo.find((p) => p.producto_id === producto.id);
-                                                if (target) onAddProduct?.(target);
-                                            }}
-                                            className="rounded-full bg-slate-900 px-2 py-1 text-[10px] font-semibold text-white"
-                                        >
-                                            Agregar
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ) : null}
-
-                <div className="space-y-2">
-                    <h4 className="text-sm font-semibold text-slate-700">Datos de entrega</h4>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                        <input
-                            value={nombre}
-                            onChange={(e) => onChangeNombre(e.target.value)}
-                            placeholder="Nombre"
-                            className="w-full rounded-full border border-slate-300 px-3 py-2 text-sm"
-                        />
-                        <input
-                            value={telefono}
-                            onChange={(e) => onChangeTelefono(e.target.value)}
-                            placeholder="Teléfono"
-                            className="w-full rounded-full border border-slate-300 px-3 py-2 text-sm"
-                        />
-                    </div>
-                    <input
-                        value={direccion}
-                        onChange={(e) => onChangeDireccion(e.target.value)}
-                        placeholder="Dirección"
-                        className="w-full rounded-full border border-slate-300 px-3 py-2 text-sm"
-                    />
-                    <label className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700">
-                        <input
-                            type="checkbox"
-                            checked={pagoConfirmado}
-                            onChange={(e) => onTogglePagoConfirmado(e.target.checked)}
-                            className="h-4 w-4"
-                        />
-                        Confirmo el pago del pedido.
-                    </label>
-                    {!isFormValid && items.length > 0 ? (
-                        <p className="text-xs text-amber-700">
-                            Completa nombre, teléfono y dirección para continuar.
-                        </p>
-                    ) : null}
-                    {!pagoConfirmado && items.length > 0 ? (
-                        <p className="text-xs text-amber-700">
-                            Confirma el pago para enviar el pedido.
-                        </p>
-                    ) : null}
-                    {statusMsg ? (
+                    {showRecommendations && showReco && recomendaciones.length > 0 ? (
                         <div className="space-y-2">
-                            <p className={`text-xs ${successPedidoId ? "text-emerald-700" : "text-red-600"}`}>
-                                {statusMsg}
-                            </p>
-                            {successPedidoId ? (
+                            <div className="flex items-center justify-between">
+                                <h4 className="text-sm font-semibold text-slate-700">Completar mínimo</h4>
                                 <button
                                     type="button"
-                                    onClick={() => onViewEntrega(successPedidoId)}
-                                    className="rounded-full bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+                                    onClick={() => setShowReco(false)}
+                                    className="text-xs font-semibold text-slate-500 hover:text-slate-700"
                                 >
-                                    Ver entrega
+                                    Ocultar
                                 </button>
-                            ) : null}
+                            </div>
+                            <p className="text-xs text-slate-500">
+                                Faltan {formatCurrency(faltante)} para el mínimo.
+                            </p>
+                            <div className="grid gap-2 sm:grid-cols-2">
+                                {recomendaciones.map((producto) => (
+                                    <div
+                                        key={producto.id}
+                                        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
+                                    >
+                                        <p className="font-semibold text-slate-900">{producto.nombre}</p>
+                                        <p className="text-xs text-slate-500">{producto.categoria}</p>
+                                        <div className="mt-2 flex items-center justify-between">
+                                            <span className="text-xs font-semibold text-slate-700">
+                                                {formatCurrency(producto.precio_cop ?? 0)}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const target = catalogo.find((p) => p.producto_id === producto.id);
+                                                    if (target) onAddProduct?.(target);
+                                                }}
+                                                className="rounded-full bg-slate-900 px-2 py-1 text-[10px] font-semibold text-white"
+                                            >
+                                                Agregar
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ) : null}
-                    {cupones.length > 0 ? (
-                        <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700">
-                            Cupón disponible en checkout: {cupones.slice(0, 2).map((c) => c.code).join(", ")}
+
+                    <div className="space-y-2">
+                        <h4 className="text-sm font-semibold text-slate-700">Datos de entrega</h4>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                            <input
+                                value={nombre}
+                                onChange={(e) => onChangeNombre(e.target.value)}
+                                placeholder="Nombre"
+                                className="w-full rounded-full border border-slate-300 px-3 py-2 text-sm"
+                            />
+                            <input
+                                value={telefono}
+                                onChange={(e) => onChangeTelefono(e.target.value)}
+                                placeholder="Teléfono"
+                                className="w-full rounded-full border border-slate-300 px-3 py-2 text-sm"
+                            />
                         </div>
-                    ) : null}
+                        <input
+                            value={direccion}
+                            onChange={(e) => onChangeDireccion(e.target.value)}
+                            placeholder="Dirección"
+                            className="w-full rounded-full border border-slate-300 px-3 py-2 text-sm"
+                        />
+                        <label className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700">
+                            <input
+                                type="checkbox"
+                                checked={pagoConfirmado}
+                                onChange={(e) => onTogglePagoConfirmado(e.target.checked)}
+                                className="h-4 w-4"
+                            />
+                            Confirmo el pago del pedido.
+                        </label>
+                        {!isFormValid && items.length > 0 ? (
+                            <p className="text-xs text-amber-700">
+                                Completa nombre, teléfono y dirección para continuar.
+                            </p>
+                        ) : null}
+                        {!pagoConfirmado && items.length > 0 ? (
+                            <p className="text-xs text-amber-700">
+                                Confirma el pago para enviar el pedido.
+                            </p>
+                        ) : null}
+                        {statusMsg ? (
+                            <div className="space-y-2">
+                                <p className={`text-xs ${successPedidoId ? "text-emerald-700" : "text-red-600"}`}>
+                                    {statusMsg}
+                                </p>
+                                {successPedidoId ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => onViewEntrega(successPedidoId)}
+                                        className="rounded-full bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+                                    >
+                                        Ver entrega
+                                    </button>
+                                ) : null}
+                            </div>
+                        ) : null}
+                        {cupones.length > 0 ? (
+                            <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700">
+                                Cupón disponible en checkout: {cupones.slice(0, 2).map((c) => c.code).join(", ")}
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
             </div>
         </Modal>
