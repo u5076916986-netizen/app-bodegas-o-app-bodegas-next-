@@ -185,30 +185,54 @@ const buildPedidoId = (bodegaId: string) => {
 };
 
 export async function POST(request: Request) {
+  const requestId = randomUUID();
+
+  const respondError = (
+    status: number,
+    code: string,
+    message: string,
+    details?: Record<string, unknown>,
+  ) =>
+    NextResponse.json(
+      {
+        ok: false,
+        code,
+        message,
+        details,
+        requestId,
+      },
+      { status },
+    );
+
   try {
-    const body = (await request.json()) as Pedido;
+    const body = (await request.json()) as Pedido & { minimoPedido?: number };
     if (!body || !isNonEmptyString(body.bodegaId)) {
-      return NextResponse.json(
-        { ok: false, error: "bodegaId es requerido" },
-        { status: 400 },
-      );
+      console.error("[pedido]", requestId, "VALIDATION_ERROR", {
+        reason: "bodegaId missing",
+      });
+      return respondError(400, "VALIDATION_ERROR", "bodegaId es requerido");
     }
 
     const bodegaId = body.bodegaId.trim();
 
     if (!Array.isArray(body.items) || body.items.length === 0) {
-      return NextResponse.json(
-        { ok: false, error: "items debe ser un arreglo con al menos un item" },
-        { status: 400 },
+      console.error("[pedido]", requestId, "VALIDATION_ERROR", {
+        reason: "items empty",
+      });
+      return respondError(
+        400,
+        "VALIDATION_ERROR",
+        "items debe ser un arreglo con al menos un item",
       );
     }
 
     const itemsValidos = body.items.every((item) => {
-      const cantidad = Number((item as any).cantidad);
-      const precio = Number((item as any).precio ?? (item as any).precio_cop ?? 0);
+      const raw = item as Record<string, unknown>;
+      const cantidad = Number(raw.cantidad);
+      const precio = Number(raw.precio ?? raw.precio_cop ?? 0);
       return (
         item &&
-        isNonEmptyString((item as any).productoId) &&
+        isNonEmptyString(raw.productoId) &&
         Number.isFinite(cantidad) &&
         cantidad > 0 &&
         Number.isFinite(precio) &&
@@ -217,25 +241,32 @@ export async function POST(request: Request) {
     });
 
     if (!itemsValidos) {
-      return NextResponse.json(
-        { ok: false, error: "Cada item debe tener productoId, cantidad > 0 y precio válido" },
-        { status: 400 },
+      console.error("[pedido]", requestId, "VALIDATION_ERROR", {
+        reason: "invalid items",
+      });
+      return respondError(
+        400,
+        "VALIDATION_ERROR",
+        "Cada item debe tener productoId, cantidad > 0 y precio válido",
       );
     }
 
     const datosEntrega = body.datosEntrega || {};
-    const cliente = (body as any).cliente || {};
-    const nombre = (datosEntrega as any).nombre ?? cliente.nombre;
-    const telefono = (datosEntrega as any).telefono ?? cliente.telefono;
-    const direccion = (datosEntrega as any).direccion ?? (body as any).direccion;
+    const cliente = (body as Record<string, unknown>).cliente as Record<string, unknown> | undefined;
+    const nombre = (datosEntrega as Record<string, unknown>).nombre ?? cliente?.nombre;
+    const telefono = (datosEntrega as Record<string, unknown>).telefono ?? cliente?.telefono;
+    const direccion =
+      (datosEntrega as Record<string, unknown>).direccion ??
+      (body as Record<string, unknown>).direccion;
 
-    if (!isNonEmptyString(nombre) || !isNonEmptyString(direccion)) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: "cliente.nombre y direccion son obligatorios",
-        },
-        { status: 400 },
+    if (!isNonEmptyString(nombre) || !isNonEmptyString(direccion) || !isNonEmptyString(telefono)) {
+      console.error("[pedido]", requestId, "VALIDATION_ERROR", {
+        reason: "missing delivery data",
+      });
+      return respondError(
+        400,
+        "VALIDATION_ERROR",
+        "nombre, telefono y direccion son obligatorios",
       );
     }
 
@@ -246,18 +277,32 @@ export async function POST(request: Request) {
     const updatedAt = now;
 
     const normalizedItems = body.items.map((item) => {
-      const cantidad = Number((item as any).cantidad) || 0;
-      const precio = Number((item as any).precio ?? (item as any).precio_cop ?? 0) || 0;
+      const raw = item as Record<string, unknown>;
+      const cantidad = Number(raw.cantidad) || 0;
+      const precio = Number(raw.precio ?? raw.precio_cop ?? 0) || 0;
       return {
         ...item,
         cantidad,
         precio,
-        precio_cop: (item as any).precio_cop ?? precio,
+        precio_cop: raw.precio_cop ?? precio,
         subtotal: cantidad * precio,
       };
     });
 
     const total = normalizedItems.reduce((sum, item) => sum + (item.subtotal ?? 0), 0);
+    const minimoPedido = Number(body.minimoPedido ?? 0) || 0;
+    if (minimoPedido > 0 && total < minimoPedido) {
+      console.error("[pedido]", requestId, "MIN_ORDER_NOT_MET", {
+        minimoPedido,
+        total,
+      });
+      return respondError(
+        422,
+        "MIN_ORDER_NOT_MET",
+        "El pedido no alcanza el minimo de compra",
+        { minimoPedido, total },
+      );
+    }
 
     // Validar cupón en servidor si fue aplicado
     if (body.coupon && body.coupon.code) {
@@ -267,9 +312,13 @@ export async function POST(request: Request) {
         const validation = validateCupon(cupones, body.coupon.code, body.bodegaId, subtotalOriginal);
 
         if (!validation.ok) {
-          return NextResponse.json(
-            { ok: false, error: `Cupón inválido: ${validation.reason}` },
-            { status: 400 },
+          console.error("[pedido]", requestId, "COUPON_INVALID", {
+            reason: validation.reason,
+          });
+          return respondError(
+            400,
+            "COUPON_INVALID",
+            `Cupon invalido: ${validation.reason}`,
           );
         }
       } catch (err) {
@@ -278,22 +327,30 @@ export async function POST(request: Request) {
       }
     }
 
+    const idValue = (body as Record<string, unknown>).id;
+    const normalizedId = isNonEmptyString(idValue) ? idValue : pedidoId;
+
+    const rawNotas = (datosEntrega as Record<string, unknown>).notas;
+    const notas = isNonEmptyString(rawNotas) ? rawNotas : null;
+
+    const normalizedDireccion = direccion;
+
     const pedido = {
       ...body,
-      id: (body as any).id || pedidoId,
+      id: normalizedId,
       pedidoId,
       bodegaId,
       createdAt,
       updatedAt,
       estado: EstadoPedido.NUEVO,
-      cliente: (body as any).cliente || { nombre, telefono },
-      direccion: (body as any).direccion || direccion,
+      cliente: (body as Record<string, unknown>).cliente || { nombre, telefono },
+      direccion: normalizedDireccion,
       items: normalizedItems,
       datosEntrega: {
         nombre,
         telefono,
         direccion,
-        notas: (datosEntrega as any).notas ?? null,
+        notas,
       },
       total,
       totalOriginal: total,
@@ -306,10 +363,8 @@ export async function POST(request: Request) {
       await appendPedido(pedido);
     } catch (err) {
       if (err instanceof SyntaxError) {
-        return NextResponse.json(
-          { ok: false, error: "Archivo pedidos.json corrupto" },
-          { status: 500 },
-        );
+        console.error("[pedido]", requestId, "FILE_CORRUPT");
+        return respondError(500, "FILE_CORRUPT", "Archivo pedidos.json corrupto");
       }
       throw err;
     }
@@ -332,14 +387,12 @@ export async function POST(request: Request) {
       {
         ok: true,
         pedido,
+        requestId,
       },
       { status: 201 },
     );
   } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { ok: false, error: "Error al procesar el pedido" },
-      { status: 500 },
-    );
+    console.error("[pedido]", requestId, "INTERNAL_ERROR", err);
+    return respondError(500, "INTERNAL_ERROR", "Error al procesar el pedido");
   }
 }

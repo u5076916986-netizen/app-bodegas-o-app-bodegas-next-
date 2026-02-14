@@ -48,6 +48,13 @@ export default function CheckoutClient() {
     const [promos, setPromos] = useState<PromoRule[]>([]);
     const [promoNow, setPromoNow] = useState<string | null>(null);
     const [showReco, setShowReco] = useState(false);
+    const [errorDetails, setErrorDetails] = useState<{
+        status?: number;
+        code?: string;
+        requestId?: string;
+        payload?: string;
+    } | null>(null);
+    const [showErrorDetails, setShowErrorDetails] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -229,6 +236,8 @@ export default function CheckoutClient() {
 
         setLoading(true);
         setStatus(null);
+        setErrorDetails(null);
+        setShowErrorDetails(false);
 
         const pedidoId = buildPedidoId(draft.bodegaId);
         const payload = {
@@ -236,6 +245,7 @@ export default function CheckoutClient() {
             pedidoId,
             bodegaId: draft.bodegaId,
             estado: "nuevo",
+            minimoPedido,
             cliente: {
                 nombre,
                 telefono,
@@ -268,8 +278,44 @@ export default function CheckoutClient() {
             });
 
             if (!resp.ok) {
-                const errData = await resp.json().catch(() => ({}));
-                throw new Error(errData.error || `Error HTTP ${resp.status}`);
+                const rawText = await resp.text();
+                let parsed: any = null;
+                try {
+                    parsed = rawText ? JSON.parse(rawText) : null;
+                } catch {
+                    parsed = null;
+                }
+
+                const statusCode = resp.status;
+                const apiMessage = parsed?.message || parsed?.error || "";
+                const apiCode = parsed?.code || undefined;
+                const requestId = parsed?.requestId || undefined;
+                const detailPayload = rawText ? rawText.slice(0, 500) : undefined;
+
+                let message = "Error interno. Intenta de nuevo.";
+                if (statusCode === 400 || statusCode === 422) {
+                    message = `Datos incompletos: ${apiMessage || "revisa los campos."}`;
+                } else if (statusCode === 401) {
+                    message = "Sesión expirada. Inicia sesión.";
+                } else if (statusCode === 403) {
+                    message = "No autorizado.";
+                } else if (statusCode === 404) {
+                    message = "Servicio no disponible (ruta).";
+                } else if (statusCode === 409) {
+                    message = `Conflicto: ${apiMessage || "stock o precio cambió."}`;
+                } else if (statusCode >= 500) {
+                    message = "Error interno. Intenta de nuevo.";
+                }
+
+                setStatus(message);
+                setErrorDetails({
+                    status: statusCode,
+                    code: apiCode,
+                    requestId,
+                    payload: detailPayload,
+                });
+                setShowErrorDetails(true);
+                return;
             }
 
             const data = (await resp.json()) as { ok: boolean; pedido?: { pedidoId?: string; id?: string } };
@@ -402,7 +448,28 @@ export default function CheckoutClient() {
 
                     {status ? (
                         <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-                            {status}
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                                <span>{status}</span>
+                                {errorDetails ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowErrorDetails((prev) => !prev)}
+                                        className="text-xs font-semibold text-amber-900 underline"
+                                    >
+                                        {showErrorDetails ? "Ocultar detalle" : "Ver detalle"}
+                                    </button>
+                                ) : null}
+                            </div>
+                            {errorDetails && showErrorDetails ? (
+                                <div className="mt-2 rounded border border-amber-200 bg-amber-100 px-3 py-2 text-xs text-amber-900">
+                                    <div>Status: {errorDetails.status ?? "N/D"}</div>
+                                    <div>Code: {errorDetails.code ?? "N/D"}</div>
+                                    <div>RequestId: {errorDetails.requestId ?? "N/D"}</div>
+                                    {errorDetails.payload ? (
+                                        <div className="mt-1 break-words">Payload: {errorDetails.payload}</div>
+                                    ) : null}
+                                </div>
+                            ) : null}
                         </div>
                     ) : null}
                 </section>
