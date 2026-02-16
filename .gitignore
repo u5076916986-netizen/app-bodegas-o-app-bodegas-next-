@@ -12,3 +12,5 @@ out/
 
 .codeartsdoer
 proyecto_completo.txt
+.vercel
+.env*.local
