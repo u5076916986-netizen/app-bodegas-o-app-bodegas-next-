@@ -332,7 +332,8 @@ export default function CheckoutClient() {
                 body: JSON.stringify(payload),
             });
 
-            if (!resp.ok) {
+
+            if (!(resp.status === 200 || resp.status === 201)) {
                 const errData = await resp.json().catch(() => ({}));
                 throw new Error(errData.error || `Error HTTP ${resp.status}`);
             }
