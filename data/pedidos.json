@@ -1731,5 +1731,39 @@
     },
     "updatedAt": "2026-02-11T18:49:41.568Z",
     "repartidorNombre": null
+  },
+  {
+    "id": "PED_BOD_006_2FBF2744",
+    "pedidoId": "PED_BOD_006_2FBF2744",
+    "bodegaId": "BOD_006",
+    "estado": "nuevo",
+    "repartidorId": "REP_001",
+    "cliente": {
+      "nombre": "andres",
+      "telefono": "a232434434"
+    },
+    "direccion": "eretretretr",
+    "items": [
+      {
+        "productoId": "PRD_BOD_006_0266",
+        "nombre": "Jabón Rey 300g",
+        "precio": 2800,
+        "precio_cop": 2800,
+        "cantidad": 27,
+        "subtotal": 75600
+      }
+    ],
+    "total": 75600,
+    "totalOriginal": 75600,
+    "discount": 0,
+    "createdAt": "2026-02-15T23:33:53.101Z",
+    "datosEntrega": {
+      "nombre": "andres",
+      "telefono": "a232434434",
+      "direccion": "eretretretr",
+      "notas": null
+    },
+    "updatedAt": "2026-02-15T23:33:53.304Z",
+    "repartidorNombre": null
   }
 ]
