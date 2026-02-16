@@ -88,5 +88,23 @@
     "titulo": "Pedido creado",
     "mensaje": "Tu pedido PED_BOD_002_81D8CBD5 fue registrado y está en preparación.",
     "target": "tenderos"
+  },
+  {
+    "id": "876fed4a-4de9-4f1a-a71e-78809024abd4",
+    "createdAt": "2026-02-15T23:33:53.313Z",
+    "read": false,
+    "bodegaId": "BOD_006",
+    "titulo": "Nuevo pedido recibido",
+    "mensaje": "Pedido PED_BOD_006_2FBF2744 listo para confirmar.",
+    "target": "bodegas"
+  },
+  {
+    "id": "07970e5e-d4cc-4884-ab6d-3e52b41d5cfd",
+    "createdAt": "2026-02-15T23:33:53.318Z",
+    "read": false,
+    "bodegaId": "BOD_006",
+    "titulo": "Pedido creado",
+    "mensaje": "Tu pedido PED_BOD_006_2FBF2744 fue registrado y está en preparación.",
+    "target": "tenderos"
   }
 ]
