@@ -1,7 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { readFile, writeFile } from "fs/promises";
-import { join } from "path";
-import { randomUUID } from "crypto";
 
 export const runtime = "nodejs";
 
@@ -30,33 +27,6 @@ type Notificacion = {
   read?: boolean;
 };
 
-const NOTIF_PATH = join(process.cwd(), "data", "notificaciones.json");
-
-const appendNotificacion = async (payload: Omit<Notificacion, "id" | "createdAt" | "read">) => {
-  try {
-    const raw = await readFile(NOTIF_PATH, "utf-8");
-    const current = JSON.parse(raw) as Notificacion[];
-    const nuevo: Notificacion = {
-      id: randomUUID(),
-      createdAt: new Date().toISOString(),
-      read: false,
-      ...payload,
-    };
-    await writeFile(NOTIF_PATH, JSON.stringify([...current, nuevo], null, 2), "utf-8");
-  } catch (err: any) {
-    if (err?.code === "ENOENT") {
-      const nuevo: Notificacion = {
-        id: randomUUID(),
-        createdAt: new Date().toISOString(),
-        read: false,
-        ...payload,
-      };
-      await writeFile(NOTIF_PATH, JSON.stringify([nuevo], null, 2), "utf-8");
-      return;
-    }
-    console.warn("No se pudo guardar notificación", err);
-  }
-};
 
 export async function GET(request: Request) {
   try {
@@ -179,19 +149,6 @@ export async function POST(request: Request) {
       },
     });
 
-    await appendNotificacion({
-      bodegaId,
-      titulo: "Nuevo pedido recibido",
-      mensaje: `Pedido ${nuevoPedido.id} listo para confirmar.`,
-      target: "bodegas",
-    });
-
-    await appendNotificacion({
-      bodegaId,
-      titulo: "Pedido creado",
-      mensaje: `Tu pedido ${nuevoPedido.id} fue registrado y está en preparación.`,
-      target: "tenderos",
-    });
 
     return Response.json(
       {
