@@ -1,9 +1,10 @@
 // Server-only file for pedido persistence
-import fs from "fs/promises";
-import path from "path";
-import type { Pedido } from "./pedidos.types";
 
-const FILE_PATH = path.join(process.cwd(), "data", "pedidos.json");
+import { PrismaClient } from "@prisma/client";
+
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const prisma = globalForPrisma.prisma || new PrismaClient();
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export function getStorageMode() {
     return "archivo";
@@ -50,9 +51,17 @@ export async function getPedidoByTracking(
     );
 }
 
-export async function getPedidoById(id: string): Promise<Pedido | null> {
-    const pedidos = await readPedidos();
-    return pedidos.find((p) => p.pedidoId === id) || null;
+
+export async function getPedidoById(id: string) {
+    try {
+        const pedido = await prisma.pedido.findUnique({
+            where: { id },
+        });
+        return pedido;
+    } catch (error) {
+        console.error("Error buscando pedido:", error);
+        return null;
+    }
 }
 
 export async function updatePedido(
