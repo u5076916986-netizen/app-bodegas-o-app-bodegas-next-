@@ -9,12 +9,13 @@ import StepperNav from "@/components/StepperNav";
 import CopyActions from "./CopyActions";
 import EtaCountdown from "./EtaCountdown";
 
+
 export default async function SeguimientoPage({
-    params,
+    params
 }: {
-    params: Promise<{ pedidoId: string }>;
+    params: { pedidoId: string }
 }) {
-    const { pedidoId } = await params;
+    const { pedidoId } = params;
     const pedido = await getPedidoById(pedidoId);
 
     if (!pedido) {
