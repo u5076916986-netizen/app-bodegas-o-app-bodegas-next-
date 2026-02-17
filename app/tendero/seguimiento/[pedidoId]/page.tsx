@@ -1,4 +1,5 @@
 
+import { getPedidoById } from "@/lib/pedidos.server";
 
 type Props = {
     params: Promise<{ pedidoId: string }>;
@@ -6,13 +7,14 @@ type Props = {
 
 export default async function SeguimientoPage({ params }: Props) {
     const { pedidoId } = await params;
+
     try {
         const pedido = await getPedidoById(pedidoId);
-        console.log("PEDIDO ENCONTRADO:", pedido);
+
         if (!pedido) {
-            console.log("PEDIDO NULL para ID:", pedidoId);
             return <div>Pedido no encontrado: {pedidoId}</div>;
         }
+
         return (
             <div>
                 <h1>Seguimiento</h1>
@@ -21,7 +23,6 @@ export default async function SeguimientoPage({ params }: Props) {
             </div>
         );
     } catch (error) {
-        console.log("ERROR:", error);
-        return <div>Error: {String(error)}</div>;
+        return <div>Error cargando pedido: {String(error)}</div>;
     }
 }
