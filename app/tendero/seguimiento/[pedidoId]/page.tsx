@@ -128,34 +128,12 @@ export default async function SeguimientoPage({
                 </div>
             ) : null}
             <div className="rounded-xl border border-[color:var(--surface-border)] bg-white p-6 shadow-sm">
-                <h3 className="mb-2 font-semibold text-[color:var(--text-strong)]">Contacto de la bodega</h3>
-                <div className="space-y-2 text-sm text-[color:var(--text-normal)]">
-                    <p className="text-slate-700">{bodega?.nombre || "Bodega"}</p>
-                    {bodega?.telefono ? (
-                        <Link
-                            href={`tel:${bodega.telefono}`}
-                            className="text-sky-700 hover:underline"
-                        >
-                            {bodega.telefono}
-                        </Link>
-                    ) : null}
-                    {bodega?.correo_pedidos ? (
-                        <Link
-                            href={`mailto:${bodega.correo_pedidos}`}
-                            className="text-sky-700 hover:underline"
-                        >
-                            {bodega.correo_pedidos}
-                        </Link>
-                    ) : null}
+                export default function SeguimientoPage({params}: {params: {pedidoId: string } }) {
+                  return (
+                <div>
+                    <h1>Seguimiento del pedido</h1>
+                    <p>ID: {params.pedidoId}</p>
                 </div>
-            </div>
-            <SeguimientoRecommendations
-                bodegaId={pedido.bodegaId || ""}
-                items={pedido.items ?? []}
-            />
-        </aside>
-                </div >
-            </div >
-        </BodegaThemeShell >
-    );
-}
+                );
+                }
+                {bodega.telefono}
