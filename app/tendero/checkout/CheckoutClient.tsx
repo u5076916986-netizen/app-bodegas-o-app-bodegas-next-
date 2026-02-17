@@ -339,9 +339,7 @@ export default function CheckoutClient() {
             }
 
             const data = (await resp.json()) as { ok: boolean; pedido?: { pedidoId?: string; id?: string } };
-            if (!data.ok) {
-                throw new Error("La API no respondió ok");
-            }
+            // No necesitamos validar a.ok porque ya validamos el status HTTP arriba
 
             const finalId = data.pedido?.pedidoId ?? data.pedido?.id ?? pedidoId;
             saveTenderoPhone(telefono);
