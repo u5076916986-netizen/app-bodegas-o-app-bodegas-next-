@@ -1,12 +1,3 @@
-type Props = {
-
-import { notFound } from "next/navigation";
-import { getPedidoById } from "@/lib/pedidos.server";
-import { getBodegaById } from "@/lib/csv";
-import CopyActions from "./CopyActions";
-import EtaCountdown from "./EtaCountdown";
-import SeguimientoRecommendations from "./SeguimientoRecommendations";
-type Props = {
 
 import { notFound } from "next/navigation";
 import { getPedidoById } from "@/lib/pedidos.server";
