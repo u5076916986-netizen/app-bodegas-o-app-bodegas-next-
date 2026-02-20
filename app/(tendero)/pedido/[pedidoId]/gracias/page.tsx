@@ -33,7 +33,9 @@ export default async function GraciasPage({
     const bodega = pedido.bodegaId ? await getBodegaById(pedido.bodegaId) : null;
     const minimoPedido = bodega?.min_pedido_cop ?? 0;
     const total = pedido.total ?? 0;
-    const direccion = pedido.datosEntrega?.direccion || "Sin dirección";
+    const direccion = pedido.direccion || "Sin dirección";
+    const nombre = pedido.nombre || "Sin nombre";
+    const telefono = pedido.telefono || "Sin teléfono";
     const formatCurrency = (value: number) =>
         new Intl.NumberFormat("es-CO", {
             style: "currency",
@@ -46,7 +48,7 @@ export default async function GraciasPage({
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                 <h1 className="text-3xl font-bold text-slate-900">¡Pedido confirmado!</h1>
                 <p className="mt-2 text-sm text-slate-600">
-                    Pedido {pedido.pedidoId} • Estado {pedido.estado}
+                    Pedido {pedido.id} • Estado {pedido.estado}
                 </p>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
@@ -58,10 +60,14 @@ export default async function GraciasPage({
                     <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
                         <p className="text-xs uppercase tracking-wide text-slate-500">Dirección</p>
                         <p className="text-sm font-semibold text-slate-900">{direccion}</p>
+                        <p className="text-xs uppercase tracking-wide text-slate-500 mt-2">Nombre</p>
+                        <p className="text-sm font-semibold text-slate-900">{nombre}</p>
+                        <p className="text-xs uppercase tracking-wide text-slate-500 mt-2">Teléfono</p>
+                        <p className="text-sm font-semibold text-slate-900">{telefono}</p>
                     </div>
                 </div>
                 <Link
-                    href={`/tendero/seguimiento/${encodeURIComponent(pedido.pedidoId)}`}
+                    href={`/tendero/seguimiento/${encodeURIComponent(pedido.id)}`}
                     className="mt-6 inline-flex rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
                 >
                     Ver seguimiento
