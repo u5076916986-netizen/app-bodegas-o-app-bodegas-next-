@@ -1,4 +1,9 @@
-﻿import { PrismaClient } from "@prisma/client";
+﻿notepad "lib\pedidos.server.ts"
+```
+
+**Ctrl+A**, **Delete**, pega esto y guarda:
+```
+import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 const prisma = globalForPrisma.prisma || new PrismaClient();
@@ -18,13 +23,15 @@ export type Pedido = {
 };
 
 export async function getPedidoById(id: string): Promise<Pedido | null> {
- try {
+  try {
     const pedido = await prisma.pedido.findUnique({ where: { id } });
     if (!pedido) return null;
     return { ...pedido, pedidoId: pedido.id };
   } catch (error) {
     return null;
   }
+}
+
 export async function updatePedido(id: string, updates: Partial<Pedido>): Promise<Pedido | null> {
   try {
     return await prisma.pedido.update({ where: { id }, data: updates });
@@ -41,3 +48,9 @@ export async function getPedidoByTracking(trackingCode: string | undefined | nul
     return null;
   }
 }
+```
+
+Luego en terminal:
+```
+git add .; git commit -m "fix: pedidos server final"; git push
+npx vercel --prod
