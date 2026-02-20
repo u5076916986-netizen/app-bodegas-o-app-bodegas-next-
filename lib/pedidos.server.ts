@@ -5,16 +5,16 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
 const prisma = globalForPrisma.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
-export type Pedido = {
-    id: string;
-    nombre: string;
-    telefono: string;
-    direccion: string;
-    items: any;
-    total: number;
-    estado: string;
-    bodegaId?: string;
-    createdAt?: Date;
+id: string;
+pedidoId ?: string;
+nombre: string;
+telefono: string;
+direccion: string;
+items: any;
+total: number;
+estado: string;
+bodegaId ?: string;
+createdAt ?: Date;
 };
 
 export async function getPedidoById(id: string): Promise<Pedido | null> {
