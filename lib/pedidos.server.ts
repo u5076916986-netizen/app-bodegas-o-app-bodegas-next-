@@ -1,9 +1,4 @@
-﻿notepad "lib\pedidos.server.ts"
-```
-
-**Ctrl+A**, **Delete**, pega esto y guarda:
-```
-import { PrismaClient } from "@prisma/client";
+﻿import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 const prisma = globalForPrisma.prisma || new PrismaClient();
@@ -48,9 +43,3 @@ export async function getPedidoByTracking(trackingCode: string | undefined | nul
     return null;
   }
 }
-```
-
-Luego en terminal:
-```
-git add .; git commit -m "fix: pedidos server final"; git push
-npx vercel --prod
