@@ -7,12 +7,12 @@ export const metadata = {
 };
 
 type Props = {
-    params: Promise<{ id: string }>;
+    params: Promise<{ pedidoId: string }>;
 };
 
 export default async function PedidoDetallePage({ params }: Props) {
-    const { id } = await params;
-    const pedido = await getPedidoById(id);
+    const { pedidoId } = await params;
+    const pedido = await getPedidoById(pedidoId);
 
     if (!pedido) {
         notFound();

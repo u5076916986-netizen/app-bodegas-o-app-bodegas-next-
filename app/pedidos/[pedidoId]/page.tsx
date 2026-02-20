@@ -5,11 +5,11 @@ import BodegaThemeShell from "@/components/theme/BodegaThemeShell";
 import TrackingQR from "@/components/TrackingQR";
 import { getBodegaById } from "@/lib/csv";
 
-type PageProps = {
+type Props = {
   params: Promise<{ pedidoId: string }>;
 };
 
-export default async function PedidoDetailPage({ params }: PageProps) {
+export default async function PedidoPage({ params }: Props) {
   const { pedidoId } = await params;
   const pedido = await getPedidoById(pedidoId);
 
@@ -46,7 +46,7 @@ export default async function PedidoDetailPage({ params }: PageProps) {
   const origin = bodega?.direccion
     ? `${bodega.direccion}${bodega.ciudad ? `, ${bodega.ciudad}` : ""}`
     : "";
-  const destination = pedido.datosEntrega?.direccion || pedido.direccion || "";
+  const destination = pedido.direccion || "";
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
     destination,
   )}${origin ? `&origin=${encodeURIComponent(origin)}` : ""}`;
