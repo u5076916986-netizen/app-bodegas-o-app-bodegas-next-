@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export type Pedido = {
   id: string;
-  pedidoId?: string;
+  pedidoId: string;
   nombre: string;
   telefono: string;
   direccion: string;
@@ -18,13 +18,13 @@ export type Pedido = {
 };
 
 export async function getPedidoById(id: string): Promise<Pedido | null> {
-  try {
-    return await prisma.pedido.findUnique({ where: { id } });
+ try {
+    const pedido = await prisma.pedido.findUnique({ where: { id } });
+    if (!pedido) return null;
+    return { ...pedido, pedidoId: pedido.id };
   } catch (error) {
     return null;
   }
-}
-
 export async function updatePedido(id: string, updates: Partial<Pedido>): Promise<Pedido | null> {
   try {
     return await prisma.pedido.update({ where: { id }, data: updates });
