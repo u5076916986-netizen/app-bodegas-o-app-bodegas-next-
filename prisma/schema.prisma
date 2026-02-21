@@ -1,3 +1,13 @@
+// =============================================================================
+// SCHEMA DE PRISMA - App Bodegas
+// =============================================================================
+// Este archivo define la estructura de tu base de datos PostgreSQL.
+// Cada "model" representa una tabla en la base de datos.
+// 
+// IMPORTANTE: Después de modificar este archivo, ejecuta:
+//   npx prisma migrate dev --name nombre_descriptivo
+// =============================================================================
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,16 +17,144 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Pedido {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  nombre     String
-  telefono   String
-  direccion  String
-  items      Json
-  total      Float
-  estado     String   @default("confirmado")
-  bodegaId   String   @default("default")
+// =============================================================================
+// MODELO: Producto
+// =============================================================================
+// Representa un producto en el inventario de una bodega.
+// Cada bodega puede tener múltiples productos.
+// =============================================================================
+model Producto {
+  // Identificador único del producto (ej: "PROD_001")
+  id          String   @id
+  
+  // ID de la bodega a la que pertenece este producto
+  bodegaId    String
+  
+  // Nombre del producto (ej: "Arroz Premium 5kg")
+  nombre      String
+  
+  // Código SKU único del producto (ej: "ARR-001")
+  sku         String
+  
+  // Categoría del producto (ej: "Granos", "Lácteos")
+  categoria   String
+  
+  // Precio en centavos o unidad mínima (ej: 15000 = $15.000)
+  precio      Float
+  
+  // Cantidad disponible en inventario
+  stock       Int      @default(0)
+  
+  // Si el producto está activo para venta
+  activo      Boolean  @default(true)
+  
+  // Descripción del producto (opcional)
+  descripcion String?
+  
+  // Fecha de última actualización
+  updatedAt   DateTime @default(now()) @updatedAt
+  
+  // Fecha de creación
+  createdAt   DateTime @default(now())
 
-  @@map("pedidos")
+  // Índices para búsquedas rápidas
+  @@index([bodegaId])
+  @@index([categoria])
+  @@index([sku])
+}
+
+// =============================================================================
+// MODELO: Promocion
+// =============================================================================
+// Representa una promoción o descuento que se aplica a productos.
+// Las promociones tienen fecha de inicio y fin, y pueden aplicarse
+// a categorías completas o productos específicos.
+// =============================================================================
+model Promocion {
+  // Identificador único de la promoción (ej: "PROMO_001")
+  id                  String   @id
+  
+  // ID de la bodega que creó la promoción
+  bodegaId            String
+  
+  // Nombre de la promoción (ej: "Descuento Granos - Febrero")
+  nombre              String
+  
+  // Tipo de descuento: "porcentaje" o "monto_fijo"
+  tipo                String
+  
+  // Valor del descuento (15 = 15% o $15 según el tipo)
+  valor               Float
+  
+  // Fecha y hora de inicio de la promoción
+  fechaInicio         DateTime
+  
+  // Fecha y hora de finalización de la promoción
+  fechaFin            DateTime
+  
+  // A qué se aplica: "categoria", "producto", "todos"
+  aplicaA             String
+  
+  // Lista de categorías afectadas (si aplicaA = "categoria")
+  // Se guarda como JSON array: ["Granos", "Lácteos"]
+  categoriaProductos  Json     @default("[]")
+  
+  // Lista de IDs de productos específicos (si aplicaA = "producto")
+  productosIds        Json     @default("[]")
+  
+  // Estado calculado: "activa", "programada", "finalizada"
+  // NOTA: Este campo se calcula dinámicamente en la API
+  estado              String   @default("programada")
+  
+  // Fecha de creación
+  createdAt           DateTime @default(now())
+  
+  // Fecha de última actualización
+  updatedAt           DateTime @default(now()) @updatedAt
+
+  // Índices para búsquedas rápidas
+  @@index([bodegaId])
+  @@index([estado])
+  @@index([fechaInicio, fechaFin])
+}
+
+// =============================================================================
+// MODELO: Pedido
+// =============================================================================
+// Representa un pedido realizado en una bodega.
+// Este modelo ya existía en tu schema original.
+// =============================================================================
+model Pedido {
+  // Identificador único del pedido
+  id              String   @id @default(cuid())
+  
+  // ID de la bodega donde se realizó el pedido
+  bodegaId        String
+  
+  // ID del cliente que realizó el pedido
+  clienteId       String?
+  
+  // Nombre del cliente
+  clienteNombre   String?
+  
+  // Estado del pedido: "pendiente", "preparando", "entregado", "cancelado"
+  estado          String   @default("pendiente")
+  
+  // Productos del pedido (JSON array)
+  productos       Json
+  
+  // Total del pedido
+  total           Float
+  
+  // Notas adicionales
+  notas           String?
+  
+  // Fecha de creación
+  createdAt       DateTime @default(now())
+  
+  // Fecha de última actualización
+  updatedAt       DateTime @default(now()) @updatedAt
+
+  @@index([bodegaId])
+  @@index([estado])
 }
