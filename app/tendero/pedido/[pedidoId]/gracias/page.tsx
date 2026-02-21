@@ -30,9 +30,9 @@ export default async function GraciasPage({
         );
     }
 
-    const total = pedido.total ?? 0;
-    const direccion = pedido.datosEntrega?.direccion || "Sin dirección";
-    const ledgerEntry = await getLedgerEntryByPedidoId(pedido.pedidoId);
+    const total = pedido?.total ?? 0;
+    const direccion = ('datosEntrega' in pedido && (pedido.datosEntrega as any)?.direccion) ? (pedido.datosEntrega as any).direccion : "Sin dirección";
+    const ledgerEntry = await getLedgerEntryByPedidoId(pedido?.id ?? "");
     const puntosGanados = ledgerEntry?.puntosTendero ?? 0;
     const formatCurrency = (value: number) =>
         new Intl.NumberFormat("es-CO", {
@@ -46,7 +46,7 @@ export default async function GraciasPage({
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                 <h1 className="text-3xl font-bold text-slate-900">¡Pedido confirmado!</h1>
                 <p className="mt-2 text-sm text-slate-600">
-                    Pedido {pedido.pedidoId} • Estado {pedido.estado}
+                    Pedido {pedido.id} • Estado {pedido.estado}
                 </p>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
@@ -65,7 +65,7 @@ export default async function GraciasPage({
                     </div>
                 </div>
                 <Link
-                    href={`/tendero/seguimiento/${encodeURIComponent(pedido.pedidoId)}`}
+                    href={`/tendero/seguimiento/${encodeURIComponent(pedido?.id ?? "")}`}
                     className="mt-6 inline-flex rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
                 >
                     Ver seguimiento
@@ -73,8 +73,8 @@ export default async function GraciasPage({
             </div>
 
             <GraciasClient
-                bodegaId={pedido.bodegaId || ""}
-                items={pedido.items ?? []}
+                bodegaId={pedido?.bodegaId || ""}
+                items={Array.isArray(pedido?.items) ? (pedido.items as { productoId: string; nombre?: string; sku?: string }[]) : []}
             />
         </main>
     );

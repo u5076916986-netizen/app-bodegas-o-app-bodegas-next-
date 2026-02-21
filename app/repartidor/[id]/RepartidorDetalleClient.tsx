@@ -25,8 +25,11 @@ export default function RepartidorDetalleClient({ pedido: initialPedido }: { ped
     );
 
     const formatDate = useMemo(
-        () => (value?: string) => {
+        () => (value?: string | Date) => {
             if (!value || !mounted) return "—";
+            if (value instanceof Date) {
+                return value.toLocaleString("es-CO");
+            }
             return new Date(value).toLocaleString("es-CO");
         },
         [mounted],

@@ -12,7 +12,8 @@ export const metadata = {
 
 export default async function RepartidorDetallePage({ params }: Params) {
     const { id } = await params;
-    const pedido = await getPedidoById(id);
+    const pedidoRaw = await getPedidoById(id);
+    const pedido = pedidoRaw ? { ...pedidoRaw, pedidoId: pedidoRaw.id, datosEntrega: ('datosEntrega' in pedidoRaw ? pedidoRaw.datosEntrega as { [key: string]: any; direccion?: string } | null | undefined : undefined), items: Array.isArray(pedidoRaw.items) ? pedidoRaw.items : [] } : null;
 
     if (!pedido) {
         notFound();

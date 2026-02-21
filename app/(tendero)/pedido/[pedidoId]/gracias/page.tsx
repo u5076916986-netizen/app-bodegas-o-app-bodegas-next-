@@ -78,7 +78,7 @@ export default async function GraciasPage({
                 bodegaId={pedido.bodegaId || ""}
                 total={total}
                 minimoPedido={minimoPedido}
-                items={pedido.items ?? []}
+                items={Array.isArray(pedido?.items) ? (pedido.items as { productoId: string; nombre?: string; sku?: string }[]) : []}
             />
         </main>
     );

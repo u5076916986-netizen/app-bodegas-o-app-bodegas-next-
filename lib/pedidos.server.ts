@@ -1,45 +1,60 @@
-﻿import { PrismaClient } from "@prisma/client";
+export async function getPedidoById(id: string) {
+    return prisma.pedido.findUnique({
+        where: { id },
+    });
+}
+import { PrismaClient, Pedido } from '@prisma/client';
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
-const prisma = globalForPrisma.prisma || new PrismaClient();
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+const prisma = new PrismaClient();
 
-export type Pedido = {
-  id: string;
-  pedidoId: string;
-  nombre: string;
-  telefono: string;
-  direccion: string;
-  items: any;
-  total: number;
-  estado: string;
-  bodegaId?: string;
-  createdAt?: Date;
-};
 
-export async function getPedidoById(id: string): Promise<Pedido | null> {
-  try {
-    const pedido = await prisma.pedido.findUnique({ where: { id } });
-    if (!pedido) return null;
-    return { ...pedido, pedidoId: pedido.id };
-  } catch (error) {
-    return null;
-  }
+
+// Obtener todos los pedidos
+export async function getPedidos(): Promise<Pedido[]> {
+    return prisma.pedido.findMany({
+        orderBy: { createdAt: 'desc' },
+    });
 }
 
-export async function updatePedido(id: string, updates: Partial<Pedido>): Promise<Pedido | null> {
-  try {
-    return await prisma.pedido.update({ where: { id }, data: updates });
-  } catch (error) {
-    return null;
-  }
+// Crear un nuevo pedido
+export async function createPedido(data: {
+    bodegaId: string;
+    nombre: string;
+    total: number;
+    items: { productoId: string; cantidad: number }[];
+    direccion: string;
+    telefono: string;
+}): Promise<Pedido> {
+    return prisma.pedido.create({
+        data: {
+            bodegaId: data.bodegaId,
+            direccion: data.direccion,
+            telefono: data.telefono,
+            nombre: data.nombre ?? "",
+            total: data.total ?? 0,
+            items: {
+                create: data.items.map((item) => ({
+                    productoId: item.productoId,
+                    cantidad: item.cantidad,
+                })),
+            },
+        },
+        // No include block needed
+    });
 }
 
-export async function getPedidoByTracking(trackingCode: string | undefined | null): Promise<Pedido | null> {
-  if (!trackingCode) return null;
-  try {
-    return await prisma.pedido.findFirst({ where: { id: trackingCode.trim() } });
-  } catch (error) {
-    return null;
-  }
+// Actualizar estado del pedido
+export async function updatePedidoEstado(id: string, estado: string): Promise<Pedido | null> {
+    return prisma.pedido.update({
+        where: { id },
+        data: { estado },
+    });
+}
+
+// Asignar repartidor a pedido
+export async function asignarRepartidor(pedidoId: string, repartidorId: string): Promise<Pedido | null> {
+    return prisma.pedido.update({
+        where: { id: pedidoId },
+        data: {},
+    });
 }

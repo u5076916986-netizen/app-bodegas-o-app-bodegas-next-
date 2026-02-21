@@ -11,7 +11,16 @@ type Props = {
 
 export default async function PedidoPage({ params }: Props) {
   const { pedidoId } = await params;
-  const pedido = await getPedidoById(pedidoId);
+  const pedidoRaw = await getPedidoById(pedidoId);
+  const pedido = pedidoRaw
+    ? ({
+      ...pedidoRaw,
+      pedidoId: pedidoRaw.id,
+      repartidorNombre: 'repartidorNombre' in pedidoRaw ? pedidoRaw.repartidorNombre as string | undefined : undefined,
+      repartidorTelefono: 'repartidorTelefono' in pedidoRaw ? pedidoRaw.repartidorTelefono as string | undefined : undefined,
+      totalOriginal: (pedidoRaw as any).totalOriginal ?? null,
+    } as import("@/lib/pedidos").Pedido)
+    : null;
 
   if (!pedido) {
     notFound();
@@ -26,9 +35,15 @@ export default async function PedidoPage({ params }: Props) {
       maximumFractionDigits: 0,
     });
 
-  const formatDate = (value?: string) => {
+  const formatDate = (value?: Date | string) => {
     if (!value) return "N/D";
-    return new Date(value).toISOString().slice(0, 16).replace("T", " ");
+    if (value instanceof Date) {
+      return value.toISOString().slice(0, 16).replace("T", " ");
+    }
+    // Si es string, intentar parsear
+    const date = new Date(value);
+    if (isNaN(date.getTime())) return value;
+    return date.toISOString().slice(0, 16).replace("T", " ");
   };
 
   const timeline = [

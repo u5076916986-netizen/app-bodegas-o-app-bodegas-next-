@@ -12,22 +12,17 @@ export type Pedido = {
     id?: string;
     pedidoId: string;
     trackingCode?: string;
-    bodegaId: string;
+    bodegaId?: string;
     total: number;
     totalOriginal?: number;
     discount?: number;
     coupon?: { code: string; descuentoCOP: number };
     pointsEarned?: number;
     estado: string;
-    createdAt?: string;
-    updatedAt?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
     items: Array<any>;
-    datosEntrega?: {
-        nombre?: string;
-        telefono?: string;
-        direccion?: string;
-        notas?: string | null;
-    } | null;
+    datosEntrega?: { direccion?: string;[key: string]: any } | null;
     cliente?: {
         nombre?: string;
         telefono?: string;
@@ -37,11 +32,11 @@ export type Pedido = {
     zona?: string;
     asignadoA?: string | null;
     // Campos para repartidor
-    repartidorId?: string | null;
     repartidorNombre?: string | null;
+    repartidorId?: string;
     repartidorTelefono?: string | null;
-    takenAt?: string;
-    deliveredAt?: string;
+    takenAt?: Date;
+    deliveredAt?: Date;
 };
 
 /**

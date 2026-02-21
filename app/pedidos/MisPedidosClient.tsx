@@ -54,13 +54,19 @@ const formatCurrency = (value: number | null) => {
   });
 };
 
-const formatDateTime = (value?: string) => {
+const formatDateTime = (value?: string | Date) => {
   if (!value) return "N/D";
+  if (value instanceof Date) {
+    return value.toLocaleString("es-CO");
+  }
   return new Date(value).toLocaleString("es-CO");
 };
 
-const formatDateOnly = (value?: string) => {
+const formatDateOnly = (value?: string | Date) => {
   if (!value) return "N/D";
+  if (value instanceof Date) {
+    return value.toLocaleDateString("es-CO");
+  }
   return new Date(value).toLocaleDateString("es-CO");
 };
 
