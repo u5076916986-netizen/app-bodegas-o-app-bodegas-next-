@@ -111,6 +111,7 @@ export async function GET(request: NextRequest) {
     // Retornamos la respuesta exitosa
     return NextResponse.json({
       success: true,
+      ok: true,
       data: promociones,
       total: promociones.length,
       activas: activas,
@@ -255,6 +256,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
+        ok: true,
         message: 'Promoción creada exitosamente',
         data: {
           ...nuevaPromocion,

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Modal from "@/components/Modal";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import { useSearchParams } from "next/navigation";
 
 interface Producto {
@@ -73,6 +74,13 @@ export default function PromocionesClient({ bodegaId }: PromocionesClientProps) 
     const [fotoLoading, setFotoLoading] = useState(false);
     const [fotoError, setFotoError] = useState<string | null>(null);
     const [fotoImageUrl, setFotoImageUrl] = useState<string | null>(null);
+    // Estados para el diálogo de confirmación de eliminación
+    const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; promoId: string | null; promoName: string }>({
+        isOpen: false,
+        promoId: null,
+        promoName: "",
+    });
+    const [isDeleting, setIsDeleting] = useState(false);
     const searchParams = useSearchParams();
     const autoOpenedRef = useRef(false);
     const filterAppliedRef = useRef(false);
@@ -317,20 +325,31 @@ export default function PromocionesClient({ bodegaId }: PromocionesClientProps) 
         setModalView("form");
     };
 
-    const handleDelete = async (promoId: string) => {
-        if (!confirm("¿Eliminar esta promoción?")) return;
+    // Mostrar diálogo de confirmación para eliminar
+    const handleDeleteClick = (promoId: string, promoName: string) => {
+        setDeleteConfirm({ isOpen: true, promoId, promoName });
+    };
+
+    // Confirmar eliminación de promoción
+    const handleDeleteConfirm = async () => {
+        if (!deleteConfirm.promoId) return;
+        
+        setIsDeleting(true);
         try {
-            const response = await fetch(`/api/promociones/${promoId}`, {
+            const response = await fetch(`/api/promociones/${deleteConfirm.promoId}`, {
                 method: "DELETE",
             });
             const result = await response.json();
-            if (result.ok) {
+            if (result.ok || result.success) {
+                setDeleteConfirm({ isOpen: false, promoId: null, promoName: "" });
                 await loadPromociones();
             } else {
                 setError(result.error || "Error eliminando promoción");
             }
         } catch (err) {
             setError("Error eliminando promoción");
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -646,7 +665,7 @@ export default function PromocionesClient({ bodegaId }: PromocionesClientProps) 
                                                 {promo.activo !== false ? "Pausar" : "Activar"}
                                             </button>
                                             <button
-                                                onClick={() => handleDelete(promo.id)}
+                                                onClick={() => handleDeleteClick(promo.id, promo.nombre)}
                                                 className="inline-flex items-center px-2.5 py-1.5 text-xs font-medium rounded text-red-700 bg-red-50 hover:bg-red-100"
                                                 aria-label={`Eliminar ${promo.nombre}`}
                                             >
@@ -710,6 +729,19 @@ export default function PromocionesClient({ bodegaId }: PromocionesClientProps) 
                     }}
                 />
             </Modal>
+
+            {/* Diálogo de confirmación para eliminar */}
+            <ConfirmDialog
+                isOpen={deleteConfirm.isOpen}
+                onClose={() => setDeleteConfirm({ isOpen: false, promoId: null, promoName: "" })}
+                onConfirm={handleDeleteConfirm}
+                title="Eliminar promoción"
+                message={`¿Estás seguro de que deseas eliminar "${deleteConfirm.promoName}"? Esta acción no se puede deshacer.`}
+                confirmText="Eliminar"
+                cancelText="Cancelar"
+                variant="danger"
+                isLoading={isDeleting}
+            />
         </div>
     );
 }

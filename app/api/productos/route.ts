@@ -50,8 +50,10 @@ export async function GET(request: NextRequest) {
     })
 
     // Retornamos la respuesta exitosa con los productos
+    // Nota: incluimos "ok" para compatibilidad con código existente
     return NextResponse.json({
       success: true,
+      ok: true,
       data: productos,
       total: productos.length,
     })
@@ -140,6 +142,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
+        ok: true,
         message: 'Producto creado exitosamente',
         data: nuevoProducto,
       },

@@ -1,145 +1,314 @@
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
+// =============================================================================
+// API DE PROMOCIÓN INDIVIDUAL - /api/promociones/[id]
+// =============================================================================
+// Este endpoint maneja operaciones CRUD para una promoción específica.
+//
+// Endpoints disponibles:
+//   GET    /api/promociones/[id]  → Obtener una promoción por ID
+//   PUT    /api/promociones/[id]  → Actualizar una promoción
+//   DELETE /api/promociones/[id]  → Eliminar una promoción
+//
+// IMPORTANTE: Ahora usa Prisma en lugar de archivos JSON
+// =============================================================================
 
-export const runtime = "nodejs";
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
 
-interface Promocion {
-    id?: string;
-    bodegaId: string;
-    nombre: string;
-    tipo: "porcentaje" | "precio_fijo";
-    valor: number;
-    fechaInicio: string;
-    fechaFin: string;
-    aplicaA: "categoria" | "productos";
-    categoriaProductos?: string[];
-    productosIds?: string[];
-    estado?: "activa" | "programada" | "finalizada";
-    productosAfectados?: number;
-    createdAt?: string;
-    updatedAt?: string;
-    activo?: boolean;
+// Tipos para los parámetros de la ruta
+type RouteParams = {
+  params: Promise<{ id: string }>
 }
 
-async function readPromociones() {
-    try {
-        const dataPath = path.join(process.cwd(), "data", "promociones.json");
-        const data = await readFile(dataPath, "utf-8");
-        return JSON.parse(data) as Promocion[];
-    } catch {
-        return [];
-    }
+// =============================================================================
+// FUNCIÓN AUXILIAR: Calcular estado de una promoción
+// =============================================================================
+function calcularEstadoPromocion(
+  fechaInicio: Date,
+  fechaFin: Date
+): 'activa' | 'programada' | 'finalizada' {
+  const ahora = new Date()
+  
+  if (ahora < fechaInicio) return 'programada'
+  if (ahora > fechaFin) return 'finalizada'
+  return 'activa'
 }
 
-async function writePromociones(promociones: Promocion[]) {
-    const dataPath = path.join(process.cwd(), "data", "promociones.json");
-    await writeFile(dataPath, JSON.stringify(promociones, null, 2));
-}
-
+// =============================================================================
+// GET - Obtener una promoción por ID
+// =============================================================================
+// Retorna la promoción completa con el estado calculado dinámicamente.
+//
+// Ejemplo: GET /api/promociones/PROMO_001
+// =============================================================================
 export async function GET(
-    request: Request,
-    { params }: { params: Promise<{ id: string }> }
+  request: NextRequest,
+  { params }: RouteParams
 ) {
-    try {
-        const { id } = await params;
-        const promociones = await readPromociones();
-        const promo = promociones.find((p) => p.id === id);
+  try {
+    const { id } = await params
 
-        if (!promo) {
-            return Response.json(
-                { ok: false, error: "Promoción no encontrada" },
-                { status: 404 }
-            );
-        }
+    // Buscamos la promoción por ID
+    const promocion = await prisma.promocion.findUnique({
+      where: { id },
+    })
 
-        return Response.json({
-            ok: true,
-            data: promo,
-        });
-    } catch (error) {
-        console.error("Error leyendo promoción:", error);
-        return Response.json(
-            { ok: false, error: "Error leyendo promoción" },
-            { status: 500 }
-        );
+    // Si no existe, retornamos 404
+    if (!promocion) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Promoción no encontrada',
+        },
+        { status: 404 }
+      )
     }
+
+    // Calculamos el estado actual
+    const estadoCalculado = calcularEstadoPromocion(
+      new Date(promocion.fechaInicio),
+      new Date(promocion.fechaFin)
+    )
+
+    // Retornamos la promoción con el estado calculado
+    return NextResponse.json({
+      success: true,
+      ok: true,
+      data: {
+        ...promocion,
+        estado: estadoCalculado,
+        fechaInicio: promocion.fechaInicio.toISOString(),
+        fechaFin: promocion.fechaFin.toISOString(),
+      },
+    })
+
+  } catch (error) {
+    console.error('Error al obtener promoción:', error)
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Error interno del servidor',
+      },
+      { status: 500 }
+    )
+  }
 }
 
+// =============================================================================
+// PUT - Actualizar una promoción
+// =============================================================================
+// Actualiza los campos proporcionados de la promoción.
+// Solo se actualizan los campos que se envían en el cuerpo.
+//
+// Ejemplo: PUT /api/promociones/PROMO_001
+// Body: { "nombre": "Nuevo nombre", "valor": 20 }
+// =============================================================================
 export async function PUT(
-    request: Request,
-    { params }: { params: Promise<{ id: string }> }
+  request: NextRequest,
+  { params }: RouteParams
 ) {
-    try {
-        const { id } = await params;
-        const body = (await request.json()) as Promocion;
+  try {
+    const { id } = await params
+    const body = await request.json()
 
-        const promociones = await readPromociones();
-        const index = promociones.findIndex((p) => p.id === id);
+    // Verificamos que la promoción exista
+    const promocionExistente = await prisma.promocion.findUnique({
+      where: { id },
+    })
 
-        if (index === -1) {
-            return Response.json(
-                { ok: false, error: "Promoción no encontrada" },
-                { status: 404 }
-            );
-        }
-
-        const updated: Promocion = {
-            ...promociones[index],
-            nombre: body.nombre || promociones[index].nombre,
-            tipo: body.tipo || promociones[index].tipo,
-            valor: body.valor !== undefined ? body.valor : promociones[index].valor,
-            fechaInicio: body.fechaInicio || promociones[index].fechaInicio,
-            fechaFin: body.fechaFin || promociones[index].fechaFin,
-            aplicaA: body.aplicaA || promociones[index].aplicaA,
-            categoriaProductos: body.categoriaProductos || promociones[index].categoriaProductos,
-            productosIds: body.productosIds || promociones[index].productosIds,
-            activo: body.activo !== undefined ? body.activo : promociones[index].activo,
-            updatedAt: new Date().toISOString(),
-        };
-
-        promociones[index] = updated;
-        await writePromociones(promociones);
-
-        return Response.json({
-            ok: true,
-            data: updated,
-        });
-    } catch (error) {
-        console.error("Error actualizando promoción:", error);
-        return Response.json(
-            { ok: false, error: "Error actualizando promoción" },
-            { status: 500 }
-        );
+    if (!promocionExistente) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Promoción no encontrada',
+        },
+        { status: 404 }
+      )
     }
+
+    // Preparamos los datos a actualizar
+    const datosActualizacion: Record<string, unknown> = {}
+
+    // Campos de texto
+    if (body.nombre !== undefined) datosActualizacion.nombre = body.nombre
+    if (body.tipo !== undefined) {
+      // Validamos que el tipo sea válido
+      if (!['porcentaje', 'monto_fijo'].includes(body.tipo)) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'El tipo debe ser "porcentaje" o "monto_fijo"',
+          },
+          { status: 400 }
+        )
+      }
+      datosActualizacion.tipo = body.tipo
+    }
+
+    // Campo numérico: valor
+    if (body.valor !== undefined) {
+      const valor = parseFloat(body.valor)
+      if (isNaN(valor) || valor <= 0) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'El valor debe ser un número mayor a 0',
+          },
+          { status: 400 }
+        )
+      }
+      datosActualizacion.valor = valor
+    }
+
+    // Fechas
+    if (body.fechaInicio !== undefined) {
+      const fecha = new Date(body.fechaInicio)
+      if (isNaN(fecha.getTime())) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'La fecha de inicio no es válida',
+          },
+          { status: 400 }
+        )
+      }
+      datosActualizacion.fechaInicio = fecha
+    }
+
+    if (body.fechaFin !== undefined) {
+      const fecha = new Date(body.fechaFin)
+      if (isNaN(fecha.getTime())) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'La fecha de fin no es válida',
+          },
+          { status: 400 }
+        )
+      }
+      datosActualizacion.fechaFin = fecha
+    }
+
+    // Validar que fechaFin sea posterior a fechaInicio
+    const fechaInicio = (datosActualizacion.fechaInicio as Date) || promocionExistente.fechaInicio
+    const fechaFin = (datosActualizacion.fechaFin as Date) || promocionExistente.fechaFin
+    if (fechaFin <= fechaInicio) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'La fecha de fin debe ser posterior a la fecha de inicio',
+        },
+        { status: 400 }
+      )
+    }
+
+    // Campo aplicaA
+    if (body.aplicaA !== undefined) {
+      if (!['categoria', 'producto', 'todos'].includes(body.aplicaA)) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'aplicaA debe ser "categoria", "producto" o "todos"',
+          },
+          { status: 400 }
+        )
+      }
+      datosActualizacion.aplicaA = body.aplicaA
+    }
+
+    // Arrays
+    if (body.categoriaProductos !== undefined) {
+      datosActualizacion.categoriaProductos = body.categoriaProductos
+    }
+    if (body.productosIds !== undefined) {
+      datosActualizacion.productosIds = body.productosIds
+    }
+
+    // Calculamos el nuevo estado
+    const estadoCalculado = calcularEstadoPromocion(
+      new Date(fechaInicio),
+      new Date(fechaFin)
+    )
+    datosActualizacion.estado = estadoCalculado
+
+    // Actualizamos la promoción
+    const promocionActualizada = await prisma.promocion.update({
+      where: { id },
+      data: datosActualizacion,
+    })
+
+    return NextResponse.json({
+      success: true,
+      ok: true,
+      message: 'Promoción actualizada exitosamente',
+      data: {
+        ...promocionActualizada,
+        estado: estadoCalculado,
+        fechaInicio: promocionActualizada.fechaInicio.toISOString(),
+        fechaFin: promocionActualizada.fechaFin.toISOString(),
+      },
+    })
+
+  } catch (error) {
+    console.error('Error al actualizar promoción:', error)
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Error interno del servidor',
+      },
+      { status: 500 }
+    )
+  }
 }
 
+// =============================================================================
+// DELETE - Eliminar una promoción
+// =============================================================================
+// Elimina permanentemente una promoción de la base de datos.
+// PRECAUCIÓN: Esta acción no se puede deshacer.
+//
+// Ejemplo: DELETE /api/promociones/PROMO_001
+// =============================================================================
 export async function DELETE(
-    request: Request,
-    { params }: { params: Promise<{ id: string }> }
+  request: NextRequest,
+  { params }: RouteParams
 ) {
-    try {
-        const { id } = await params;
-        const promociones = await readPromociones();
-        const filtered = promociones.filter((p) => p.id !== id);
+  try {
+    const { id } = await params
 
-        if (filtered.length === promociones.length) {
-            return Response.json(
-                { ok: false, error: "Promoción no encontrada" },
-                { status: 404 }
-            );
-        }
+    // Verificamos que la promoción exista
+    const promocionExistente = await prisma.promocion.findUnique({
+      where: { id },
+    })
 
-        await writePromociones(filtered);
-
-        return Response.json({
-            ok: true,
-            message: "Promoción eliminada",
-        });
-    } catch (error) {
-        console.error("Error eliminando promoción:", error);
-        return Response.json(
-            { ok: false, error: "Error eliminando promoción" },
-            { status: 500 }
-        );
+    if (!promocionExistente) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Promoción no encontrada',
+        },
+        { status: 404 }
+      )
     }
+
+    // Eliminamos la promoción
+    await prisma.promocion.delete({
+      where: { id },
+    })
+
+    return NextResponse.json({
+      success: true,
+      ok: true,
+      message: 'Promoción eliminada exitosamente',
+    })
+
+  } catch (error) {
+    console.error('Error al eliminar promoción:', error)
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Error interno del servidor',
+      },
+      { status: 500 }
+    )
+  }
 }

@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import Table from "@/components/Table";
 import Modal from "@/components/Modal";
 import ProductForm from "@/components/ProductForm";
+import ConfirmDialog from "@/components/ConfirmDialog";
 import type { ProductFormValues } from "@/components/ProductForm";
 import { buildFuseIndex, smartSearch } from "@/lib/smartSearch";
 import { expandQuery } from "@/lib/synonyms";
@@ -54,6 +55,12 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
     const [activeTab, setActiveTab] = useState<TabType>("catalogo");
     const [editingPrice, setEditingPrice] = useState<EditingPrice | null>(null);
     const [editingStock, setEditingStock] = useState<EditingStock | null>(null);
+    // Estados para el diálogo de confirmación de eliminación
+    const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; product: Producto | null }>({
+        isOpen: false,
+        product: null,
+    });
+    const [isDeleting, setIsDeleting] = useState(false);
     const searchParams = useSearchParams();
     const autoOpenedRef = useRef(false);
     const filterAppliedRef = useRef(false);
@@ -154,15 +161,18 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
         setModalView("form");
     };
 
+    // Guardar producto (crear o actualizar)
     const handleSave = async (values: ProductFormValues) => {
         try {
+            // Si estamos editando, usamos PUT a /api/productos/[id]
+            // Si estamos creando, usamos POST a /api/productos
             const url = editing
-                ? `/api/productos`
+                ? `/api/productos/${editing.id}`
                 : `/api/productos`;
             const method = editing ? "PUT" : "POST";
             const payload = editing
-                ? { id: editing.id, bodegaId, ...values }
-                : { bodegaId, ...values };
+                ? { ...values }  // Para actualizar, solo enviamos los valores
+                : { bodegaId, ...values };  // Para crear, incluimos bodegaId
 
             const response = await fetch(url, {
                 method,
@@ -171,7 +181,7 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
             });
 
             const result = await response.json();
-            if (result.ok) {
+            if (result.ok || result.success) {
                 setModalView(null);
                 setEditing(null);
                 await loadProductos();
@@ -211,19 +221,19 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
         }
     };
 
+    // Activar/desactivar producto
     const handleToggle = async (product: Producto) => {
         try {
-            const response = await fetch("/api/productos", {
+            const response = await fetch(`/api/productos/${product.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    id: product.id,
                     activo: !product.activo,
                 }),
             });
 
             const result = await response.json();
-            if (result.ok) {
+            if (result.ok || result.success) {
                 await loadProductos();
             } else {
                 setError(result.error || "Error actualizando producto");
@@ -233,21 +243,32 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
         }
     };
 
-    const handleDelete = async (product: Producto) => {
-        if (!window.confirm(`¿Eliminar "${product.nombre}"?`)) return;
+    // Mostrar diálogo de confirmación para eliminar
+    const handleDeleteClick = (product: Producto) => {
+        setDeleteConfirm({ isOpen: true, product });
+    };
+
+    // Confirmar eliminación de producto
+    const handleDeleteConfirm = async () => {
+        if (!deleteConfirm.product) return;
+        
+        setIsDeleting(true);
         try {
-            const response = await fetch(`/api/productos?id=${product.id}`, {
+            const response = await fetch(`/api/productos/${deleteConfirm.product.id}`, {
                 method: "DELETE",
             });
 
             const result = await response.json();
-            if (result.ok) {
+            if (result.ok || result.success) {
+                setDeleteConfirm({ isOpen: false, product: null });
                 await loadProductos();
             } else {
                 setError(result.error || "Error eliminando producto");
             }
         } catch (err) {
             setError("Error eliminando producto");
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -462,7 +483,7 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
         },
         {
             label: "Eliminar",
-            onClick: handleDelete,
+            onClick: handleDeleteClick,
             className: "text-red-600 hover:bg-red-50",
         },
     ];
@@ -597,6 +618,18 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
                 />
             </Modal>
 
+            {/* Diálogo de confirmación para eliminar */}
+            <ConfirmDialog
+                isOpen={deleteConfirm.isOpen}
+                onClose={() => setDeleteConfirm({ isOpen: false, product: null })}
+                onConfirm={handleDeleteConfirm}
+                title="Eliminar producto"
+                message={`¿Estás seguro de que deseas eliminar "${deleteConfirm.product?.nombre}"? Esta acción no se puede deshacer.`}
+                confirmText="Eliminar"
+                cancelText="Cancelar"
+                variant="danger"
+                isLoading={isDeleting}
+            />
         </div>
     );
 }
