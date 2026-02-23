@@ -167,25 +167,32 @@ export default function TopNav() {
   };
 
   return (
+    // Contenedor principal con mejor contraste y sombra para móvil
     <div className="w-full border-b border-slate-200 bg-white sticky top-0 z-40 shadow-sm">
-      <nav className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-3">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Link href="/inicio" className="font-bold text-lg text-slate-900">
+      {/* Navegación principal - responsive con mejor espaciado */}
+      <nav className="mx-auto flex max-w-7xl flex-col gap-2 sm:gap-4 px-3 sm:px-4 py-2 sm:py-3">
+        {/* Fila superior: Logo y acciones principales */}
+        <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4">
+          {/* Logo y badge de modo */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link href="/inicio" className="font-bold text-base sm:text-lg text-slate-900">
               🏪 APP Bodegas
             </Link>
+            {/* Badge de modo - visible en tablet/desktop */}
             <span className="hidden sm:inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
               Modo: {roleLabel}
-              {locationLabel ? <span className="text-slate-400">•</span> : null}
+              {locationLabel ? <span className="text-slate-600">•</span> : null}
               {locationLabel ? `En: ${locationLabel}` : null}
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Acciones de navegación - adaptadas para móvil */}
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            {/* Selector de rol - más grande en móvil para mejor touch */}
             <select
               value={role}
               onChange={(e) => setRole(e.target.value as typeof role)}
-              className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+              className="rounded-full border border-slate-200 px-2.5 sm:px-3 py-1.5 sm:py-1 text-sm sm:text-xs font-semibold text-slate-700 hover:bg-slate-100 min-h-[36px] sm:min-h-0"
               aria-label="Cambiar modo"
             >
               <option value="tendero">Tendero</option>
@@ -193,31 +200,34 @@ export default function TopNav() {
               <option value="repartidor">Repartidor</option>
               <option value="admin">Admin</option>
             </select>
+            {/* Links rápidos - responsive */}
             {uniqueQuickLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                className="rounded-full border border-slate-200 px-2.5 sm:px-3 py-1.5 sm:py-1 text-sm sm:text-xs font-semibold text-slate-700 hover:bg-slate-100 min-h-[36px] sm:min-h-0 flex items-center"
               >
                 {link.label}
                 {role === "tendero" && link.label === "Carrito" && cartCount > 0 ? (
-                  <span className="ml-2 inline-flex items-center justify-center rounded-full bg-slate-900 px-2 py-0.5 text-[10px] font-bold text-white">
+                  <span className="ml-1.5 sm:ml-2 inline-flex items-center justify-center rounded-full bg-slate-900 px-1.5 sm:px-2 py-0.5 text-[11px] sm:text-[10px] font-bold text-white">
                     {cartCount}
                   </span>
                 ) : null}
               </Link>
             ))}
+            {/* Botón de ayuda - más visible */}
             <Link
               href="/inicio"
-              className="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold text-white hover:bg-slate-800"
+              className="rounded-full bg-slate-900 px-2.5 sm:px-3 py-1.5 sm:py-1 text-sm sm:text-xs font-semibold text-white hover:bg-slate-800 min-h-[36px] sm:min-h-0 flex items-center"
             >
               Ayuda
             </Link>
+            {/* Botón "Cómo funciona" - solo tendero, oculto en móvil muy pequeño */}
             {role === "tendero" ? (
               <button
                 type="button"
                 onClick={() => setHelpOpen(true)}
-                className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                className="hidden xs:flex rounded-full border border-slate-200 px-2.5 sm:px-3 py-1.5 sm:py-1 text-sm sm:text-xs font-semibold text-slate-700 hover:bg-slate-100 min-h-[36px] sm:min-h-0 items-center"
               >
                 ¿Cómo funciona?
               </button>
@@ -277,27 +287,29 @@ export default function TopNav() {
           />
         </div>
 
+        {/* Pasos del tendero - mejorado para móvil */}
         {role === "tendero" ? (
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600">
-              <span className="text-slate-500">Pasos:</span>
+          <div className="flex flex-col gap-2 sm:gap-3">
+            {/* Barra de pasos - responsive y con mejor contraste */}
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 rounded-lg border border-slate-200 bg-slate-50 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-slate-700">
+              <span className="text-slate-600 mr-1">Pasos:</span>
               {tenderoSteps.map((step, index) => {
                 const isActive = index === tenderoStepIndex;
                 const isDone = index < tenderoStepIndex;
                 return (
-                  <div key={step.key} className="flex items-center gap-2">
+                  <div key={step.key} className="flex items-center gap-1 sm:gap-2">
                     <span
-                      className={`rounded-full px-3 py-1 ${isActive
-                        ? "bg-slate-900 text-white"
+                      className={`rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm ${isActive
+                        ? "bg-slate-900 text-white font-bold"
                         : isDone
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-white text-slate-500"
+                          ? "bg-emerald-100 text-emerald-800 font-semibold"
+                          : "bg-white text-slate-600 border border-slate-200"
                         }`}
                     >
                       {step.label}
                     </span>
                     {index < tenderoSteps.length - 1 ? (
-                      <span className="text-slate-300">→</span>
+                      <span className="text-slate-500 font-bold">→</span>
                     ) : null}
                   </div>
                 );

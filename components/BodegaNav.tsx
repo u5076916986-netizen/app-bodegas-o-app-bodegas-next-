@@ -24,25 +24,26 @@ export default function BodegaNav() {
     ];
 
     return (
+        // Navegación de bodega - optimizada para móvil
         <nav className="border-b border-gray-200 bg-white shadow-sm">
-            <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between">
-                    {/* Left: Logo + Title */}
-                    <div className="flex items-center gap-4">
-                        <Link href="/bodega" className="font-bold text-lg text-gray-900">
-                            🏪 Panel Bodega
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3 lg:px-8">
+                <div className="flex items-center justify-between gap-2">
+                    {/* Logo + Title - más compacto en móvil */}
+                    <div className="flex items-center gap-2 sm:gap-4">
+                        <Link href="/bodega" className="font-bold text-base sm:text-lg text-gray-900">
+                            🏪 <span className="hidden xs:inline">Panel</span> Bodega
                         </Link>
                     </div>
 
-                    {/* Center: Nav Links */}
-                    <div className="hidden md:flex items-center gap-2">
+                    {/* Nav Links - visible solo en desktop */}
+                    <div className="hidden lg:flex items-center gap-1">
                         {navItems.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={`px-3 py-2 rounded-md text-sm font-medium transition ${isActive(item.href)
-                                        ? "bg-blue-100 text-blue-700"
-                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                                        ? "bg-blue-100 text-blue-800 font-semibold"
+                                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                                     }`}
                             >
                                 {item.icon} {item.label}
@@ -50,40 +51,41 @@ export default function BodegaNav() {
                         ))}
                     </div>
 
-                    {/* Right: Actions */}
-                    <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500 hidden sm:inline">
-                            Rol: <span className="font-semibold text-gray-700">{role}</span>
+                    {/* Acciones - más compactas en móvil */}
+                    <div className="flex items-center gap-1 sm:gap-2">
+                        <span className="text-xs text-gray-600 hidden sm:inline">
+                            Rol: <span className="font-semibold text-gray-800">{role}</span>
                         </span>
                         <button
                             onClick={() => router.back()}
-                            className="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                            className="px-2 sm:px-3 py-1.5 sm:py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md min-h-[36px] flex items-center"
                             title="Volver atrás"
                         >
-                            ← Atrás
+                            ← <span className="hidden sm:inline ml-1">Atrás</span>
                         </button>
                         <Link
                             href="/bodegas"
-                            className="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md"
+                            className="px-2 sm:px-3 py-1.5 sm:py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md min-h-[36px] flex items-center"
                             title="Ir a seleccionar bodega"
                         >
-                            🏠 Inicio
+                            🏠 <span className="hidden sm:inline ml-1">Inicio</span>
                         </Link>
                     </div>
                 </div>
 
-                {/* Mobile Menu */}
-                <div className="md:hidden flex flex-wrap gap-2 mt-3">
+                {/* Menú móvil - scroll horizontal con mejor diseño */}
+                <div className="lg:hidden flex overflow-x-auto gap-1.5 mt-2 pb-1 -mx-1 px-1 scrollbar-hide">
                     {navItems.map((item) => (
                         <Link
                             key={item.href}
                             href={item.href}
-                            className={`px-3 py-1 rounded text-xs font-medium transition ${isActive(item.href)
-                                    ? "bg-blue-100 text-blue-700"
-                                    : "text-gray-600 bg-gray-50 hover:bg-gray-100"
+                            className={`flex-shrink-0 px-3 py-2 rounded-lg text-sm font-medium transition min-h-[40px] flex items-center ${isActive(item.href)
+                                    ? "bg-blue-100 text-blue-800 font-semibold border border-blue-200"
+                                    : "text-gray-700 bg-gray-50 hover:bg-gray-100 border border-gray-200"
                                 }`}
                         >
-                            {item.icon} {item.label}
+                            <span className="mr-1">{item.icon}</span>
+                            <span className="whitespace-nowrap">{item.label}</span>
                         </Link>
                     ))}
                 </div>

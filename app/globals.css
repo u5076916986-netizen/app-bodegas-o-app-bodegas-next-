@@ -1,14 +1,20 @@
 @import "tailwindcss";
 
+/* ============================================
+   VARIABLES CSS - Sistema de diseño
+   Colores optimizados para mejor contraste
+   ============================================ */
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --surface-bg: #f8fafc;
   --surface-card: #ffffff;
   --surface-border: #e2e8f0;
+  /* Colores de texto con mejor contraste para móvil */
   --text-strong: #0f172a;
-  --text-normal: #334155;
-  --text-muted: #64748b;
+  --text-normal: #1e293b; /* Más oscuro que antes (era #334155) */
+  --text-muted: #475569;  /* Más oscuro que antes (era #64748b) */
+  --text-light: #64748b;  /* Para decoraciones, no texto principal */
   --brand-primary: #2563eb;
   --brand-primary-soft: #dbeafe;
   --brand-secondary: #0ea5e9;
@@ -32,7 +38,8 @@
     --surface-border: #1f2937;
     --text-strong: #f8fafc;
     --text-normal: #e2e8f0;
-    --text-muted: #94a3b8;
+    --text-muted: #cbd5e1; /* Más claro que antes para mejor contraste */
+    --text-light: #94a3b8;
     --brand-primary: #60a5fa;
     --brand-primary-soft: #1e293b;
     --brand-secondary: #38bdf8;
@@ -55,6 +62,10 @@ body {
   color: var(--text-normal, var(--foreground));
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  /* Mejora renderizado de texto en móvil */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 img,
@@ -63,4 +74,362 @@ video,
 canvas {
   max-width: 100%;
   height: auto;
+}
+
+/* ============================================
+   MEJORAS PARA MÓVIL - Responsive Design
+   ============================================ */
+
+/* Tamaño mínimo de fuente en móvil para mejor legibilidad */
+@media (max-width: 640px) {
+  html {
+    font-size: 16px; /* Base 16px para mejor legibilidad */
+  }
+  
+  /* Asegurar que todos los textos pequeños sean legibles */
+  .text-xs {
+    font-size: 0.8125rem !important; /* 13px mínimo en móvil */
+    line-height: 1.4 !important;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem !important; /* 14px */
+    line-height: 1.5 !important;
+  }
+  
+  /* Espaciado táctil mínimo para elementos clickeables */
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Mejor padding en inputs para dedos */
+  input,
+  select,
+  textarea {
+    padding: 0.75rem 1rem;
+    font-size: 1rem; /* Previene zoom en iOS */
+  }
+  
+  /* Mejor espaciado en tablas para móvil */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Cards más compactas en móvil */
+  .card,
+  [class*="rounded-lg"],
+  [class*="rounded-xl"] {
+    padding: 0.75rem;
+  }
+}
+
+/* ============================================
+   MEJORAS DE CONTRASTE - Sobrescribir colores claros
+   Estas clases tendrán más contraste en móvil
+   ============================================ */
+
+/* Mejorar contraste de textos grises/slate claros */
+@media (max-width: 768px) {
+  /* Slate-300, slate-400 son muy claros - mejorar contraste */
+  .text-slate-300 {
+    color: #64748b !important; /* slate-500 */
+  }
+  
+  .text-slate-400 {
+    color: #475569 !important; /* slate-600 */
+  }
+  
+  .text-gray-300 {
+    color: #6b7280 !important; /* gray-500 */
+  }
+  
+  .text-gray-400 {
+    color: #4b5563 !important; /* gray-600 */
+  }
+  
+  /* Placeholder con mejor contraste */
+  ::placeholder {
+    color: #64748b !important;
+    opacity: 1 !important;
+  }
+  
+  /* Mejorar contraste de badges y chips */
+  .text-slate-500 {
+    color: #334155 !important; /* slate-700 */
+  }
+  
+  .text-gray-500 {
+    color: #374151 !important; /* gray-700 */
+  }
+}
+
+/* ============================================
+   NAVEGACIÓN MÓVIL MEJORADA
+   ============================================ */
+
+@media (max-width: 640px) {
+  /* Navegación más compacta */
+  nav {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  /* Botones de navegación más grandes para touch */
+  nav a,
+  nav button,
+  nav select {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Barra de búsqueda optimizada */
+  nav input[type="text"],
+  nav input[type="search"] {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* ============================================
+   MODALES RESPONSIVE
+   ============================================ */
+
+@media (max-width: 640px) {
+  /* Modales full-width en móvil */
+  [role="dialog"],
+  .modal,
+  [class*="fixed"][class*="inset"] > [class*="bg-white"],
+  [class*="fixed"][class*="inset"] > [class*="rounded"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0.5rem !important;
+    border-radius: 0.75rem !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ============================================
+   FORMULARIOS MÓVIL
+   ============================================ */
+
+@media (max-width: 640px) {
+  /* Labels más visibles */
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-normal);
+    margin-bottom: 0.375rem;
+    display: block;
+  }
+  
+  /* Campos de formulario más accesibles */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 1.5px solid var(--surface-border);
+  }
+  
+  /* Focus states más visibles */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    outline: none;
+  }
+}
+
+/* ============================================
+   TABLAS RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Hacer tablas scrollables horizontalmente */
+  .table-responsive,
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  
+  /* Celdas con mejor espaciado */
+  td, th {
+    padding: 0.75rem 0.5rem;
+    white-space: nowrap;
+  }
+  
+  /* Headers sticky para tablas largas */
+  thead {
+    position: sticky;
+    top: 0;
+    background: var(--surface-card);
+    z-index: 10;
+  }
+}
+
+/* ============================================
+   CARDS Y LISTAS RESPONSIVE
+   ============================================ */
+
+@media (max-width: 640px) {
+  /* Grid de cards adaptable */
+  .grid {
+    gap: 0.75rem;
+  }
+  
+  /* Cards más compactas */
+  [class*="shadow"] {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Listas con mejor espaciado táctil */
+  li {
+    padding: 0.5rem 0;
+  }
+  
+  /* Items clickeables con mejor feedback */
+  li > a,
+  li > button {
+    display: block;
+    padding: 0.75rem;
+    margin: -0.5rem -0.75rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.15s ease;
+  }
+  
+  li > a:active,
+  li > button:active {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* ============================================
+   BOTONES MÓVIL OPTIMIZADOS
+   ============================================ */
+
+@media (max-width: 640px) {
+  /* Botones primarios más prominentes */
+  button[class*="bg-"],
+  a[class*="bg-"] {
+    font-weight: 600;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+  
+  /* Botones full-width en contextos móviles */
+  .btn-mobile-full {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   ESTADOS DE CARGA Y FEEDBACK
+   ============================================ */
+
+/* Skeleton loading con mejor visibilidad */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-bg) 25%,
+    var(--surface-border) 50%,
+    var(--surface-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.375rem;
+}
+
+/* ============================================
+   ACCESIBILIDAD Y USABILIDAD
+   ============================================ */
+
+/* Focus visible para teclado */
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* Desactivar outline solo para mouse/touch */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Prevenir selección accidental en elementos interactivos */
+button,
+a,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Mejorar tap targets en dispositivos touch */
+@media (pointer: coarse) {
+  button,
+  a,
+  [role="button"],
+  input,
+  select {
+    min-height: 44px;
+  }
+}
+
+/* ============================================
+   UTILIDADES RESPONSIVE ADICIONALES
+   ============================================ */
+
+/* Ocultar elementos en móvil */
+@media (max-width: 640px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Mostrar solo en móvil */
+@media (min-width: 641px) {
+  .show-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Texto responsive que escala con viewport */
+.text-responsive {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+/* Padding responsive */
+.p-responsive {
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+/* Gap responsive en grids */
+.gap-responsive {
+  gap: clamp(0.5rem, 2vw, 1rem);
 }
