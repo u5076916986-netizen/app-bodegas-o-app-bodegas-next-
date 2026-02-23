@@ -18,6 +18,59 @@ datasource db {
 }
 
 // =============================================================================
+// ENUM: Rol
+// =============================================================================
+// Define los roles disponibles en la aplicación:
+// - ADMIN: Acceso completo a todas las funcionalidades
+// - BODEGUERO: Gestión de su bodega (productos, promociones, pedidos)
+// - CLIENTE: Ver productos y hacer pedidos
+// =============================================================================
+enum Rol {
+  ADMIN
+  BODEGUERO
+  CLIENTE
+}
+
+// =============================================================================
+// MODELO: Usuario
+// =============================================================================
+// Representa un usuario del sistema con su rol y datos de acceso.
+// =============================================================================
+model Usuario {
+  // Identificador único del usuario
+  id            String    @id @default(cuid())
+  
+  // Email del usuario (único, usado para login)
+  email         String    @unique
+  
+  // Contraseña hasheada con bcryptjs
+  password      String
+  
+  // Nombre completo del usuario
+  nombre        String
+  
+  // Rol del usuario (ADMIN, BODEGUERO, CLIENTE)
+  rol           Rol       @default(CLIENTE)
+  
+  // ID de la bodega asignada (solo para BODEGUERO)
+  bodegaId      String?
+  
+  // Si el usuario está activo
+  activo        Boolean   @default(true)
+  
+  // Fecha de creación
+  createdAt     DateTime  @default(now())
+  
+  // Fecha de última actualización
+  updatedAt     DateTime  @updatedAt
+
+  // Índices para búsquedas rápidas
+  @@index([email])
+  @@index([rol])
+  @@index([bodegaId])
+}
+
+// =============================================================================
 // MODELO: Producto
 // =============================================================================
 // Representa un producto en el inventario de una bodega.

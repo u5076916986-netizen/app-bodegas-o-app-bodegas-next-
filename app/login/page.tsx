@@ -1,80 +1,54 @@
 // =============================================================================
-// Página: Registro
+// Página: Login
 // =============================================================================
-// Formulario para crear una nueva cuenta de usuario.
-// Los usuarios se registran como CLIENTE por defecto.
+// Formulario de inicio de sesión con email y contraseña.
+// Usa NextAuth.js para manejar la autenticación.
 // =============================================================================
 
 'use client';
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function RegistroPage() {
+export default function LoginPage() {
   // Estados del formulario
-  const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // URL a donde redirigir después del login
+  const callbackUrl = searchParams.get('callbackUrl') || '/inicio';
   
   // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
-    // Validar que las contraseñas coincidan
-    if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
-      return;
-    }
-    
-    // Validar longitud mínima de contraseña
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
-      return;
-    }
-    
     setLoading(true);
     
     try {
-      // Llamar a la API de registro
-      const response = await fetch('/api/auth/registro', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email, password }),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        // Mostrar error del servidor
-        setError(data.error || 'Error al crear la cuenta');
-        return;
-      }
-      
-      // Registro exitoso, iniciar sesión automáticamente
+      // Intentar iniciar sesión con NextAuth
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: false,
+        redirect: false, // No redirigir automáticamente
       });
       
       if (result?.error) {
-        // Si hay error en login, ir a la página de login
-        router.push('/login?registered=true');
+        // Mostrar error al usuario
+        setError(result.error);
       } else {
-        // Login exitoso, ir a inicio
-        router.push('/inicio');
-        router.refresh();
+        // Login exitoso, redirigir
+        router.push(callbackUrl);
+        router.refresh(); // Refrescar para actualizar la sesión
       }
     } catch (err) {
-      setError('Error de conexión. Intenta de nuevo.');
+      setError('Error al iniciar sesión. Intenta de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -89,14 +63,14 @@ export default function RegistroPage() {
             🏪 App Bodegas
           </h1>
           <p className="text-slate-400">
-            Crea tu cuenta para comenzar
+            Inicia sesión para continuar
           </p>
         </div>
         
         {/* Tarjeta del formulario */}
         <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 shadow-xl">
           <h2 className="text-xl font-semibold text-white mb-6">
-            Crear Cuenta
+            Iniciar Sesión
           </h2>
           
           {/* Mensaje de error */}
@@ -108,26 +82,6 @@ export default function RegistroPage() {
           
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Campo Nombre */}
-            <div>
-              <label 
-                htmlFor="nombre" 
-                className="block text-sm font-medium text-slate-300 mb-2"
-              >
-                Nombre completo
-              </label>
-              <input
-                id="nombre"
-                type="text"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                placeholder="Juan Pérez"
-                required
-                autoComplete="name"
-                className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
-              />
-            </div>
-            
             {/* Campo Email */}
             <div>
               <label 
@@ -161,29 +115,9 @@ export default function RegistroPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Mínimo 6 caracteres"
+                placeholder="••••••••"
                 required
-                autoComplete="new-password"
-                className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
-              />
-            </div>
-            
-            {/* Campo Confirmar Contraseña */}
-            <div>
-              <label 
-                htmlFor="confirmPassword" 
-                className="block text-sm font-medium text-slate-300 mb-2"
-              >
-                Confirmar contraseña
-              </label>
-              <input
-                id="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Repite tu contraseña"
-                required
-                autoComplete="new-password"
+                autoComplete="current-password"
                 className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
               />
             </div>
@@ -197,35 +131,40 @@ export default function RegistroPage() {
               {loading ? (
                 <>
                   <span className="animate-spin">⚪</span>
-                  Creando cuenta...
+                  Iniciando...
                 </>
               ) : (
-                'Crear Cuenta'
+                'Iniciar Sesión'
               )}
             </button>
           </form>
           
-          {/* Enlace a login */}
+          {/* Enlace a registro */}
           <div className="mt-6 text-center">
             <p className="text-slate-400">
-              ¿Ya tienes cuenta?{' '}
+              ¿No tienes cuenta?{' '}
               <Link 
-                href="/login" 
+                href="/registro" 
                 className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
               >
-                Inicia sesión
+                Regístrate aquí
               </Link>
             </p>
           </div>
         </div>
         
-        {/* Nota sobre roles */}
-        <div className="mt-6 text-center">
-          <p className="text-xs text-slate-500">
-            Al registrarte, tu cuenta será de tipo <strong>Cliente</strong>.<br />
-            Contacta al administrador para obtener otros permisos.
-          </p>
-        </div>
+        {/* Credenciales de prueba (solo para desarrollo) */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="mt-6 bg-slate-800/30 border border-slate-700 rounded-xl p-4">
+            <p className="text-sm text-slate-400 mb-2 font-medium">Usuarios de prueba:</p>
+            <div className="text-xs text-slate-500 space-y-1">
+              <p>👑 Admin: admin@bodegas.com</p>
+              <p>📦 Bodeguero: bodeguero@bodegas.com</p>
+              <p>👤 Cliente: cliente@bodegas.com</p>
+              <p className="text-slate-600">Contraseña: password123</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

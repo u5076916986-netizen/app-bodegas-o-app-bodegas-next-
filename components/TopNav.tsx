@@ -11,6 +11,8 @@ import * as searchHistory from "@/lib/searchHistory";
 import { getBodegaId } from "@/lib/storage";
 import Modal from "@/components/Modal";
 import { useCart } from "@/app/providers";
+// Importaciones para autenticación
+import { useSession, signOut } from "next-auth/react";
 
 export default function TopNav() {
   const { role, setRole } = useRole();
@@ -25,6 +27,10 @@ export default function TopNav() {
   const [showTour, setShowTour] = useState(false);
   const [showStepTips, setShowStepTips] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  
+  // Estado de autenticación
+  const { data: session, status } = useSession();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   useEffect(() => {
     setBodegaId(getBodegaId());
@@ -232,6 +238,106 @@ export default function TopNav() {
                 ¿Cómo funciona?
               </button>
             ) : null}
+            
+            {/* ====== Menú de Usuario / Login ====== */}
+            {status === "loading" ? (
+              // Loading state
+              <div className="animate-pulse rounded-full bg-slate-200 w-8 h-8"></div>
+            ) : session?.user ? (
+              // Usuario autenticado - mostrar menú
+              <div className="relative">
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 rounded-full border border-slate-200 px-2.5 sm:px-3 py-1.5 sm:py-1 text-sm sm:text-xs font-semibold text-slate-700 hover:bg-slate-100 min-h-[36px] sm:min-h-0"
+                >
+                  {/* Icono según rol */}
+                  <span>
+                    {session.user.rol === 'ADMIN' && '👑'}
+                    {session.user.rol === 'BODEGUERO' && '📦'}
+                    {session.user.rol === 'CLIENTE' && '👤'}
+                  </span>
+                  <span className="hidden sm:inline max-w-[100px] truncate">
+                    {session.user.nombre}
+                  </span>
+                  <span className="text-[10px]">▼</span>
+                </button>
+                
+                {/* Dropdown del menú de usuario */}
+                {userMenuOpen && (
+                  <>
+                    {/* Overlay para cerrar */}
+                    <div 
+                      className="fixed inset-0 z-40" 
+                      onClick={() => setUserMenuOpen(false)}
+                    />
+                    {/* Menú desplegable */}
+                    <div className="absolute right-0 top-full mt-2 w-56 rounded-lg border border-slate-200 bg-white shadow-lg z-50">
+                      <div className="p-3 border-b border-slate-100">
+                        <p className="font-semibold text-slate-900 truncate">
+                          {session.user.nombre}
+                        </p>
+                        <p className="text-xs text-slate-500 truncate">
+                          {session.user.email}
+                        </p>
+                        <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-bold
+                          ${session.user.rol === 'ADMIN' ? 'bg-purple-100 text-purple-700' : ''}
+                          ${session.user.rol === 'BODEGUERO' ? 'bg-blue-100 text-blue-700' : ''}
+                          ${session.user.rol === 'CLIENTE' ? 'bg-green-100 text-green-700' : ''}
+                        `}>
+                          {session.user.rol}
+                        </span>
+                      </div>
+                      <div className="p-1">
+                        {/* Enlaces según rol */}
+                        {session.user.rol === 'ADMIN' && (
+                          <Link
+                            href="/admin"
+                            onClick={() => setUserMenuOpen(false)}
+                            className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded"
+                          >
+                            👑 Panel Admin
+                          </Link>
+                        )}
+                        {(session.user.rol === 'ADMIN' || session.user.rol === 'BODEGUERO') && session.user.bodegaId && (
+                          <Link
+                            href={`/bodega/${session.user.bodegaId}`}
+                            onClick={() => setUserMenuOpen(false)}
+                            className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded"
+                          >
+                            📦 Mi Bodega
+                          </Link>
+                        )}
+                        <Link
+                          href="/pedidos"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded"
+                        >
+                          📋 Mis Pedidos
+                        </Link>
+                        <hr className="my-1 border-slate-100" />
+                        <button
+                          onClick={() => {
+                            setUserMenuOpen(false);
+                            signOut({ callbackUrl: '/login' });
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded"
+                        >
+                          🚪 Cerrar Sesión
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              // No autenticado - mostrar botón de login
+              <Link
+                href="/login"
+                className="rounded-full border-2 border-cyan-500 bg-cyan-500 text-white px-3 sm:px-4 py-1.5 sm:py-1 text-sm sm:text-xs font-semibold hover:bg-cyan-600 hover:border-cyan-600 min-h-[36px] sm:min-h-0 flex items-center transition-colors"
+              >
+                Iniciar Sesión
+              </Link>
+            )}
           </div>
         </div>
 
