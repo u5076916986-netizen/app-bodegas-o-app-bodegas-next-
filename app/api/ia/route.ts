@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import Anthropic from "@anthropic-ai/sdk";
 
 export const runtime = "nodejs";
 
@@ -124,32 +125,92 @@ export async function POST(request: NextRequest) {
         const body = (await request.json()) as RequestBody;
         const { bodegaId, message } = body;
 
-        // Validación
         if (!bodegaId || !message) {
             return NextResponse.json(
                 { ok: false, error: "bodegaId y message son requeridos" },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
         if (typeof message !== "string" || message.trim().length === 0) {
             return NextResponse.json(
                 { ok: false, error: "El mensaje debe ser una cadena no vacía" },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
-        const safeResponse = await buildSafeResponse(message, bodegaId);
+        // Cargar contexto de la bodega
+        const productos = (await readJson<ProductoData>("productos.json")).filter(
+            (item) => item.bodegaId === bodegaId,
+        );
+        const promos = (await readJson<PromoData>("promociones.json")).filter(
+            (item) => item.bodegaId === bodegaId,
+        );
+
+        const activeProductos = productos.filter((item) => item.activo !== false);
+        const lowStock = activeProductos
+            .filter((item) => Number(item.stock ?? 0) <= 5)
+            .slice(0, 10)
+            .map((p) => `${p.nombre} (stock: ${p.stock ?? 0}, precio: $${p.precio ?? 0})`);
+
+        const categorias = Array.from(new Set(productos.map((p) => p.categoria).filter(Boolean)));
+
+        const contexto = `
+Datos de la bodega ${bodegaId}:
+- Productos activos: ${activeProductos.length}
+- Stock bajo (≤5): ${lowStock.join(", ") || "ninguno"}
+- Promociones activas: ${promos.filter((p) => p.estado === "activa").length}
+- Categorías: ${categorias.join(", ") || "sin datos"}
+        `.trim();
+
+        // Usar Claude si hay API key, fallback si no
+        const anthropicKey = process.env.ANTHROPIC_API_KEY;
+        if (!anthropicKey) {
+            const fallback = await buildSafeResponse(message, bodegaId);
+            return NextResponse.json({
+                ok: true,
+                data: fallback,
+                _note: "Configura ANTHROPIC_API_KEY para respuestas con IA real.",
+            });
+        }
+
+        const client = new Anthropic({ apiKey: anthropicKey });
+
+        const claudeResponse = await client.messages.create({
+            model: "claude-sonnet-4-6",
+            max_tokens: 1024,
+            system: `Eres el asistente IA de una bodega colombiana. Ayudas al bodeguero con inventario, promociones, análisis de ventas y decisiones del negocio.
+Hablas en español colombiano informal pero profesional. Responde de forma concisa y útil.
+Si detectas problemas (stock bajo, sin promos activas), sugiere acciones concretas y específicas.
+
+${contexto}`,
+            messages: [{ role: "user", content: message }],
+        });
+
+        const claudeText =
+            claudeResponse.content[0]?.type === "text"
+                ? claudeResponse.content[0].text
+                : "No pude procesar tu solicitud.";
+
+        const requiresApproval =
+            claudeText.toLowerCase().includes("crear") ||
+            claudeText.toLowerCase().includes("actualizar") ||
+            claudeText.toLowerCase().includes("eliminar");
+
         return NextResponse.json({
             ok: true,
-            data: safeResponse,
-            _note: "Respuesta basada solo en datos existentes; sin valores inventados.",
+            data: {
+                summary: claudeText,
+                plan: [],
+                requiresApproval,
+            },
+            model: "claude-sonnet-4-6",
         });
     } catch (error) {
         console.error("Error en /api/ia:", error);
         return NextResponse.json(
             { ok: false, error: "Error procesando la solicitud" },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

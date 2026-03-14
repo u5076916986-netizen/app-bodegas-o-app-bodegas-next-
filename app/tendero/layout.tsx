@@ -1,4 +1,5 @@
 import RoleLayout from "@/components/RoleLayout";
+import TenderoIaChat from "@/components/TenderoIaChat";
 
 export default function TenderoLayout({
     children,
@@ -23,6 +24,7 @@ export default function TenderoLayout({
             mobileLabel="Navegación tendero"
         >
             {children}
+            <TenderoIaChat />
         </RoleLayout>
     );
 }

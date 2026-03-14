@@ -16,6 +16,8 @@ export default async function BodegaPanelLayout({
         { label: "Pedidos", href: `/bodega/${bodegaId}/pedidos`, icon: "🧺" },
         { label: "Clientes", href: `/bodega/${bodegaId}/clientes`, icon: "👥" },
         { label: "Promociones", href: `/bodega/${bodegaId}/promociones`, icon: "🎯" },
+        { label: "Cupones", href: `/bodega/${bodegaId}/cupones`, icon: "🎟️" },
+        { label: "IA Asistente", href: `/bodega/${bodegaId}/ia`, icon: "🤖" },
         { label: "Configuración", href: `/bodega/${bodegaId}/configuracion`, icon: "⚙️" },
     ];
 

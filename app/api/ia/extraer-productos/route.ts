@@ -1,22 +1,23 @@
 import { NextResponse } from "next/server";
+import Anthropic from "@anthropic-ai/sdk";
 
 export const runtime = "nodejs";
 
 /**
  * POST /api/ia/extraer-productos
- * Extrae lista de productos de una imagen usando OpenAI Vision (opcional)
- * Fallback: devuelve error claro si OPENAI_API_KEY no está configurada
+ * Extrae lista de productos de una imagen usando Claude Vision (Anthropic)
+ * Fallback: devuelve error claro si ANTHROPIC_API_KEY no está configurada
  */
 export async function POST(request: Request) {
     try {
-        const openaiKey = process.env.OPENAI_API_KEY;
-        if (!openaiKey) {
+        const anthropicKey = process.env.ANTHROPIC_API_KEY;
+        if (!anthropicKey) {
             return NextResponse.json(
                 {
                     ok: false,
                     error: "IA no configurada",
                     message:
-                        "Para usar extracción por IA, configura OPENAI_API_KEY en .env.local",
+                        "Para usar extracción por IA, configura ANTHROPIC_API_KEY en .env.local",
                     fallback: "Usa el formulario manual para cargar productos",
                 },
                 { status: 501 }
@@ -24,7 +25,10 @@ export async function POST(request: Request) {
         }
 
         const body = await request.json();
-        const { imageBase64 } = body as { imageBase64: string };
+        const { imageBase64, mediaType = "image/jpeg" } = body as {
+            imageBase64: string;
+            mediaType?: string;
+        };
 
         if (!imageBase64) {
             return NextResponse.json(
@@ -33,56 +37,61 @@ export async function POST(request: Request) {
             );
         }
 
-        // Call OpenAI Vision API
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${openaiKey}`,
-            },
-            body: JSON.stringify({
-                model: "gpt-4-vision-preview",
-                messages: [
-                    {
-                        role: "user",
-                        content: [
-                            {
-                                type: "text",
-                                text: `Analiza esta imagen de una lista de productos y extrae los siguientes datos en formato JSON:
-                        [
-                          {
-                            "nombre": "nombre del producto",
-                            "categoria": "categoría (ej: ASEO, BEBIDAS, etc)",
-                            "precio_cop": número,
-                            "stock": número
-                          }
-                        ]
-                        
-                        Si el stock no está claro, usa 0. Si el precio no está, usa 0. Devuelve SOLO el JSON array, sin explicación.`,
+        const client = new Anthropic({ apiKey: anthropicKey });
+
+        const response = await client.messages.create({
+            model: "claude-sonnet-4-6",
+            max_tokens: 2048,
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        {
+                            type: "image",
+                            source: {
+                                type: "base64",
+                                media_type: mediaType as
+                                    | "image/jpeg"
+                                    | "image/png"
+                                    | "image/gif"
+                                    | "image/webp",
+                                data: imageBase64,
                             },
-                            {
-                                type: "image_url",
-                                image_url: {
-                                    url: `data:image/jpeg;base64,${imageBase64}`,
-                                },
-                            },
-                        ],
-                    },
-                ],
-            }),
+                        },
+                        {
+                            type: "text",
+                            text: `Eres un asistente especializado en bodegas colombianas.
+Analiza esta imagen (puede ser una lista de precios, foto de estantería, lista escrita, etc.) y extrae TODOS los productos visibles.
+
+Devuelve ÚNICAMENTE un JSON array con este formato exacto (sin explicación, sin markdown, solo el JSON):
+[
+  {
+    "nombre": "nombre del producto",
+    "categoria": "una de: ASEO, BEBIDAS, GRANOS, LACTEOS, PANADERIA, CARNES, FRUTAS_VERDURAS, SNACKS, LICORES, CIGARRILLOS, OTROS",
+    "precio_cop": número entero (precio en pesos colombianos, 0 si no se ve),
+    "stock": número entero (cantidad disponible, 10 si no se ve),
+    "descripcion": "descripción breve o null"
+  }
+]
+
+Si no puedes identificar ningún producto, devuelve [].`,
+                        },
+                    ],
+                },
+            ],
         });
 
-        if (!response.ok) {
-            throw new Error(`OpenAI API error: ${response.statusText}`);
-        }
+        const content =
+            response.content[0]?.type === "text" ? response.content[0].text : "[]";
 
-        const result = await response.json();
-        const content = result.choices[0]?.message?.content || "[]";
-
-        // Parse JSON
+        // Limpiar posibles bloques ```json ... ```
         let productos = [];
         try {
-            productos = JSON.parse(content);
+            const cleaned = content
+                .replace(/```json\n?/g, "")
+                .replace(/```\n?/g, "")
+                .trim();
+            productos = JSON.parse(cleaned);
         } catch {
             productos = [];
         }
@@ -91,6 +100,7 @@ export async function POST(request: Request) {
             ok: true,
             productos,
             count: productos.length,
+            model: "claude-sonnet-4-6",
         });
     } catch (err) {
         console.error(err);
