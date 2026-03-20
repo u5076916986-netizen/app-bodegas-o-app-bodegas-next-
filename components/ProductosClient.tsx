@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { SkeletonTable } from "@/components/ui/Skeleton";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Table from "@/components/Table";
@@ -589,13 +590,25 @@ export default function ProductosClient({ bodegaId }: ProductosClientProps) {
             </div>
 
             {loading ? (
-                <div className="text-center py-8 text-slate-600">Cargando productos...</div>
+                <SkeletonTable rows={6} cols={5} />
+            ) : filtered.length === 0 && products.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-16 text-center">
+                    <div className="text-5xl mb-4">🏪</div>
+                    <p className="text-lg font-semibold text-slate-700">Sin productos en el catálogo</p>
+                    <p className="text-sm text-slate-500 mt-1">Comienza cargando productos desde Excel o foto</p>
+                    <Link
+                        href={`/bodega/${bodegaId}/cargar-productos`}
+                        className="mt-4 rounded-md bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+                    >
+                        Cargar productos
+                    </Link>
+                </div>
             ) : (
                 <Table
                     columns={columns}
                     data={filtered}
                     actions={activeTab === "catalogo" ? actions : []}
-                    emptyMessage="No hay productos que coincidan"
+                    emptyMessage="No hay productos que coincidan con los filtros"
                 />
             )}
 

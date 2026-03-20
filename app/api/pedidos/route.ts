@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { getToken } from "next-auth/jwt";
 
 export const runtime = "nodejs";
 
@@ -37,6 +38,16 @@ export async function GET(request: Request) {
     const tenderoPhone = searchParams.get("tenderoPhone");
     const estado = searchParams.get("estado");
     const q = searchParams.get("q");
+
+    // Validar sesión para rutas protegidas (bodega, repartidor)
+    if (role === "bodega" || role === "repartidor") {
+      const token = await getToken({ req: request as any, secret: process.env.NEXTAUTH_SECRET });
+      if (!token) return Response.json({ ok: false, error: "No autenticado" }, { status: 401 });
+      // Bodeguero solo puede ver sus propios pedidos
+      if (token.rol === "BODEGUERO" && token.bodegaId && bodegaId && token.bodegaId !== bodegaId) {
+        return Response.json({ ok: false, error: "Sin permiso para esta bodega" }, { status: 403 });
+      }
+    }
 
     if (id) {
       const pedido = await prisma.pedido.findUnique({ where: { id } });

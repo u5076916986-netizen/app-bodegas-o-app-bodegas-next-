@@ -12,6 +12,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getToken } from 'next-auth/jwt'
 
 // =============================================================================
 // GET - Obtener productos de una bodega
@@ -103,6 +104,16 @@ export async function GET(request: NextRequest) {
 // =============================================================================
 export async function POST(request: NextRequest) {
   try {
+    // Verificar autenticación: solo BODEGUERO y ADMIN pueden crear productos
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
+    if (!token) {
+      return NextResponse.json({ success: false, error: 'No autenticado' }, { status: 401 })
+    }
+    const role = token.rol as string
+    if (!['ADMIN', 'BODEGUERO'].includes(role)) {
+      return NextResponse.json({ success: false, error: 'Sin permiso para crear productos' }, { status: 403 })
+    }
+
     // Parseamos el cuerpo de la petición como JSON
     const body = await request.json()
 
@@ -118,6 +129,11 @@ export async function POST(request: NextRequest) {
         },
         { status: 400 }
       )
+    }
+
+    // Bodeguero solo puede crear productos de su bodega
+    if (role === 'BODEGUERO' && token.bodegaId && body.bodegaId !== token.bodegaId) {
+      return NextResponse.json({ success: false, error: 'Solo puedes crear productos para tu bodega' }, { status: 403 })
     }
 
     // Generamos un ID único si no se proporcionó

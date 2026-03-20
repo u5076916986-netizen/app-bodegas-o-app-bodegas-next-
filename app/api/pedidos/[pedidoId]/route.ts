@@ -1,224 +1,162 @@
-import { NextResponse } from "next/server";
-import { readFile, writeFile } from "fs/promises";
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { getToken } from "next-auth/jwt";
+import { writeFile, readFile } from "fs/promises";
 import { join } from "path";
-import { applyLedgerForPedido } from "@/lib/ledger";
 import { randomUUID } from "crypto";
 
 export const runtime = "nodejs";
 
-type Notificacion = {
-  id: string;
-  bodegaId?: string | null;
-  titulo: string;
-  mensaje: string;
-  target: "tenderos" | "bodegas" | "repartidores" | "all";
-  createdAt: string;
-  read?: boolean;
+type Params = { params: Promise<{ pedidoId: string }> };
+
+const ESTADOS_VALIDOS = [
+    "nuevo", "confirmado", "asignado", "en_bodega",
+    "recogido", "en_ruta", "entregado", "cancelado",
+];
+
+const TRANSICIONES: Record<string, string[]> = {
+    nuevo:      ["confirmado", "cancelado"],
+    confirmado: ["asignado", "cancelado"],
+    asignado:   ["en_bodega", "cancelado"],
+    en_bodega:  ["recogido", "cancelado"],
+    recogido:   ["en_ruta", "cancelado"],
+    en_ruta:    ["entregado", "cancelado"],
+    entregado:  [],
+    cancelado:  [],
 };
 
-const NOTIF_PATH = join(process.cwd(), "data", "notificaciones.json");
+type PedidoRow = {
+    id: string; createdAt: Date; nombre: string; telefono: string;
+    direccion: string; items: unknown; total: number; estado: string;
+    bodegaId: string; repartidorId?: string | null;
+    repartidorNombre?: string | null; notas?: string | null; updatedAt?: Date;
+};
 
-const appendNotificacion = async (payload: Omit<Notificacion, "id" | "createdAt" | "read">) => {
-  try {
-    const raw = await readFile(NOTIF_PATH, "utf-8");
-    const current = JSON.parse(raw) as Notificacion[];
-    const nuevo: Notificacion = {
-      id: randomUUID(),
-      createdAt: new Date().toISOString(),
-      read: false,
-      ...payload,
-    };
-    await writeFile(NOTIF_PATH, JSON.stringify([...current, nuevo], null, 2), "utf-8");
-  } catch (err: any) {
-    if (err?.code === "ENOENT") {
-      const nuevo: Notificacion = {
-        id: randomUUID(),
-        createdAt: new Date().toISOString(),
-        read: false,
-        ...payload,
-      };
-      await writeFile(NOTIF_PATH, JSON.stringify([nuevo], null, 2), "utf-8");
-      return;
+const formatPedido = (p: PedidoRow) => ({
+    ...p,
+    pedidoId: p.id,
+    cliente: { nombre: p.nombre, telefono: p.telefono },
+    datosEntrega: { nombre: p.nombre, telefono: p.telefono, direccion: p.direccion, notas: p.notas ?? null },
+});
+
+const appendNotif = async (payload: {
+    bodegaId?: string | null; titulo: string; mensaje: string;
+    target: "tenderos" | "bodegas" | "repartidores" | "all";
+}) => {
+    const path = join(process.cwd(), "data", "notificaciones.json");
+    try {
+        const raw = await readFile(path, "utf-8").catch(() => "[]");
+        const all = JSON.parse(raw);
+        all.push({ id: randomUUID(), createdAt: new Date().toISOString(), read: false, ...payload });
+        await writeFile(path, JSON.stringify(all, null, 2), "utf-8");
+    } catch { /* silencioso */ }
+};
+
+// GET /api/pedidos/[pedidoId]
+export async function GET(request: NextRequest, { params }: Params) {
+    try {
+        const { pedidoId } = await params;
+
+        const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+        if (!token) return NextResponse.json({ ok: false, error: "No autenticado" }, { status: 401 });
+
+        const pedido = await prisma.pedido.findUnique({ where: { id: pedidoId } });
+        if (!pedido) return NextResponse.json({ ok: false, error: "Pedido no encontrado" }, { status: 404 });
+
+        const role = token.rol as string;
+        if (role === "BODEGUERO" && token.bodegaId && pedido.bodegaId !== token.bodegaId) {
+            return NextResponse.json({ ok: false, error: "Sin permiso" }, { status: 403 });
+        }
+
+        return NextResponse.json({ ok: true, pedido: formatPedido(pedido as unknown as PedidoRow) });
+    } catch (err) {
+        console.error(err);
+        return NextResponse.json({ ok: false, error: "Error al leer pedido" }, { status: 500 });
     }
-    console.warn("No se pudo guardar notificación", err);
-  }
-};
-
-type Params = {
-  params: Promise<{ pedidoId: string }>;
-};
-
-export async function GET(_request: Request, { params }: Params) {
-  try {
-    const { pedidoId } = await params;
-    const dataPath = join(process.cwd(), "data", "pedidos.json");
-    const raw = await readFile(dataPath, "utf-8");
-    const pedidos = JSON.parse(raw) as Array<Record<string, any>>;
-    const pedido = pedidos.find(
-      (p) => p?.id === pedidoId || p?.pedidoId === pedidoId,
-    );
-
-    if (!pedido) {
-      return NextResponse.json(
-        { ok: false, error: "not_found" },
-        { status: 404 },
-      );
-    }
-
-    return NextResponse.json({ ok: true, pedido });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { ok: false, error: "Error al leer pedido" },
-      { status: 500 },
-    );
-  }
 }
 
-export async function PATCH(request: Request, { params }: Params) {
-  try {
-    const { pedidoId } = await params;
-    const body = (await request.json()) as {
-      estado?: string;
-      repartidorId?: string | null;
-      repartidorNombre?: string | null;
-      repartidorTelefono?: string | null;
-    };
-
-    const estadosPermitidos = [
-      "nuevo",
-      "confirmado",
-      "asignado",
-      "en_bodega",
-      "recogido",
-      "en_ruta",
-      "entregado",
-      "cancelado",
-    ];
-
-    const transicionesPermitidas: Record<string, string[]> = {
-      nuevo: ["confirmado", "cancelado"],
-      confirmado: ["asignado", "cancelado"],
-      asignado: ["en_bodega", "cancelado"],
-      en_bodega: ["recogido", "cancelado"],
-      recogido: ["en_ruta", "cancelado"],
-      en_ruta: ["entregado", "cancelado"],
-      entregado: [],
-      cancelado: [],
-    };
-
-    // Validar estado si se proporciona
-    if (body.estado && !estadosPermitidos.includes(body.estado)) {
-      return NextResponse.json(
-        { ok: false, error: "Estado inválido" },
-        { status: 400 },
-      );
-    }
-
-    const dataPath = join(process.cwd(), "data", "pedidos.json");
-    const raw = await readFile(dataPath, "utf-8");
-    const pedidos = JSON.parse(raw) as Array<Record<string, any>>;
-
-    const index = pedidos.findIndex(
-      (p) => p?.id === pedidoId || p?.pedidoId === pedidoId,
-    );
-
-    if (index === -1) {
-      return NextResponse.json(
-        { ok: false, error: "not_found" },
-        { status: 404 },
-      );
-    }
-
-    const currentEstado = String(pedidos[index]?.estado ?? "nuevo");
-
-    if (body.estado) {
-      const allowed = transicionesPermitidas[currentEstado] || [];
-      if (!allowed.includes(body.estado)) {
-        return NextResponse.json(
-          { ok: false, error: "Transición de estado inválida" },
-          { status: 400 },
-        );
-      }
-    }
-
-    const nextEstado = body.estado || currentEstado;
-
-    const prevPedido = pedidos[index];
-    const nextPedido = {
-      ...pedidos[index],
-      ...(body.estado && { estado: body.estado }),
-      ...(body.repartidorId !== undefined && { repartidorId: body.repartidorId }),
-      ...(body.repartidorNombre !== undefined && { repartidorNombre: body.repartidorNombre }),
-      ...(body.repartidorTelefono !== undefined && { repartidorTelefono: body.repartidorTelefono }),
-      updatedAt: new Date().toISOString(),
-    } as Record<string, any>;
-
-    if (nextPedido.estado === "entregado" && !nextPedido.ledgerApplied) {
-      const ledgerResult = await applyLedgerForPedido(nextPedido);
-      if (ledgerResult?.entry) {
-        nextPedido.ledgerApplied = true;
-        nextPedido.ledgerAppliedAt = ledgerResult.entry.createdAt;
-      }
-    }
-
-    pedidos[index] = nextPedido;
-
+// PATCH /api/pedidos/[pedidoId]
+export async function PATCH(request: NextRequest, { params }: Params) {
     try {
-      await writeFile(
-        dataPath,
-        JSON.stringify(pedidos, null, 2),
-        "utf-8",
-      );
-    } catch (err) {
-      console.error("Error al escribir pedidos.json:", err);
-      return NextResponse.json(
-        { ok: false, error: "Error al guardar pedido" },
-        { status: 500 },
-      );
-    }
+        const { pedidoId } = await params;
 
-    const repartidorAsignado =
-      body.repartidorId !== undefined &&
-      body.repartidorId !== prevPedido?.repartidorId &&
-      body.repartidorId;
+        const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+        if (!token) return NextResponse.json({ ok: false, error: "No autenticado" }, { status: 401 });
 
-    if (body.estado && body.estado !== currentEstado) {
-      await appendNotificacion({
-        bodegaId: nextPedido.bodegaId ?? null,
-        titulo: "Actualización de pedido",
-        mensaje: `Pedido ${nextPedido.pedidoId || nextPedido.id} ahora está ${nextEstado.replace("_", " ")}.`,
-        target: "tenderos",
-      });
+        const role = token.rol as string;
+        if (!["ADMIN", "BODEGUERO", "REPARTIDOR"].includes(role)) {
+            return NextResponse.json({ ok: false, error: "Sin permiso" }, { status: 403 });
+        }
 
-      if (nextPedido.repartidorId) {
-        await appendNotificacion({
-          bodegaId: nextPedido.bodegaId ?? null,
-          titulo: nextEstado === "asignado" ? "Nueva entrega asignada" : "Estado actualizado",
-          mensaje:
-            nextEstado === "asignado"
-              ? `Te asignaron el pedido ${nextPedido.pedidoId || nextPedido.id}.`
-              : `Pedido ${nextPedido.pedidoId || nextPedido.id} ahora está ${nextEstado.replace("_", " ")}.`,
-          target: "repartidores",
+        const body = await request.json() as {
+            estado?: string;
+            repartidorId?: string | null;
+            repartidorNombre?: string | null;
+            notas?: string;
+        };
+
+        const pedidoActual = await prisma.pedido.findUnique({ where: { id: pedidoId } });
+        if (!pedidoActual) return NextResponse.json({ ok: false, error: "Pedido no encontrado" }, { status: 404 });
+
+        if (role === "BODEGUERO" && token.bodegaId && pedidoActual.bodegaId !== token.bodegaId) {
+            return NextResponse.json({ ok: false, error: "Sin permiso para este pedido" }, { status: 403 });
+        }
+        if (role === "REPARTIDOR") {
+            const repartidorId = token.sub as string;
+            if (pedidoActual.repartidorId && pedidoActual.repartidorId !== repartidorId) {
+                return NextResponse.json({ ok: false, error: "Pedido asignado a otro repartidor" }, { status: 403 });
+            }
+        }
+
+        if (body.estado) {
+            if (!ESTADOS_VALIDOS.includes(body.estado)) {
+                return NextResponse.json({ ok: false, error: "Estado inválido" }, { status: 400 });
+            }
+            const estadoActual = pedidoActual.estado || "nuevo";
+            const permitidos = TRANSICIONES[estadoActual] || [];
+            if (!permitidos.includes(body.estado)) {
+                return NextResponse.json({
+                    ok: false,
+                    error: `Transición inválida: ${estadoActual} → ${body.estado}`,
+                    estadosPermitidos: permitidos,
+                }, { status: 400 });
+            }
+        }
+
+        const data: Record<string, unknown> = {};
+        if (body.estado !== undefined)           data.estado           = body.estado;
+        if (body.repartidorId !== undefined)     data.repartidorId     = body.repartidorId;
+        if (body.repartidorNombre !== undefined) data.repartidorNombre = body.repartidorNombre;
+        if (body.notas !== undefined)            data.notas            = body.notas;
+
+        const pedidoActualizado = await prisma.pedido.update({
+            where: { id: pedidoId },
+            data,
         });
-      }
-    }
 
-    if (repartidorAsignado) {
-      await appendNotificacion({
-        bodegaId: nextPedido.bodegaId ?? null,
-        titulo: "Nueva entrega asignada",
-        mensaje: `Te asignaron el pedido ${nextPedido.pedidoId || nextPedido.id}.`,
-        target: "repartidores",
-      });
-    }
+        // Notificaciones asíncronas
+        if (body.estado && body.estado !== pedidoActual.estado) {
+            appendNotif({
+                bodegaId: pedidoActual.bodegaId,
+                titulo: "Estado del pedido actualizado",
+                mensaje: `Pedido ${pedidoId} → ${body.estado.replace("_", " ")}`,
+                target: "tenderos",
+            });
+            if (pedidoActualizado.repartidorId || body.repartidorId) {
+                appendNotif({
+                    bodegaId: pedidoActual.bodegaId,
+                    titulo: body.estado === "asignado" ? "Nueva entrega asignada" : "Estado actualizado",
+                    mensaje: body.estado === "asignado"
+                        ? `Te asignaron el pedido ${pedidoId}.`
+                        : `Pedido ${pedidoId} está ${body.estado.replace("_", " ")}.`,
+                    target: "repartidores",
+                });
+            }
+        }
 
-    return NextResponse.json({ ok: true, pedido: pedidos[index] });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { ok: false, error: "Error al actualizar pedido" },
-      { status: 500 },
-    );
-  }
+        return NextResponse.json({ ok: true, pedido: formatPedido(pedidoActualizado as unknown as PedidoRow) });
+    } catch (err) {
+        console.error("Error PATCH /api/pedidos/[pedidoId]:", err);
+        return NextResponse.json({ ok: false, error: "Error al actualizar pedido" }, { status: 500 });
+    }
 }
