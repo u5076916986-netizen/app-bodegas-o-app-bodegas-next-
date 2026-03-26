@@ -17,15 +17,6 @@ const normalizePhone = (phone: string): string => {
   return phone.replace(/[\s\-\(\)]/g, "").trim();
 };
 
-type Notificacion = {
-  id: string;
-  bodegaId?: string | null;
-  titulo: string;
-  mensaje: string;
-  target: "tenderos" | "bodegas" | "repartidores" | "all";
-  createdAt: string;
-  read?: boolean;
-};
 
 
 export async function GET(request: Request) {
@@ -36,6 +27,7 @@ export async function GET(request: Request) {
     const bodegaId = searchParams.get("bodegaId");
     const tenderoPhone = searchParams.get("tenderoPhone");
     const estado = searchParams.get("estado");
+    const repartidorId = searchParams.get("repartidorId");
     const q = searchParams.get("q");
 
     if (id) {
@@ -64,6 +56,10 @@ export async function GET(request: Request) {
       where.estado = estado;
     }
 
+    if (repartidorId) {
+      where.repartidorId = repartidorId;
+    }
+
     if (q) {
       where.OR = [
         { id: { contains: q, mode: "insensitive" } },
@@ -82,7 +78,7 @@ export async function GET(request: Request) {
   } catch (err) {
     console.error(err);
     return Response.json(
-      { success: false, message: "Error al guardar pedido" },
+      { ok: false, error: "Error al guardar pedido" },
       { status: 500 },
     );
   }
@@ -161,9 +157,31 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error(err);
     return Response.json(
-      { success: false, message: "Error al guardar pedido" },
+      { ok: false, error: "Error al guardar pedido" },
       { status: 500 },
     );
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const pedidoId = body.pedidoId || body.id;
+    const estado = body.estado;
+    const repartidorId = body.repartidorId;
+    if (!pedidoId || !estado) {
+      return Response.json({ ok: false, error: "pedidoId y estado son requeridos" }, { status: 400 });
+    }
+    const data: { estado: string; repartidorId?: string } = { estado };
+    if (repartidorId) data.repartidorId = repartidorId;
+    const pedido = await prisma.pedido.update({
+      where: { id: pedidoId },
+      data,
+    });
+    return Response.json({ ok: true, pedido: formatPedido(pedido) });
+  } catch (err) {
+    console.error(err);
+    return Response.json({ ok: false, error: "No se pudo actualizar el pedido" }, { status: 500 });
   }
 }
 
@@ -177,6 +195,7 @@ type PedidoRecord = {
   total: number;
   estado: string;
   bodegaId: string;
+  repartidorId: string | null;
 };
 
 const formatPedido = (pedido: PedidoRecord) => {

@@ -171,7 +171,7 @@ async function migrarPromociones(): Promise<void> {
         where: { id: promo.id },
         update: {
           bodegaId: promo.bodegaId,
-          nombre: promo.nombre,
+          titulo: promo.nombre,
           tipo: promo.tipo,
           valor: promo.valor,
           fechaInicio: new Date(promo.fechaInicio),
@@ -184,7 +184,7 @@ async function migrarPromociones(): Promise<void> {
         create: {
           id: promo.id,
           bodegaId: promo.bodegaId,
-          nombre: promo.nombre,
+          titulo: promo.nombre,
           tipo: promo.tipo,
           valor: promo.valor,
           fechaInicio: new Date(promo.fechaInicio),
@@ -232,7 +232,7 @@ async function verificarMigracion(): Promise<void> {
   console.log('\n   Ejemplo de promociones:')
   const ejemploPromociones = await prisma.promocion.findMany({ take: 3 })
   ejemploPromociones.forEach(p => {
-    console.log(`      - ${p.nombre} (${p.valor}% ${p.tipo})`)
+    console.log(`      - ${p.titulo} (${p.valor}% ${p.tipo})`)
   })
 }
 

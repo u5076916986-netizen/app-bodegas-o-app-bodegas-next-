@@ -23,13 +23,12 @@ type RouteParams = {
 // FUNCIÓN AUXILIAR: Calcular estado de una promoción
 // =============================================================================
 function calcularEstadoPromocion(
-  fechaInicio: Date,
-  fechaFin: Date
+  fechaInicio: Date | null,
+  fechaFin: Date | null
 ): 'activa' | 'programada' | 'finalizada' {
   const ahora = new Date()
-  
-  if (ahora < fechaInicio) return 'programada'
-  if (ahora > fechaFin) return 'finalizada'
+  if (fechaInicio && ahora < fechaInicio) return 'programada'
+  if (fechaFin && ahora > fechaFin) return 'finalizada'
   return 'activa'
 }
 
@@ -65,8 +64,8 @@ export async function GET(
 
     // Calculamos el estado actual
     const estadoCalculado = calcularEstadoPromocion(
-      new Date(promocion.fechaInicio),
-      new Date(promocion.fechaFin)
+      promocion.fechaInicio ? new Date(promocion.fechaInicio) : null,
+      promocion.fechaFin ? new Date(promocion.fechaFin) : null
     )
 
     // Retornamos la promoción con el estado calculado
@@ -76,8 +75,8 @@ export async function GET(
       data: {
         ...promocion,
         estado: estadoCalculado,
-        fechaInicio: promocion.fechaInicio.toISOString(),
-        fechaFin: promocion.fechaFin.toISOString(),
+        fechaInicio: promocion.fechaInicio?.toISOString() ?? null,
+        fechaFin: promocion.fechaFin?.toISOString() ?? null,
       },
     })
 
@@ -225,8 +224,8 @@ export async function PUT(
 
     // Calculamos el nuevo estado
     const estadoCalculado = calcularEstadoPromocion(
-      new Date(fechaInicio),
-      new Date(fechaFin)
+      fechaInicio ? new Date(fechaInicio) : null,
+      fechaFin ? new Date(fechaFin) : null
     )
     datosActualizacion.estado = estadoCalculado
 
@@ -243,8 +242,8 @@ export async function PUT(
       data: {
         ...promocionActualizada,
         estado: estadoCalculado,
-        fechaInicio: promocionActualizada.fechaInicio.toISOString(),
-        fechaFin: promocionActualizada.fechaFin.toISOString(),
+        fechaInicio: promocionActualizada.fechaInicio?.toISOString() ?? null,
+        fechaFin: promocionActualizada.fechaFin?.toISOString() ?? null,
       },
     })
 

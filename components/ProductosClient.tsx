@@ -22,6 +22,7 @@ export interface Producto {
     activo: boolean;
     descripcion?: string;
     updatedAt: string;
+    imagenUrl?: string;
 }
 
 type ModalView = "form" | null;

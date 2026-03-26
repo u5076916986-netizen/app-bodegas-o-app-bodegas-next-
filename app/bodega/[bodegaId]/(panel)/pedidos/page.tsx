@@ -1,21 +1,8 @@
-﻿import PedidosBodega from "./PedidosBodega";
-import Breadcrumbs from "@/app/ui/Breadcrumbs";
+import PedidosBodega from './PedidosBodega';
 
-export default async function PedidosPage({
-    params,
-}: {
-    params: Promise<{ bodegaId: string }>;
-}) {
+type Params = { bodegaId: string };
+
+export default async function PedidosPage({ params }: { params: Promise<Params> }) {
     const { bodegaId } = await params;
-    return (
-        <div className="space-y-4">
-            <Breadcrumbs
-                items={[
-                    { label: "Panel", href: `/bodega/${bodegaId}/panel` },
-                    { label: "Pedidos" },
-                ]}
-            />
-            <PedidosBodega bodegaId={bodegaId} />
-        </div>
-    );
+    return <PedidosBodega bodegaId={bodegaId} />;
 }

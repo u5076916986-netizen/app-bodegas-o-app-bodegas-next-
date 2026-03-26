@@ -74,8 +74,9 @@ export default function CarritoDrawer({
     formatCurrency,
     catalogo = [],
 }: Props) {
+    const minimo = minimoPedido ?? 0;
     const router = useRouter();
-    const canFinalize = items.length > 0 && !isSending;
+    const canFinalize = items.length > 0 && !isSending && subtotal >= minimo;
     const [cupones, setCupones] = useState<Cupon[]>([]);
     const [promos, setPromos] = useState<PromoRule[]>([]);
     const [showReco, setShowReco] = useState(false);
@@ -117,7 +118,7 @@ export default function CarritoDrawer({
         setPromoNow(new Date().toISOString());
     }, [isOpen]);
 
-    const minimo = minimoPedido ?? 0;
+    // const minimo = minimoPedido ?? 0; // removed duplicate
     const faltante = Math.max(0, minimo - subtotal);
     const cartIds = new Set(items.map((line) => line.producto.producto_id));
     const readSku = (value: unknown) =>
@@ -176,7 +177,13 @@ export default function CarritoDrawer({
             onClose={onClose}
             onConfirm={handleFinalize}
             confirmDisabled={!canFinalize}
-            confirmText={isSending ? "Cargando..." : "Finalizar compra"}
+            confirmText={
+                isSending
+                    ? "Cargando..."
+                    : subtotal < minimo
+                        ? `Faltan ${formatCurrency(faltante)}`
+                        : "Finalizar compra"
+            }
             cancelText="Seguir comprando"
             size="lg"
         >
@@ -188,7 +195,7 @@ export default function CarritoDrawer({
                     </div>
                     {minimo > 0 && faltante > 0 ? (
                         <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
-                            Te faltan <strong>{formatCurrency(faltante)}</strong> para el mínimo.
+                            Te faltan <strong>{formatCurrency(faltante)}</strong> para el mínimo de pedido.
                             <button
                                 type="button"
                                 onClick={() => setShowReco(true)}

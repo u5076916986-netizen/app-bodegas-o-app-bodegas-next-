@@ -23,6 +23,7 @@ export default async function PedidoDetallePage({ params }: Props) {
         ...pedido,
         items: Array.isArray(pedido.items) ? pedido.items : [],
         pedidoId: pedido.id,
+        repartidorId: pedido.repartidorId ?? undefined,
         repartidorNombre: 'repartidorNombre' in pedido ? pedido.repartidorNombre as string | undefined : undefined,
         repartidorTelefono: 'repartidorTelefono' in pedido ? pedido.repartidorTelefono as string | undefined : undefined,
         totalOriginal: 'totalOriginal' in pedido ? (pedido.totalOriginal as number | undefined) ?? undefined : undefined,

@@ -92,7 +92,7 @@ export default function PedidosBodega({ bodegaId }: { bodegaId: string }) {
                 setPedidos([]);
                 return;
             }
-            let data = await res.json();
+            const data = await res.json();
             let filteredPedidos = data.pedidos || [];
 
             // Aplicar filtro de asignación
@@ -168,7 +168,7 @@ export default function PedidosBodega({ bodegaId }: { bodegaId: string }) {
             );
         };
 
-        let list = pedidos.filter(matchesRange);
+        const list = pedidos.filter(matchesRange);
         if (!q.trim()) return list;
         const expanded = expandQuery(q);
         return smartSearch(fuse, expanded, 200) as PedidoListItem[];
@@ -260,7 +260,7 @@ export default function PedidosBodega({ bodegaId }: { bodegaId: string }) {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label htmlFor="q" className="block text-sm font-medium text-slate-700 mb-1">
-                                Buscar
+                                Filtrar por texto
                             </label>
                             <input
                                 id="q"
@@ -306,9 +306,12 @@ export default function PedidosBodega({ bodegaId }: { bodegaId: string }) {
                         <div className="flex items-end">
                             <button
                                 onClick={fetchPedidos}
-                                className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800"
+                                className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-700 active:scale-95 transition-all text-sm font-medium"
                             >
-                                Buscar
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 010 2H4a1 1 0 01-1-1zm3 5a1 1 0 011-1h10a1 1 0 010 2H7a1 1 0 01-1-1zm4 5a1 1 0 011-1h4a1 1 0 010 2h-4a1 1 0 01-1-1z" />
+                                </svg>
+                                Aplicar filtros
                             </button>
                         </div>
                     </div>

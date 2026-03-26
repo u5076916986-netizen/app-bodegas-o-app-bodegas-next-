@@ -1,0 +1,12 @@
+[
+  {
+    "id": "4cb5dcaa-1155-4aad-957b-1b35dfeaa7e2",
+    "pedidoId": "e4aa811c-44b6-41f0-80aa-fba8a2164fb4",
+    "repartidorId": "REP_001",
+    "estado": "confirmado",
+    "motivo": "cliente_no_responde",
+    "detalle": "retretr",
+    "source": "repartidor",
+    "createdAt": "2026-02-24T20:21:30.122Z"
+  }
+]

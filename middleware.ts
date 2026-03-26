@@ -22,6 +22,13 @@ const PUBLIC_ROUTES = [
   '/inicio',
   '/api/auth',
   '/api/bodegas',
+  '/api/pedidos',
+  '/api/productos',
+  '/api/promociones',
+  '/api/buscar',
+  '/tendero',
+  '/seguimiento',
+  '/entregas',
 ];
 
 // Rutas que solo pueden acceder los ADMIN

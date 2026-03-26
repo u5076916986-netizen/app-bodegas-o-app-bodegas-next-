@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-css-tags */
+ 
 import { ReactNode } from "react";
 import { getThemeForBodega, type BodegaTheme, DEFAULT_BODEGA_THEME } from "@/lib/themes";
 

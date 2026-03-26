@@ -17,7 +17,11 @@ export default function ProductQuickModal({
     onAddToCart,
     formatCurrency,
 }: ProductQuickModalProps) {
-    const [cantidad, setCantidad] = useState(1);
+
+    // Enforce minimum quantity (1) and max (stock)
+    const minQty = 1;
+    const maxQty = Math.max(minQty, producto.stock ?? 1);
+    const [cantidad, setCantidad] = useState(minQty);
     const [imageUrl, setImageUrl] = useState('/productos/placeholder.svg');
     const [imageLoading, setImageLoading] = useState(true);
 
@@ -39,8 +43,14 @@ export default function ProductQuickModal({
         fetchImage();
     }, [producto.nombre]);
 
+    // Reset quantity if product changes
+    useEffect(() => {
+        setCantidad(minQty);
+    }, [producto.producto_id]);
+
     const handleAddToCart = () => {
-        onAddToCart(Math.max(1, cantidad));
+        if ((producto.stock ?? 0) < minQty) return;
+        onAddToCart(Math.max(minQty, Math.min(maxQty, cantidad)));
     };
 
     return (
@@ -113,36 +123,39 @@ export default function ProductQuickModal({
                         </label>
                         <div className="flex items-center gap-3">
                             <button
-                                onClick={() => setCantidad(Math.max(1, cantidad - 1))}
+                                onClick={() => setCantidad(Math.max(minQty, cantidad - 1))}
                                 className="rounded-lg border border-slate-300 px-4 py-2 font-semibold hover:bg-slate-100"
                                 aria-label="Disminuir cantidad"
+                                disabled={cantidad <= minQty}
                             >
                                 −
                             </button>
                             <input
                                 id="cantidad-input"
                                 type="number"
-                                min="1"
-                                max={producto.stock ?? 999}
+                                min={minQty}
+                                max={maxQty}
                                 value={cantidad}
-                                onChange={(e) =>
-                                    setCantidad(Math.max(1, parseInt(e.target.value) || 1))
-                                }
+                                onChange={(e) => {
+                                    let val = parseInt(e.target.value) || minQty;
+                                    val = Math.max(minQty, Math.min(maxQty, val));
+                                    setCantidad(val);
+                                }}
                                 className="w-16 rounded-lg border border-slate-300 px-2 py-2 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 aria-label="Cantidad a agregar"
                             />
                             <button
-                                onClick={() =>
-                                    setCantidad(
-                                        Math.min(producto.stock ?? 999, cantidad + 1)
-                                    )
-                                }
+                                onClick={() => setCantidad(Math.min(maxQty, cantidad + 1))}
                                 className="rounded-lg border border-slate-300 px-4 py-2 font-semibold hover:bg-slate-100"
                                 aria-label="Aumentar cantidad"
+                                disabled={cantidad >= maxQty}
                             >
                                 +
                             </button>
                         </div>
+                        {producto.stock !== undefined && producto.stock !== null && producto.stock <= minQty && (
+                            <div className="text-xs text-red-600 mt-1">Sin stock suficiente.</div>
+                        )}
                     </div>
 
                     {/* Subtotal */}
@@ -165,10 +178,10 @@ export default function ProductQuickModal({
                         </button>
                         <button
                             onClick={handleAddToCart}
-                            disabled={(producto.stock ?? 0) === 0}
+                            disabled={(producto.stock ?? 0) < minQty}
                             className="flex-1 rounded-lg bg-green-600 px-4 py-3 font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            {(producto.stock ?? 0) === 0 ? "Sin stock" : "Agregar al pedido"}
+                            {(producto.stock ?? 0) < minQty ? "Sin stock" : "Agregar al pedido"}
                         </button>
                     </div>
                 </div>

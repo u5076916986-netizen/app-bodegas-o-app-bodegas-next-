@@ -2,6 +2,7 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
 import { formatCurrency } from '@/lib/formatCurrency';
+import DashboardActions from '@/components/DashboardActions';
 
 interface Inventario {
     productoId: string;
@@ -44,7 +45,7 @@ export default async function PanelPage({
     let productosStock10 = 0;
     let entregasPendientes = 0;
     let pedidosHoy = 0;
-    let promosActivas = 2;
+    const promosActivas = 2;
     let clientesList: Cliente[] = [];
     let totalClientes = 0;
     let clientesFrecuentes = 0;
@@ -184,14 +185,6 @@ export default async function PanelPage({
         });
     }
 
-    // Acciones rápidas
-    const quickActions = [
-        { label: 'Nuevo producto', emoji: '➕', href: `/bodega/${bodegaId}/productos?nuevo=1` },
-        { label: 'Importar Excel', emoji: '📥', href: `/bodega/${bodegaId}/cargar-productos` },
-        { label: 'Crear promoción', emoji: '🎯', href: `/bodega/${bodegaId}/promociones?nueva=1` },
-        { label: 'Ver pedidos', emoji: '👁️', href: `/bodega/${bodegaId}/pedidos` },
-        { label: 'Ver clientes', emoji: '👥', href: `/bodega/${bodegaId}/clientes` },
-    ];
 
     return (
         <div className="max-w-6xl mx-auto p-4 md:p-6 space-y-6">
@@ -310,20 +303,7 @@ export default async function PanelPage({
                 <h2 className="text-lg md:text-xl font-bold text-gray-900">
                     Acciones rápidas
                 </h2>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    {quickActions.map((action) => (
-                        <Link
-                            key={action.label}
-                            href={action.href}
-                            className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
-                        >
-                            <span className="text-2xl md:text-3xl mb-1">{action.emoji}</span>
-                            <span className="text-xs md:text-sm font-medium text-gray-700 text-center">
-                                {action.label}
-                            </span>
-                        </Link>
-                    ))}
-                </div>
+                <DashboardActions bodegaId={bodegaId} />
             </div>
 
             {/* Módulos Principales */}

@@ -342,19 +342,42 @@ export default function TopNav() {
         </div>
 
         <div className="relative">
-          <form onSubmit={onSubmit} className="flex items-center gap-2 w-full">
+          <form onSubmit={onSubmit} className="flex items-center w-full rounded-xl border border-slate-300 bg-white shadow-sm focus-within:border-slate-900 focus-within:ring-2 focus-within:ring-slate-900/10 transition-all">
+            <span className="pl-3 text-slate-400 pointer-events-none select-none">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+              </svg>
+            </span>
             <input
               ref={inputRef}
               aria-label={placeholder}
-              placeholder={`🔍 ${placeholder}`}
+              placeholder={placeholder}
               value={q}
-              onChange={(e) => {
-                setQ(e.target.value);
-                setOpen(true);
-              }}
+              onChange={(e) => { setQ(e.target.value); setOpen(true); }}
               onFocus={() => setOpen(true)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-300"
+              className="flex-1 bg-transparent px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none"
             />
+            {q && (
+              <button
+                type="button"
+                onClick={() => { setQ(""); setOpen(false); inputRef.current?.focus(); }}
+                className="px-2 text-slate-400 hover:text-slate-600"
+                aria-label="Limpiar búsqueda"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+            <button
+              type="submit"
+              className="m-1 flex items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-700 active:scale-95 transition-all shrink-0"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+              </svg>
+              Buscar
+            </button>
           </form>
 
           <SearchDropdown

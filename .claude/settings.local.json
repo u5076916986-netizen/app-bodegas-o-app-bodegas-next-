@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx next:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx tsc:*)",
+      "Bash(xargs grep:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(taskkill:*)",
+      "Bash(cmd /c \"taskkill /PID 30420 /F\")",
+      "Bash(cmd /c \"taskkill /IM node.exe /F\")",
+      "Bash(cmd /c \"taskkill /F /PID 30420 2>&1 && taskkill /F /IM node.exe 2>&1\")",
+      "Bash(cmd /c \"netstat -ano | findstr :3000\")",
+      "Bash(npm install:*)",
+      "Bash(cmd /c \"taskkill /F /IM node.exe 2>&1\")",
+      "Bash(cmd /c \"netstat -ano | findstr LISTEN\")",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Select-Object LocalPort, State, OwningProcess\")",
+      "Bash(powershell -Command \"Get-Process -Id 30420 -ErrorAction SilentlyContinue | Select-Object Id, Name, MainWindowTitle\")",
+      "Bash(powershell -Command \"Stop-Process -Id 30420 -Force; Write-Host ''killed''\")",
+      "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_EGrAuat2J1sg@ep-fancy-dew-aijn0nls.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require\" npx prisma db push)"
+    ]
+  }
+}
